@@ -1,0 +1,26 @@
+[
+  {
+    "title": "CoinJoin",
+    "description": "CoinJoin mixes your Bitcoin with others in one transaction to make it harder to trace, for more privacy.",
+    "illustration": "intro-coinjoin",
+    "bgColor": "#F9FDE5",
+    "borderColor": "#D6FF0066",
+    "rotate": 3.83
+  },
+  {
+    "title": "Hash",
+    "description": "A hash is a shuffled digital fingerprint used to secure Bitcoin data.",
+    "illustration": "intro-hash",
+    "bgColor": "#FFF8F0",
+    "borderColor": "#F7931B66",
+    "rotate": -6.52
+  },
+  {
+    "title": "Node",
+    "description": "A node is a computer that helps run, support, and share information on the Bitcoin network.",
+    "illustration": "intro-node",
+    "bgColor": "#EEF7FF",
+    "borderColor": "#3A9CFF66",
+    "rotate": 0.6
+  }
+]

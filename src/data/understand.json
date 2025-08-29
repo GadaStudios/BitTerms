@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Terms Simplification",
+    "description": "We turn complex Bitcoin lingo into plain, everyday language. If you can explain it to a friend over coffee, to a 9 year old, or to a grandpa,  you’ll find it here.",
+    "icon": "✏️"
+  },
+  {
+    "title": "Illustrations",
+    "description": "We pair clear definitions with simple illustrations to make learning intuitive. Because sometimes, a sketch does what a paragraph can’t; it bridges the gap between confusion and clarity.",
+    "icon": "🎨"
+  },
+  {
+    "title": "Open Source",
+    "description": "Add your own plain-language definitions, suggest edits, share feedback, or upload visuals. Every contribution makes Bitcoin clearer for someone else. Bit by bit, together, we build understanding.",
+    "icon": "🌐"
+  }
+]
