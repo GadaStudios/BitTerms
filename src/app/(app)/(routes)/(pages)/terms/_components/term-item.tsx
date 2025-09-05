@@ -6,6 +6,8 @@ import { PiSpeakerHighDuotone } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
+import { PortableText } from "next-sanity";
+import { urlFor } from "@/lib/image";
 
 interface Props {
   term: TermInstance;
@@ -20,6 +22,10 @@ export const TermItem: React.FC<Props> = ({
 }) => {
   const [isSpeaking, setIsSpeaking] = React.useState<string | null>(null);
   const isOpen = activeToggle === term.name;
+
+  const illustrationUrl = term.illustration
+    ? urlFor(term.illustration)?.url()
+    : null;
 
   const handlePlaySound = (text: string) => {
     if (typeof window === "undefined") return;
@@ -53,11 +59,9 @@ export const TermItem: React.FC<Props> = ({
             </Button>
           </div>
 
-          {term.definition && (
-            <p className="text-base md:text-lg lg:text-xl font-normal tracking-[-2%]">
-              {term.definition}
-            </p>
-          )}
+          <div className="text-base md:text-lg lg:text-xl font-normal tracking-[-2%]">
+            <PortableText value={term.definition} />
+          </div>
 
           {!isOpen && (
             <p
@@ -95,9 +99,9 @@ export const TermItem: React.FC<Props> = ({
                   Technical Definition
                 </p>
 
-                <p className="text-base md:text-lg lg:text-xl font-normal tracking-[-2%]">
-                  {term.technicalDefinition}
-                </p>
+                <div className="text-base md:text-lg lg:text-xl font-normal tracking-[-2%]">
+                  <PortableText value={term.technicalDefinition} />
+                </div>
               </div>
 
               <p
@@ -125,7 +129,7 @@ export const TermItem: React.FC<Props> = ({
         className="size-[92px] md:size-[160px] origin-top-right"
       >
         <Image
-          src={`/${term.illustrator}`}
+          src={illustrationUrl ?? "/404.svg"}
           alt={term.name}
           width={190}
           height={190}

@@ -5,12 +5,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Wrapper from "@/components/wrapper";
 import { Button } from "@/components/ui/button";
-import termsData from "@/data/terms.json";
 import { TermItem } from "./term-item";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
-export const Terms = () => {
+interface Props {
+  termsData: Array<TermInstance>;
+}
+
+export const Terms: React.FC<Props> = ({ termsData }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const activeFilter = searchParams.get("letter");
@@ -71,7 +74,7 @@ export const Terms = () => {
     <section className="pb-16 md:py-16 lg:py-24">
       <Wrapper className="flex flex-col gap-10 md:max-w-[752px]">
         {/* ALPHABETS */}
-        <div className="sticky top-[72px] md:top-[78px] bg-background py-4 md:py-6">
+        <div className="sticky top-[72px] md:top-[78px] bg-background py-4 md:py-6 z-50">
           <div className="flex whitespace-pre flex-wrap z-50 gap-1 md:gap-2 justify-center w-full">
             {filters.map((label) => {
               const displayLabel = label === "symbol" ? "#" : label;
@@ -86,11 +89,9 @@ export const Terms = () => {
                   onClick={() => handleClick(label)}
                   variant={isActive ? "default" : "secondary"}
                   className={`font-mono !rounded-[12px] h-[34px] sm:h-[44px] text-lg md:text-xl lg:text-2xl
-      ${
-        label === "all"
-          ? "w-[55px] md:w-[84px]"
-          : "w-[30px] px-3 sm:px-4 md:px-5"
-      }`}
+  ${
+    label === "all" ? "w-[55px] md:w-[84px]" : "w-[30px] px-3 sm:px-4 md:px-5"
+  }`}
                 >
                   <span>{displayLabel}</span>
                 </Button>

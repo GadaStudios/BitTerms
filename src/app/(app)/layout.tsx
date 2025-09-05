@@ -8,6 +8,7 @@ import { naughtyMonster } from "@/fonts";
 import { siteConfig } from "@/config/site.config";
 import { Toaster } from "@/components/ui/sonner";
 import { Header } from "@/components/header";
+import { SanityLive } from "@/lib/live";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,6 +44,7 @@ export default function RootLayout({
           naughtyMonster.variable
         )}
       >
+        <SanityLive />
         <Toaster />
         <NextJSTopLoader
           showSpinner={false}

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { RiFileUploadLine } from "react-icons/ri";
@@ -23,28 +22,7 @@ import {
   FileUploaderContent,
   FileUploaderItem,
 } from "@/components/ui/file-upload";
-
-const suggestFormSchema = z.object({
-  fName: z
-    .string()
-    .max(50, "First Name must be at most 50 characters")
-    .optional(),
-  term: z
-    .string()
-    .min(3, "Term must be at least 3 characters")
-    .max(100, "Term must be at most 100 characters"),
-  definition: z
-    .string()
-    .min(2, "Definition must be at least 2 characters")
-    .max(1000, "Definition must be at most 1000 characters"),
-  simpleDefinition: z
-    .string()
-    .max(300, "Simplify Definition must be at most 300 characters")
-    .optional(),
-  illustration: z.string().optional(),
-});
-
-type SuggestFormValues = z.infer<typeof suggestFormSchema>;
+import { suggestFormSchema, SuggestFormValues } from "@/lib/validators";
 
 export const SuggestForm = () => {
   const [files, setFiles] = React.useState<File[] | null>(null);
