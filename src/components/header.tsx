@@ -13,21 +13,21 @@ export const Header = () => {
 
   return (
     <header
-      className={cn("fixed top-6 left-0 w-full z-50", {
+      className={cn("fixed top-6 left-0 z-50 w-full", {
         relative: pathname === "/terms",
       })}
     >
       <Wrapper>
-        <nav className="w-full h-14 max-w-[369px] mx-auto sm:h-[60px] bg-black/70 px-7 py-2 rounded-full backdrop-blur-xs flex justify-center items-center">
-          <div className="flex items-center justify-between h-5">
+        <nav className="mx-auto flex h-14 w-full max-w-[369px] items-center justify-center rounded-full bg-black/70 px-7 py-2 backdrop-blur-xs sm:h-[60px]">
+          <div className="flex h-5 items-center justify-between">
             <Link href="/">
               <svg
                 viewBox="0 0 65 19"
                 className={cn(
-                  "fill-background w-14 h-4 min-[390px]:w-16 min-[390px]:h-5 hover:fill-primary",
+                  "fill-background hover:fill-primary h-4 w-14 min-[390px]:h-5 min-[390px]:w-16",
                   {
                     "fill-primary": isActivePath("/", pathname),
-                  }
+                  },
                 )}
               >
                 <path d="M12.6541 8.71489L10.2154 8.67324C10.2154 8.95853 10.0954 15.6015 10.2154 17.0362L12.6455 16.8405C12.5555 15.7451 12.6198 10.6036 12.6541 8.71489ZM11.3683 4.55005C11.0573 4.55218 10.7525 4.6347 10.4851 4.78913C10.2177 4.94356 9.99742 5.16435 9.84684 5.42883C9.67008 5.72351 9.57445 6.05749 9.5692 6.39854C9.56394 6.73959 9.64924 7.0762 9.81684 7.37589C9.97281 7.63424 10.1967 7.84758 10.4657 7.99397C10.7346 8.14037 11.0387 8.21454 11.3469 8.20886C11.5978 8.21728 11.8479 8.17636 12.0821 8.08856C12.3164 8.00077 12.53 7.8679 12.7101 7.69794C12.8902 7.52797 13.0331 7.32441 13.1303 7.09946C13.2275 6.8745 13.2769 6.63279 13.2756 6.38883C13.2747 6.1472 13.2248 5.90811 13.1286 5.68529C13.0324 5.46247 12.8918 5.26031 12.715 5.09042C12.5382 4.92054 12.3286 4.78626 12.0982 4.69532C11.8679 4.60437 11.6213 4.55854 11.3726 4.56046L11.3683 4.55005Z" />
@@ -43,17 +43,17 @@ export const Header = () => {
 
             <Separator
               orientation="vertical"
-              className="!h-4 bg-background/40 mx-4"
+              className="bg-background/40 mx-4 !h-4"
             />
 
             <Link
               href="/terms"
               className={cn(
-                "font-normal tracking-[-2%] hover:text-primary text-background",
+                "hover:text-primary text-background font-normal tracking-[-2%]",
                 {
                   "text-primary": isActivePath("/terms", pathname),
                   "hover:italic": !isActivePath("/terms", pathname),
-                }
+                },
               )}
             >
               <span className="text-xs min-[390px]:text-sm md:text-base">
@@ -63,17 +63,17 @@ export const Header = () => {
 
             <Separator
               orientation="vertical"
-              className="!h-4 bg-background/40 mx-4"
+              className="bg-background/40 mx-4 !h-4"
             />
 
             <Link
               href="/suggest"
               className={cn(
-                "font-normal tracking-[-2%] hover:text-primary text-background",
+                "hover:text-primary text-background font-normal tracking-[-2%]",
                 {
                   "text-primary": isActivePath("/suggest", pathname),
                   "hover:italic": !isActivePath("/suggest", pathname),
-                }
+                },
               )}
             >
               <span className="text-xs min-[390px]:text-sm md:text-base">

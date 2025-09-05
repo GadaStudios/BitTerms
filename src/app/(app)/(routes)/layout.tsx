@@ -1,5 +1,6 @@
 import React from "react";
 import { Footer } from "@/components/footer";
+import Provider from "./provider";
 
 export default function RoutesLayout({
   children,
@@ -7,9 +8,9 @@ export default function RoutesLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <React.Fragment>
+    <Provider>
       {children}
       <Footer />
-    </React.Fragment>
+    </Provider>
   );
 }

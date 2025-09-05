@@ -57,6 +57,10 @@
     @apply border-border outline-ring/50;
   }
 
+  *::-webkit-scrollbar {
+    @apply hidden;
+  }
+
   body {
     @apply bg-background text-foreground font-sans;
   }
@@ -80,5 +84,26 @@
 
   h3 {
     @apply text-4xl md:text-5xl lg:text-[64px];
+  }
+
+  html.lenis,
+  html.lenis body {
+    @apply h-auto;
+  }
+
+  .lenis.lenis-smooth {
+    @apply !scroll-auto;
+  }
+
+  .lenis.lenis-smooth [data-lenis-prevent] {
+    @apply overscroll-contain;
+  }
+
+  .lenis.lenis-stopped {
+    @apply overflow-hidden;
+  }
+
+  .lenis.lenis-smooth iframe {
+    @apply pointer-events-none;
   }
 }

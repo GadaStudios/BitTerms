@@ -3,22 +3,32 @@ import Link from "next/link";
 import Wrapper from "@/components/wrapper";
 import { buttonVariants } from "@/components/ui/button";
 import { HeroIllustration } from "./hero-illustration";
+import Image from "next/image";
 
 export const HomeHero = () => {
   return (
-    <section className="text-background relative bg-foreground">
-      <div className="py-36 sm:py-44 md:py-[187px] relative">
-        <Wrapper className="flex flex-col text-center gap-8">
+    <section className="text-background bg-foreground relative w-full">
+      <Image
+        src="/texture.svg"
+        alt=""
+        width="1440"
+        height="311"
+        priority
+        className="absolute -bottom-8 left-1/2 w-dvw -translate-x-1/2 scale-[115%] rotate-180 object-contain sm:-bottom-10 md:-bottom-16"
+      />
+
+      <div className="relative pt-36 pb-16 sm:pt-44 md:pt-[187px]">
+        <Wrapper className="flex flex-col gap-8 text-center">
           <div className="flex flex-col gap-4">
-            <h1 className="text-center leading-[0.95] flex flex-col">
-              <span className="flex items-end leading-[0.95] justify-center">
+            <h1 className="flex flex-col text-center leading-[0.95]">
+              <span className="flex items-end justify-center leading-[0.95]">
                 BITCOIN{" "}
                 <HeroIllustration className="ml-3 w-[102px] sm:w-[132px] md:w-[165px] lg:w-[189px]" />{" "}
                 TERMS
               </span>
               <span>FINALLY MADE SIMPLE</span>
             </h1>
-            <p className="text-base md:text-lg lg:text-xl tracking-tight max-w-[790px] w-full mx-auto">
+            <p className="mx-auto w-full max-w-[790px] text-base tracking-tight md:text-lg lg:text-xl">
               Ease into Bitcoin with less jargon and no confusion. Bit Terms
               meets wherever you are, helping you make sense of Bitcoin, one
               clear definition at a time, with friendly visuals so you

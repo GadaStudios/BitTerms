@@ -10,4 +10,5 @@ interface TermInstance {
     };
   } | null;
   author?: string;
+  audio?: string;
 }

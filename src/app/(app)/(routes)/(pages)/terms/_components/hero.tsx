@@ -59,25 +59,25 @@ export const TermsHero = () => {
 
   return (
     <React.Fragment>
-      <section className="pt-36 sm:pt-44 md:pt-[187px] relative">
-        <Wrapper className="flex flex-col text-center gap-8 md:gap-14">
+      <section className="relative pt-36 sm:pt-44 md:pt-[187px]">
+        <Wrapper className="flex flex-col gap-8 text-center md:gap-14">
           <div className="flex flex-col gap-4">
-            <h2 className="text-center flex flex-col">
+            <h2 className="flex flex-col text-center">
               Looking for a term? <br /> See its simplified definition
             </h2>
-            <p className="text-base md:text-lg lg:text-xl max-w-[640px] w-full mx-auto">
+            <p className="mx-auto w-full max-w-[640px] text-base md:text-lg lg:text-xl">
               Find or search for terms you want to know about and see a
               simplified definition with accompanied illustration
             </p>
           </div>
 
-          <div className="flex items-center mx-auto gap-3">
-            <p className="text-sm sm:text-base font-normal">Top Searched</p>
+          <div className="mx-auto flex items-center gap-3">
+            <p className="text-sm font-normal sm:text-base">Top Searched</p>
             <div className="flex items-center gap-1">
               {["Accessibility", "Hash", "Multisig"].map((tag) => (
                 <Badge
                   key={tag}
-                  className="px-2 py-1 sm:px-4 text-xs sm:text-sm text-foreground font-normal bg-primary/15 cursor-pointer"
+                  className="text-foreground bg-primary/15 cursor-pointer px-2 py-1 text-xs font-normal sm:px-4 sm:text-sm"
                   onClick={() => handleChange(tag)}
                 >
                   {tag}
@@ -91,11 +91,11 @@ export const TermsHero = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={cn("w-full sticky top-0 z-50 bg-background py-6", {
+          className={cn("bg-background sticky top-0 z-50 w-full py-6", {
             "py-4": isScrolled,
           })}
         >
-          <Wrapper className="max-w-[546px] mx-auto w-full">
+          <Wrapper className="mx-auto w-full max-w-[546px]">
             <FormField
               control={form.control}
               name="term"
@@ -107,10 +107,10 @@ export const TermsHero = () => {
                         "relative transition-all duration-300",
                         isScrolled
                           ? "h-14 md:h-12 lg:h-[54px]"
-                          : "h-14 md:h-16 lg:h-[76px]"
+                          : "h-14 md:h-16 lg:h-[76px]",
                       )}
                     >
-                      <FiSearch className="size-5 md:size-6 absolute top-1/2 left-5 text-[#8E8E8E] -translate-y-1/2" />
+                      <FiSearch className="absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#8E8E8E] md:size-6" />
                       <Input
                         {...field}
                         value={field.value}
@@ -119,8 +119,8 @@ export const TermsHero = () => {
                         id={termId}
                         placeholder="Search bitcoin terms"
                         className={cn(
-                          "h-full rounded-full md:text-lg md:pl-14 pr-26 flex-1 border-foreground placeholder:text-[#B4B4B4] shadow-none",
-                          isScrolled ? "md:pr-32 pl-8" : "pl-12 md:pr-36"
+                          "border-foreground !h-full flex-1 rounded-full pr-26 pl-12 shadow-none placeholder:text-[#B4B4B4] md:pl-14 md:text-lg",
+                          isScrolled ? "pr-32" : "md:pr-36",
                         )}
                       />
                       <Button
@@ -129,8 +129,8 @@ export const TermsHero = () => {
                         isLoading={form.formState.isSubmitting}
                         disabled={!form.formState.isValid}
                         className={cn(
-                          "absolute top-1/2 right-2 -translate-y-1/2 !h-[calc(100%-12px)] transition-all",
-                          isScrolled ? "right-1.5" : "!px-9"
+                          "absolute top-1/2 right-2 !h-[calc(100%-12px)] -translate-y-1/2 transition-all",
+                          isScrolled ? "right-1.5" : "md:!px-8",
                         )}
                       >
                         <span>Search</span>

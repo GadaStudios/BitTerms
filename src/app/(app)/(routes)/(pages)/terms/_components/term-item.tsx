@@ -2,11 +2,12 @@
 
 import React from "react";
 import Image from "next/image";
+import { Client } from "@gradio/client";
+import { PortableText } from "next-sanity";
 import { PiSpeakerHighDuotone } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
-import { PortableText } from "next-sanity";
 import { urlFor } from "@/lib/image";
 
 interface Props {
@@ -27,47 +28,76 @@ export const TermItem: React.FC<Props> = ({
     ? urlFor(term.illustration)?.url()
     : null;
 
-  const handlePlaySound = (text: string) => {
+  const handlePlaySound = async (text: string) => {
     if (typeof window === "undefined") return;
     setIsSpeaking(text);
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.onend = () => setIsSpeaking(null);
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(utterance);
+    if (term.audio || term.audio !== null) {
+      const audio = new Audio(term.audio);
+      audio.onended = () => setIsSpeaking(null);
+      await audio.play();
+    } else {
+      try {
+        const client = await Client.connect(
+          "NihalGazi/Text-To-Speech-Unlimited",
+        );
+        const result = await client.predict("/text_to_speech_app", {
+          prompt: text,
+          voice: "sage",
+          emotion: "happy",
+          use_random_seed: true,
+          specific_seed: 3,
+        });
+
+        const data = result?.data as Array<{ url: string }>;
+        const audioUrl = data?.[0]?.url;
+        if (audioUrl) {
+          const audio = new Audio(audioUrl);
+          audio.onended = () => setIsSpeaking(null);
+          await audio.play();
+          console.log(audioUrl);
+        } else {
+          console.error("No audio URL returned");
+          setIsSpeaking(null);
+        }
+      } catch (error) {
+        console.error(error);
+        setIsSpeaking(null);
+      }
+    }
   };
 
   return (
     <li
       key={term.name}
-      className="border-b first-of-type:border-t py-8 flex justify-between gap-3.5"
+      className="flex justify-between gap-3.5 border-b py-8 first-of-type:border-t last-of-type:border-b-0"
     >
-      <div className="flex flex-col max-w-[500px] flex-1 gap-6">
+      <div className="flex max-w-[500px] flex-1 flex-col gap-6">
         <div className="flex flex-col gap-4 md:gap-6">
           <div className="flex items-center gap-4">
-            <p className="text-lg md:text-xl lg:text-2xl font-medium">
+            <p className="text-lg font-medium md:text-xl lg:text-2xl">
               {term.name}
             </p>
             <Button
               size="icon"
               onClick={() => handlePlaySound(term.name)}
               disabled={isSpeaking === term.name}
-              variant={isSpeaking === term.name ? "default" : "outline2"}
-              className="size-9 lg:size-11"
+              variant={isSpeaking === term.name ? "outline" : "outline2"}
+              className="size-9"
             >
-              <PiSpeakerHighDuotone className="size-5 lg:size-6" />
+              <PiSpeakerHighDuotone className="size-5" />
             </Button>
           </div>
 
-          <div className="text-base md:text-lg lg:text-xl font-normal tracking-[-2%]">
-            <PortableText value={term.definition} />
+          <div className="text-base font-normal tracking-[-2%] md:text-lg lg:text-xl">
+            <PortableText value={term.definition ?? term.technicalDefinition} />
           </div>
 
           {!isOpen && (
             <p
               role="button"
               onClick={() => setActiveToggle(isOpen ? null : term.name)}
-              className="text-primary italic text-base font-medium cursor-pointer w-max"
+              className="text-primary w-max cursor-pointer text-base font-medium italic"
             >
               See technical definition
             </p>
@@ -75,7 +105,7 @@ export const TermItem: React.FC<Props> = ({
         </div>
 
         <AnimatePresence initial={false}>
-          {isOpen && (
+          {term.definition && isOpen && (
             <motion.div
               key="definition"
               initial={{
@@ -92,14 +122,14 @@ export const TermItem: React.FC<Props> = ({
                 },
               }}
               exit={{ height: 0, opacity: 0 }}
-              className="overflow-hidden flex flex-col gap-4 md:gap-6"
+              className="flex flex-col gap-4 overflow-hidden md:gap-6"
             >
               <div className="flex flex-col gap-2 md:gap-4">
-                <p className="text-base md:text-lg lg:text-xl font-medium tracking-[-2%] italic">
+                <p className="text-base font-medium tracking-[-2%] italic md:text-lg lg:text-xl">
                   Technical Definition
                 </p>
 
-                <div className="text-base md:text-lg lg:text-xl font-normal tracking-[-2%]">
+                <div className="text-base font-normal tracking-[-2%] md:text-lg lg:text-xl">
                   <PortableText value={term.technicalDefinition} />
                 </div>
               </div>
@@ -107,7 +137,7 @@ export const TermItem: React.FC<Props> = ({
               <p
                 role="button"
                 onClick={() => setActiveToggle(null)}
-                className="text-primary italic text-base font-medium cursor-pointer w-max"
+                className="text-primary w-max cursor-pointer text-base font-medium italic"
               >
                 See less
               </p>
@@ -126,7 +156,7 @@ export const TermItem: React.FC<Props> = ({
           stiffness: 300,
           damping: 15,
         }}
-        className="size-[92px] md:size-[160px] origin-top-right"
+        className="size-[92px] origin-top-right md:size-[160px]"
       >
         <Image
           src={illustrationUrl ?? "/404.svg"}
@@ -135,7 +165,7 @@ export const TermItem: React.FC<Props> = ({
           height={190}
           priority
           quality={100}
-          className="object-contain size-full"
+          className="size-full object-contain"
         />
       </motion.div>
     </li>

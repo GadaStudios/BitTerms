@@ -31,14 +31,14 @@ const socials = [
 
 export const Footer = () => {
   return (
-    <footer className="mt-24 md:mt-[152px] relative text-background bg-foreground overflow-x-clip">
-      <div className="bg-[url('/texture.svg')] bg-cover bg-repeat absolute size-full -top-16 left-0" />
-      <div className="bg-[url('/texture.svg')] bg-no-repeat bg-cover absolute size-full -top-16 -right-60" />
+    <footer className="text-background bg-foreground relative mt-24 overflow-x-clip md:mt-[152px]">
+      <div className="pointer-events-none absolute -top-16 left-0 size-full bg-[url('/texture.svg')]" />
+      <div className="pointer-events-none absolute -top-16 -right-60 size-full bg-[url('/texture.svg')]" />
 
-      <Wrapper className="relative pt-5 overflow-clip">
+      <Wrapper className="relative overflow-clip pt-5">
         <div className="flex flex-col gap-8">
-          <div className="flex items-center flex-wrap gap-6 justify-between">
-            <div className="flex items-center gap-3 sm:gap-2 flex-wrap">
+          <div className="flex flex-wrap items-center justify-between gap-6">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-2">
               <Link
                 href="/terms"
                 className={buttonVariants({
@@ -60,7 +60,7 @@ export const Footer = () => {
               </Link>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-2 flex-wrap">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-2">
               {socials.map((social) => (
                 <Link
                   href={social.href || "#"}
@@ -86,7 +86,7 @@ export const Footer = () => {
             height={310}
             priority
             quality={100}
-            className="object-contain select-none -mb-14 sm:-mb-24 md:-mb-32 lg:-mb-36"
+            className="-mb-14 object-contain select-none sm:-mb-24 md:-mb-32 lg:-mb-36"
           />
         </div>
       </Wrapper>

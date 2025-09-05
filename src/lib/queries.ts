@@ -11,6 +11,7 @@ export const queryApprovedTerms = () => {
         }
       },
       author,
+      audio
     } | order(name asc)`;
 
   return query;

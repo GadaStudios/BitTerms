@@ -6,7 +6,7 @@ import { Understand } from "./_components/understand";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 overflow-x-clip">
+    <div className="flex flex-1 flex-col overflow-x-clip">
       <HomeHero />
       <Intro />
       <Understand />

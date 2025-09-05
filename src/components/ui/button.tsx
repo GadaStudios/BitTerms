@@ -29,7 +29,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 function Button({
@@ -57,7 +57,7 @@ function Button({
     >
       {isLoading ? (
         <>
-          <FiLoader className="animate-spin size-4" />{" "}
+          <FiLoader className="size-4 animate-spin" />{" "}
           {loadingText && loadingText}
         </>
       ) : (

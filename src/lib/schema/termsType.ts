@@ -13,6 +13,11 @@ export const termsType = defineType({
       type: "string",
     }),
     defineField({
+      name: "audio",
+      title: "Term Audio",
+      type: "url",
+    }),
+    defineField({
       name: "author",
       title: "Full Name",
       type: "string",

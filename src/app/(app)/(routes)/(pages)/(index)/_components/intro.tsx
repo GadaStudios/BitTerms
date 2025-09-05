@@ -8,9 +8,9 @@ import { buttonVariants } from "@/components/ui/button";
 
 export const Intro = () => {
   return (
-    <section className="pt-24 md:pt-[152px]">
+    <section className="pt-24 md:pt-[152px] lg:pt-48">
       <Wrapper>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
+        <div className="grid grid-cols-1 gap-8 md:gap-16 lg:grid-cols-2">
           <div className="flex flex-col gap-4">
             {introData.map((intro, index) => (
               <div
@@ -20,10 +20,10 @@ export const Intro = () => {
                   borderColor: intro.borderColor,
                   transform: `rotate(${Number(intro.rotate) * -1}deg)`,
                 }}
-                className="border flex items-center gap-2 max-w-[472px] lg:max-w-max mx-auto lg:mx-0 rounded-3xl md:rounded-4xl px-6 md:px-8 py-6 nth-[2]:z-10 nth-[2]:-mb-6 nth-[2]:-mt-1"
+                className="mx-auto flex max-w-[472px] items-center gap-2 rounded-3xl border px-6 py-6 nth-[2]:z-10 nth-[2]:-mt-1 nth-[2]:-mb-6 md:rounded-4xl md:px-8 lg:mx-0 lg:max-w-max"
               >
-                <div className="flex flex-col flex-1 gap-3 md:gap-4">
-                  <p className="text-base md:text-[22px] font-semibold">
+                <div className="flex flex-1 flex-col gap-3 md:gap-4">
+                  <p className="text-base font-semibold md:text-[22px]">
                     {intro.title}
                   </p>
                   <p className="text-xs sm:text-[13px] md:text-sm lg:text-base">
@@ -38,16 +38,16 @@ export const Intro = () => {
                   height={113}
                   priority
                   quality={100}
-                  className="object-cover size-[85px] md:size-[113px]"
+                  className="size-[85px] object-cover md:size-[113px]"
                 />
               </div>
             ))}
           </div>
 
-          <div className="flex text-center justify-center md:text-start mx-auto lg:mx-0 flex-col gap-8 max-w-2xl lg:max-w-[472px]">
-            <h3 className="font-normal leading-none">Welcome to BiT Terms</h3>
+          <div className="mx-auto flex max-w-2xl flex-col justify-center gap-4 text-center md:gap-8 md:text-start lg:mx-0 lg:max-w-[472px]">
+            <h3 className="leading-none font-normal">Welcome to BiT Terms</h3>
             <div className="flex flex-col gap-4">
-              <p className="text-base md:text-lg lg:text-xl tracking-tight">
+              <p className="text-base tracking-tight md:text-lg lg:text-xl">
                 Bitcoin can be a lot of “hash this”, “node that”. It’s like it
                 has its own language. It’s almost normal to feel lost or even a
                 little stressed trying to keep up. BitTerms is making bitcoin
@@ -61,7 +61,7 @@ export const Intro = () => {
               href="/terms"
               className={buttonVariants({
                 size: "lg",
-                className: "w-max mx-auto md:mx-0",
+                className: "mx-auto w-max md:mx-0",
               })}
             >
               <span>See all terms</span>
