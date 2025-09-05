@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Accessibility",
+    "definition": "Accessibility means making sure everyone, including people with disabilities, can use Bitcoin apps.",
+    "technicalDefinition": "Accessibility in Bitcoin apps involves implementing features that accommodate users with various disabilities, such as screen readers for the visually impaired, keyboard navigation for those with motor impairments, and ensuring color contrast for users with color blindness. This ensures that all users can effectively interact with Bitcoin applications.",
+    "illustrator": "intro-node.svg"
+  },
+  {
+    "name": "Address",
+    "definition": "An address is like a digital location where you can send and receive Bitcoin.",
+    "technicalDefinition": "A Bitcoin address is a unique alphanumeric string derived from a public key, used to receive Bitcoin transactions. It typically starts with '1', '3', or 'bc1' and is generated through cryptographic algorithms to ensure security and privacy.",
+    "illustrator": "hero-black.svg"
+  },
+  {
+    "name": "Airdrop",
+    "definition": "An airdrop is when free tokens are given to people, usually to promote a new cryptocurrency.",
+    "technicalDefinition": "An airdrop in the cryptocurrency context refers to the distribution of free tokens or coins to a large number of wallet addresses, often as part of a marketing strategy or to reward early adopters. Airdrops can be unconditional or require users to perform specific actions, such as holding a certain token or signing up for a service.",
+    "illustrator": "intro-node.svg"
+  },
+  {
+    "name": "All-Time High (ATH)",
+    "definition": "All-Time High (ATH) is the highest price that Bitcoin has ever reached.",
+    "technicalDefinition": "All-Time High (ATH) refers to the highest historical price point that Bitcoin has achieved in its trading history. It is a significant milestone for investors and traders, often indicating strong market sentiment and potential future growth.",
+    "illustrator": "intro-node.svg"
+  },
+  {
+    "name": "Bech32 Address",
+    "definition": "A Bech32 address is a type of Bitcoin address that starts with 'bc1' and is designed to be more efficient and user-friendly.",
+    "technicalDefinition": "A Bech32 address is a Segregated Witness (SegWit) address format for Bitcoin that starts with 'bc1'. It uses a more efficient encoding scheme that reduces the size of the address and improves error detection. Bech32 addresses support lower transaction fees and are compatible with SegWit transactions.",
+    "illustrator": "hero-black.svg"
+  },
+  {
+    "name": "Block",
+    "definition": "A block is a collection of Bitcoin transactions that are grouped together and added to the blockchain.",
+    "technicalDefinition": "A block in the Bitcoin network is a data structure that contains a list of validated transactions, a reference to the previous block (the parent block), a timestamp, and a nonce used for mining. Blocks are created through a process called mining, where miners compete to solve complex mathematical puzzles to add the block to the blockchain.",
+    "illustrator": "intro-node.svg"
+  },
+  {
+    "name": "Blockchain",
+    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
+    "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
+    "illustrator": "intro-node.svg"
+  },
+  {
+    "name": "54 B Square",
+    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
+    "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
+    "illustrator": "intro-node.svg"
+  },
+  {
+    "name": "?P2P Square",
+    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
+    "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
+    "illustrator": "intro-node.svg"
+  }
+]

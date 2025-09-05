@@ -6,9 +6,7 @@ import { HeroIllustration } from "./hero-illustration";
 
 export const HomeHero = () => {
   return (
-    <section className="text-background relative">
-      <div className="bg-[url('/texture.svg')] bg-cover absolute size-full -top-16 left-0" />
-
+    <section className="text-background relative bg-foreground">
       <div className="py-36 sm:py-44 md:py-[187px] relative">
         <Wrapper className="flex flex-col text-center gap-8">
           <div className="flex flex-col gap-4">

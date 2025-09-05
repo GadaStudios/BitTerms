@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import NextJSTopLoader from "nextjs-toploader";
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { naughtyMonster } from "@/fonts";
 import { siteConfig } from "@/config/site.config";
+import { Toaster } from "@/components/ui/sonner";
+import { Header } from "@/components/header";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,8 +15,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.title,
-  description: siteConfig.description,
+  title: {
+    template: `%s • ${siteConfig.default.title}`,
+    default: siteConfig.default.title,
+  },
+  description: siteConfig.default.description,
+  openGraph: {
+    title: siteConfig.default.title,
+    description: siteConfig.default.description,
+    url: siteConfig.url,
+    type: "website",
+    siteName: siteConfig.default.title,
+  },
 };
 
 export default function RootLayout({
@@ -30,7 +43,14 @@ export default function RootLayout({
           naughtyMonster.variable
         )}
       >
-        {children}
+        <Toaster />
+        <NextJSTopLoader
+          showSpinner={false}
+          showForHashAnchor
+          color="var(--primary)"
+        />
+        <Header />
+        <main className="flex-1">{children}</main>
       </body>
     </html>
   );

@@ -12,7 +12,11 @@ export const Header = () => {
   const pathname = usePathname();
 
   return (
-    <header className="fixed top-6 left-0 w-full z-50">
+    <header
+      className={cn("fixed top-6 left-0 w-full z-50", {
+        relative: pathname === "/terms",
+      })}
+    >
       <Wrapper>
         <nav className="w-full h-14 max-w-[369px] mx-auto sm:h-[60px] bg-black/70 px-7 py-2 rounded-full backdrop-blur-xs flex justify-center items-center">
           <div className="flex items-center justify-between h-5">
