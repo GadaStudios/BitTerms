@@ -39,13 +39,13 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "flex flex-col flex-1 antialiased min-h-dvh",
+          "flex min-h-dvh flex-1 flex-col antialiased",
           inter.variable,
-          naughtyMonster.variable
+          naughtyMonster.variable,
         )}
       >
         <SanityLive />
-        <Toaster />
+        <Toaster richColors />
         <NextJSTopLoader
           showSpinner={false}
           showForHashAnchor

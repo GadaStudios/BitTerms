@@ -29,6 +29,7 @@ import { generateAudio } from "@/lib/utils";
 
 export const SuggestForm = () => {
   const [files, setFiles] = React.useState<File[] | null>(null);
+
   const dropZoneConfig = {
     maxFiles: 1,
     maxSize: 1024 * 1024 * 2,
@@ -40,40 +41,66 @@ export const SuggestForm = () => {
     resolver: zodResolver(suggestFormSchema),
     defaultValues: {
       author: "Holiday",
-      name: "Multisig",
-      definition: "Just a simplified definition",
-      technicalDefinition: "Multisig testing definition",
+      name: "Accessibility",
+      definition:
+        "Accessibility means making sure everyone, including people with disabilities, can use Bitcoin apps.",
+      technicalDefinition:
+        "Accessibility in Bitcoin apps involves implementing features that accommodate users with various disabilities, such as screen readers for the visually impaired, keyboard navigation for those with motor impairments, and ensuring color contrast for users with color blindness. This ensures that all users can effectively interact with Bitcoin applications.",
       illustration: undefined,
       audio: "",
     },
   });
 
-  // background generation onBlur
-  const handleBlurName = async (value: string) => {
+  async function handleBlurName(value: string) {
     if (!value) return;
     const audioUrl = await generateAudio(value);
-    console.log(audioUrl);
     if (audioUrl) {
       form.setValue("audio", audioUrl);
+      console.log("onBlur ✅");
     }
-  };
+  }
 
   async function onSubmit(values: SuggestFormValues) {
-    let finalAudioUrl = values.audio;
+    try {
+      let finalAudioUrl = values.audio;
 
-    // Retry audio generation if missing
-    if (!finalAudioUrl && values.name) {
-      finalAudioUrl = await generateAudio(values.name);
-      form.setValue("audio", finalAudioUrl);
+      if (!finalAudioUrl && values.name) {
+        const audioUrl = await generateAudio(values.name);
+        if (audioUrl) {
+          finalAudioUrl = audioUrl;
+          console.log("onSubmit ✅");
+        }
+      }
+
+      // Build FormData instead of JSON
+      const formData = new FormData();
+      formData.append("name", values.name);
+      formData.append("definition", values.definition || "");
+      formData.append("technicalDefinition", values.technicalDefinition);
+      formData.append("author", values.author || "");
+      formData.append("audio", finalAudioUrl || "");
+
+      if (files?.length) {
+        formData.append("illustration", files[0]);
+      }
+
+      const response = await fetch("/api/suggest", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success("Term submitted successfully!");
+        form.reset();
+      } else {
+        toast.error("Submission failed: " + result.error);
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast.error("An error occurred while submitting");
     }
-
-    if (!finalAudioUrl) {
-      console.warn("Audio still missing, proceeding without it:", values);
-    }
-
-    // Now you can send `values` (with audio) to Sanity or API
-    toast.success("Submitted successfully!");
-    console.log("Final submit payload:", { ...values, audio: finalAudioUrl });
   }
 
   return (
@@ -170,7 +197,7 @@ export const SuggestForm = () => {
             <FormField
               control={form.control}
               name="illustration"
-              render={() => (
+              render={({}) => (
                 <FormItem>
                   <FormLabel>
                     <span>Upload Illustration</span>
@@ -230,8 +257,8 @@ export const SuggestForm = () => {
           </div>
 
           <Button
-            className="ml-auto"
             type="submit"
+            className="ml-auto"
             isLoading={form.formState.isSubmitting}
             loadingText="Submitting..."
           >

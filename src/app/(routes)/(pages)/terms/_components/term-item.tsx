@@ -2,8 +2,6 @@
 
 import React from "react";
 import Image from "next/image";
-import { Client } from "@gradio/client";
-import { PortableText } from "next-sanity";
 import { PiSpeakerHighDuotone } from "react-icons/pi";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -32,38 +30,12 @@ export const TermItem: React.FC<Props> = ({
     if (typeof window === "undefined") return;
     setIsSpeaking(text);
 
-    if (term.audio || term.audio !== null) {
+    try {
       const audio = new Audio(term.audio);
       audio.onended = () => setIsSpeaking(null);
       await audio.play();
-    } else {
-      try {
-        const client = await Client.connect(
-          "NihalGazi/Text-To-Speech-Unlimited",
-        );
-        const result = await client.predict("/text_to_speech_app", {
-          prompt: text,
-          voice: "sage",
-          emotion: "happy",
-          use_random_seed: true,
-          specific_seed: 3,
-        });
-
-        const data = result?.data as Array<{ url: string }>;
-        const audioUrl = data?.[0]?.url;
-        if (audioUrl) {
-          const audio = new Audio(audioUrl);
-          audio.onended = () => setIsSpeaking(null);
-          await audio.play();
-          console.log(audioUrl);
-        } else {
-          console.error("No audio URL returned");
-          setIsSpeaking(null);
-        }
-      } catch (error) {
-        console.error(error);
-        setIsSpeaking(null);
-      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -81,7 +53,7 @@ export const TermItem: React.FC<Props> = ({
             <Button
               size="icon"
               onClick={() => handlePlaySound(term.name)}
-              disabled={isSpeaking === term.name}
+              disabled={isSpeaking === term.name || !term.audio}
               variant={isSpeaking === term.name ? "outline" : "outline2"}
               className="size-9"
             >
@@ -90,7 +62,7 @@ export const TermItem: React.FC<Props> = ({
           </div>
 
           <div className="text-base font-normal tracking-[-2%] md:text-lg lg:text-xl">
-            <PortableText value={term.definition ?? term.technicalDefinition} />
+            {term.definition ?? term.technicalDefinition}
           </div>
 
           {!isOpen && (
@@ -130,7 +102,7 @@ export const TermItem: React.FC<Props> = ({
                 </p>
 
                 <div className="text-base font-normal tracking-[-2%] md:text-lg lg:text-xl">
-                  <PortableText value={term.technicalDefinition} />
+                  {term.technicalDefinition}
                 </div>
               </div>
 

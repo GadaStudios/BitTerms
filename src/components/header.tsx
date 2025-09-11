@@ -11,10 +11,12 @@ import { cn, isActivePath } from "@/lib/utils";
 export const Header = () => {
   const pathname = usePathname();
 
+  if (isActivePath("/studio", pathname)) return null;
+
   return (
     <header
       className={cn("fixed top-6 left-0 z-50 w-full", {
-        relative: pathname === "/terms",
+        relative: isActivePath("/terms", pathname),
       })}
     >
       <Wrapper>

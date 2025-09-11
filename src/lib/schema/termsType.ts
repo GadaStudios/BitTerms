@@ -31,27 +31,54 @@ export const termsType = defineType({
     defineField({
       name: "definition",
       title: "Simplified Definition",
-      type: "blockContent",
+      type: "text",
     }),
     defineField({
       name: "technicalDefinition",
       title: "Technical Definition",
-      type: "blockContent",
+      type: "text",
     }),
     defineField({
       name: "illustration",
       title: "Illustration",
       type: "image",
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: "alt",
-          type: "string",
-          title: "Alternative text",
-        }),
-      ],
     }),
   ],
+  orderings: [
+    {
+      title: "Approved, Newest First",
+      name: "approvedDesc",
+      by: [
+        { field: "approved", direction: "desc" },
+        { field: "_createdAt", direction: "desc" },
+      ],
+    },
+    {
+      title: "Pending Approval",
+      name: "pendingFirst",
+      by: [
+        { field: "approved", direction: "asc" },
+        { field: "_createdAt", direction: "desc" },
+      ],
+    },
+  ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "author",
+      approved: "approved",
+      audio: "audio",
+      media: "illustration",
+    },
+    prepare({ title, subtitle, approved, audio, media }) {
+      const status = approved ? "Approved" : "Pending";
+      const audioStatus = audio ? "Has Audio" : "No Audio";
+
+      return {
+        title,
+        subtitle: `${subtitle || "No author"} • ${status} • ${audioStatus}`,
+        media,
+      };
+    },
+  },
 });
