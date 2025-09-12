@@ -39,24 +39,11 @@ export const FilterComp = () => {
     defaultValues: { term: "" },
   });
 
-  async function recordSearch(term: string) {
-    try {
-      await fetch("/api/search", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ term }),
-      });
-    } catch (e) {
-      console.error("Failed to record search", e);
-    }
-  }
-
   async function onSubmit({ term }: SearchFilterProps) {
     toast.loading(`Searching for "${term.trim() || "all terms"}"...`, {
       id: "search",
     });
     try {
-      await recordSearch(term);
       toast.success("Search completed!", { id: "search" });
     } catch (error) {
       console.log("Search error", error);
@@ -142,7 +129,8 @@ export const FilterComp = () => {
                       <Input
                         {...field}
                         value={field.value}
-                        disabled={form.formState.isSubmitting}
+                        // disabled={form.formState.isSubmitting}
+                        disabled
                         id={termId}
                         placeholder="Search bitcoin terms"
                         className={cn(
@@ -154,7 +142,8 @@ export const FilterComp = () => {
                         type="submit"
                         loadingText="Searching..."
                         isLoading={form.formState.isSubmitting}
-                        disabled={!form.formState.isValid}
+                        // disabled={!form.formState.isValid}
+                        disabled
                         className={cn(
                           "absolute top-1/2 right-2 !h-[calc(100%-12px)] -translate-y-1/2 transition-all",
                           isScrolled ? "right-1.5" : "md:!px-8",

@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { useGlobal } from "@/app/provider";
@@ -14,23 +15,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 export const TermsComp = () => {
   const { terms } = useGlobal();
 
+  const searchParams = useSearchParams();
+  const activeFilter = searchParams.get("letter");
+  const activeTerm = searchParams.get("term") ?? "";
+
   const [speakingId, setSpeakingId] = React.useState<string | null>(null);
   const [activeToggle, setActiveToggle] = React.useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
-  const [activeTerm, setActiveTerm] = React.useState<string>("");
 
   const termsRef = React.useRef<HTMLDivElement | null>(null);
 
-  // sync params from current URL
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      setActiveFilter(params.get("letter"));
-      setActiveTerm(params.get("term") ?? "");
-    }
-  }, []);
-
-  // scroll into view when params change
   React.useEffect(() => {
     if ((activeFilter || activeTerm) && termsRef.current) {
       const headerOffset = 280;
