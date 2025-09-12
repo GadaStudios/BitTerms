@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     type: "website",
     siteName: siteConfig.default.title,
   },
+  icons: {
+    icon: "/hero.svg",
+  },
 };
 
 export default async function RootLayout({
@@ -41,7 +44,7 @@ export default async function RootLayout({
         className={cn(
           "flex flex-1 flex-col antialiased",
           inter.variable,
-          naughtyMonster.variable
+          naughtyMonster.variable,
         )}
       >
         <GlobalProvider>
