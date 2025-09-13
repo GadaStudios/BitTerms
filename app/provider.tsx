@@ -5,14 +5,14 @@ import * as React from "react";
 import NextJSTopLoader from "nextjs-toploader";
 import { Toaster } from "@/components/ui/sonner";
 import { ScrollToTop } from "@/components/shared/scroll";
-import { client } from "@/sanity/lib/client";
-import { TERM_QUERY } from "@/sanity/lib/queries";
 import { TERM_QUERYResult } from "@/sanity/types";
+import { PAGE_SIZE } from "@/lib/env";
 
 type TermProps = {
   data: TERM_QUERYResult | [];
   isFetching: boolean;
   error: string | null;
+  nextOffset: number | null;
 };
 
 type GlobalContextType = {
@@ -24,28 +24,34 @@ const GlobalContext = React.createContext<GlobalContextType | undefined>(
   undefined,
 );
 
-const options = { next: { revalidate: 10 } };
-
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
   const [terms, setTerms] = React.useState<{
     data: TERM_QUERYResult | [];
     isFetching: boolean;
     error: string | null;
+    nextOffset: number | null;
   }>({
     data: [],
     isFetching: true,
     error: null,
+    nextOffset: 0,
   });
 
   const handleFetchTerms = async () => {
     setTerms((prev) => ({ ...prev, isFetching: true }));
     try {
-      const result: TERM_QUERYResult = await client.fetch(
-        TERM_QUERY,
-        {},
-        options,
-      );
-      setTerms((prev) => ({ ...prev, isFetching: false, data: result }));
+      const res = await fetch(`/api/terms?offset=0&limit=${PAGE_SIZE}`, {
+        cache: "no-store",
+      });
+      if (!res.ok) throw new Error(`Failed to load terms: ${res.status}`);
+      const data: { items: TERM_QUERYResult; nextOffset: number | null } =
+        await res.json();
+      setTerms((prev) => ({
+        ...prev,
+        isFetching: false,
+        data: data.items,
+        nextOffset: data.nextOffset,
+      }));
     } catch (error) {
       const errMsg =
         error instanceof Error ? error.message : "Problem fetching terms";
