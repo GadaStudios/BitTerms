@@ -63,8 +63,4 @@ export const structure: StructureResolver = (S) =>
                 ),
             ]),
         ),
-      // S.listItem()
-      //   .title("Search Term")
-      //   .icon(MdOutlineBrandingWatermark)
-      //   .child(S.documentTypeList("searchTerm").title("Search Term")),
     ]);

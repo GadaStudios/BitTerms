@@ -1,56 +1,176 @@
 [
   {
     "name": "Accessibility",
-    "definition": "Accessibility means making sure everyone, including people with disabilities, can use Bitcoin apps.",
     "technicalDefinition": "Accessibility in Bitcoin apps involves implementing features that accommodate users with various disabilities, such as screen readers for the visually impaired, keyboard navigation for those with motor impairments, and ensuring color contrast for users with color blindness. This ensures that all users can effectively interact with Bitcoin applications.",
-    "illustrator": "intro-node.svg"
+    "definition": "Accessibility means making sure everyone, including people with disabilities, can use Bitcoin apps.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "Address",
-    "definition": "An address is like a digital location where you can send and receive Bitcoin.",
     "technicalDefinition": "A Bitcoin address is a unique alphanumeric string derived from a public key, used to receive Bitcoin transactions. It typically starts with '1', '3', or 'bc1' and is generated through cryptographic algorithms to ensure security and privacy.",
-    "illustrator": "hero-black.svg"
+    "definition": "An address is like a digital location where you can send and receive Bitcoin.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "Airdrop",
-    "definition": "An airdrop is when free tokens are given to people, usually to promote a new cryptocurrency.",
     "technicalDefinition": "An airdrop in the cryptocurrency context refers to the distribution of free tokens or coins to a large number of wallet addresses, often as part of a marketing strategy or to reward early adopters. Airdrops can be unconditional or require users to perform specific actions, such as holding a certain token or signing up for a service.",
-    "illustrator": "intro-node.svg"
+    "definition": "An airdrop is when free tokens are given to people, usually to promote a new cryptocurrency.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "All-Time High (ATH)",
-    "definition": "All-Time High (ATH) is the highest price that Bitcoin has ever reached.",
     "technicalDefinition": "All-Time High (ATH) refers to the highest historical price point that Bitcoin has achieved in its trading history. It is a significant milestone for investors and traders, often indicating strong market sentiment and potential future growth.",
-    "illustrator": "intro-node.svg"
+    "definition": "All-Time High (ATH) is the highest price that Bitcoin has ever reached.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "Bech32 Address",
-    "definition": "A Bech32 address is a type of Bitcoin address that starts with 'bc1' and is designed to be more efficient and user-friendly.",
     "technicalDefinition": "A Bech32 address is a Segregated Witness (SegWit) address format for Bitcoin that starts with 'bc1'. It uses a more efficient encoding scheme that reduces the size of the address and improves error detection. Bech32 addresses support lower transaction fees and are compatible with SegWit transactions.",
-    "illustrator": "hero-black.svg"
+    "definition": "A Bech32 address is a type of Bitcoin address that starts with 'bc1' and is designed to be more efficient and user-friendly.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "Block",
-    "definition": "A block is a collection of Bitcoin transactions that are grouped together and added to the blockchain.",
     "technicalDefinition": "A block in the Bitcoin network is a data structure that contains a list of validated transactions, a reference to the previous block (the parent block), a timestamp, and a nonce used for mining. Blocks are created through a process called mining, where miners compete to solve complex mathematical puzzles to add the block to the blockchain.",
-    "illustrator": "intro-node.svg"
+    "definition": "A block is a collection of Bitcoin transactions that are grouped together and added to the blockchain.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "Blockchain",
-    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
     "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
-    "illustrator": "intro-node.svg"
+    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "54 B Square",
-    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
     "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
-    "illustrator": "intro-node.svg"
+    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
     "name": "?P2P Square",
-    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
     "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
-    "illustrator": "intro-node.svg"
+    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Confirmation",
+    "technicalDefinition": "A confirmation occurs when a Bitcoin transaction is included in a block and that block is added to the blockchain. Each additional block that builds on top of it increases the number of confirmations, making the transaction more secure and irreversible.",
+    "definition": "A confirmation means your Bitcoin transaction has been added to the blockchain and is secure.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Consensus",
+    "technicalDefinition": "Consensus in the Bitcoin network is the process by which nodes agree on the validity of transactions and the current state of the blockchain. It is achieved through the Proof-of-Work mechanism, ensuring that all participants trust the same version of the ledger.",
+    "definition": "Consensus is how all Bitcoin computers agree on which transactions are valid.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Cryptography",
+    "technicalDefinition": "Cryptography in Bitcoin secures transactions and controls the creation of new coins. It uses public key cryptography, where users have a public key for receiving funds and a private key for signing and spending them.",
+    "definition": "Cryptography is the math that keeps Bitcoin safe and private.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Decentralization",
+    "technicalDefinition": "Decentralization refers to the distribution of control and decision-making across a network rather than being managed by a central authority. In Bitcoin, decentralization ensures that no single entity controls the blockchain or the issuance of new coins.",
+    "definition": "Decentralization means no single person or company controls Bitcoin.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Difficulty",
+    "technicalDefinition": "Mining difficulty is a measure of how hard it is to find a valid block hash in Bitcoin. It adjusts approximately every two weeks (2016 blocks) to ensure that blocks are produced every 10 minutes on average, regardless of the total network mining power.",
+    "definition": "Difficulty shows how hard it is to mine new Bitcoin blocks.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Double Spending",
+    "technicalDefinition": "Double spending refers to the risk that a digital currency can be spent more than once. Bitcoin prevents double spending through its decentralized ledger and consensus mechanism, making it nearly impossible to alter confirmed transactions.",
+    "definition": "Double spending means trying to use the same Bitcoin twice. The blockchain prevents this.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Fee",
+    "technicalDefinition": "A Bitcoin transaction fee is a small amount of Bitcoin paid to miners as an incentive for including a transaction in a block. Higher fees can result in faster transaction confirmations during periods of network congestion.",
+    "definition": "A fee is the extra Bitcoin you pay so miners process your transaction faster.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Fork",
+    "technicalDefinition": "A fork occurs when the Bitcoin blockchain diverges into two separate chains, either temporarily or permanently. Forks can be soft (backward-compatible) or hard (non-compatible), often resulting from changes to the protocol.",
+    "definition": "A fork is when the Bitcoin blockchain splits into two versions.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Genesis Block",
+    "technicalDefinition": "The Genesis Block, also known as Block 0, is the first block ever mined on the Bitcoin blockchain by its creator, Satoshi Nakamoto, on January 3, 2009. It serves as the foundation of the entire network.",
+    "definition": "The Genesis Block is the very first block of Bitcoin, created in 2009.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Halving",
+    "technicalDefinition": "Bitcoin halving is a programmed event that occurs approximately every 210,000 blocks (about every four years). It reduces the block reward given to miners by half, slowing the creation of new bitcoins and enforcing scarcity.",
+    "definition": "Halving is when the reward for mining Bitcoin is cut in half every four years.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Hash",
+    "technicalDefinition": "A hash is the output of a cryptographic function that converts input data into a fixed-length string. In Bitcoin, hashes are used to secure transactions and blocks, ensuring data integrity and preventing tampering.",
+    "definition": "A hash is a unique code that represents Bitcoin data securely.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Hot Wallet",
+    "technicalDefinition": "A hot wallet is a Bitcoin wallet connected to the internet, allowing quick and convenient access to funds. Examples include mobile apps and web wallets. They are more vulnerable to hacks than offline storage.",
+    "definition": "A hot wallet is a Bitcoin wallet connected to the internet, making it easier but less secure.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Mining",
+    "technicalDefinition": "Mining is the process of validating Bitcoin transactions and adding them to the blockchain by solving complex cryptographic puzzles. Miners are rewarded with newly minted bitcoins and transaction fees.",
+    "definition": "Mining is how new Bitcoins are created and transactions get confirmed.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Mnemonic Phrase",
+    "technicalDefinition": "A mnemonic phrase, or seed phrase, is a series of words generated by a Bitcoin wallet that allows users to recover their private keys and access funds. It must be kept secure and private.",
+    "definition": "A mnemonic phrase is a set of words that lets you back up and restore your Bitcoin wallet.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Node",
+    "technicalDefinition": "A node is a computer that participates in the Bitcoin network by storing a copy of the blockchain and relaying transactions. Full nodes verify transactions and blocks independently, maintaining decentralization and security.",
+    "definition": "A node is a computer that helps run the Bitcoin network.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Nonce",
+    "technicalDefinition": "A nonce is a random value used in Bitcoin mining. Miners repeatedly change the nonce until they find a hash that meets the required difficulty target, allowing them to add a new block to the blockchain.",
+    "definition": "A nonce is a random number miners use to solve Bitcoin puzzles.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Peer-to-Peer (P2P)",
+    "technicalDefinition": "Peer-to-Peer (P2P) refers to the decentralized communication model where participants in the Bitcoin network interact directly without intermediaries. This ensures censorship resistance and global accessibility.",
+    "definition": "Peer-to-peer means Bitcoin users connect directly without a middleman.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Private Key",
+    "technicalDefinition": "A private key is a secret cryptographic code that allows the owner to spend bitcoins from a corresponding public address. Loss of the private key means permanent loss of access to the associated funds.",
+    "definition": "A private key is your secret password to spend Bitcoin.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Proof of Work (PoW)",
+    "technicalDefinition": "Proof of Work is the consensus algorithm used in Bitcoin, requiring miners to solve computational puzzles to validate transactions and add blocks. It ensures network security by making attacks costly and resource-intensive.",
+    "definition": "Proof of Work is the system miners use to keep Bitcoin secure by solving puzzles.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Public Key",
+    "technicalDefinition": "A public key is derived from a private key and is used to create Bitcoin addresses. While the public key can be shared freely, it must be paired with the corresponding private key to spend funds.",
+    "definition": "A public key is like your Bitcoin address that others use to send you money.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   }
 ]

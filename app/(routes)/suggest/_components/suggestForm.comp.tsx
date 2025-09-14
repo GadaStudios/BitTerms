@@ -107,7 +107,7 @@ export const SuggestFormComp = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto mt-16 flex w-full max-w-[600px] flex-col gap-6 md:mt-24"
+          className="mx-auto mt-16 flex w-full max-w-[600px] flex-col gap-6 md:mt-20"
         >
           <div className="grid grid-cols-1 gap-4">
             <FormField

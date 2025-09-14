@@ -34,6 +34,20 @@ export async function POST(req: Request) {
       });
     }
 
+    // Additionally, increment searchPopularity on the matching term document
+    const termDoc = await client.fetch(
+      `*[_type == "term" && lower(name) == $term][0]{ _id }`,
+      { term: normalized },
+    );
+
+    if (termDoc?._id) {
+      await client
+        .patch(termDoc._id)
+        .setIfMissing({ searchPopularity: 0 })
+        .inc({ searchPopularity: 1 })
+        .commit();
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error(error);

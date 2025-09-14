@@ -4,8 +4,9 @@ import React from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { FiSearch } from "react-icons/fi";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { IoClose } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import { cn } from "@/lib/utils";
 import { useGlobal } from "@/app/provider";
@@ -18,35 +19,63 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Skeleton } from "@/components/ui/skeleton";
 import { abcFilters } from "@/lib/constants";
 
+type TopTerm = { _id: string; name: string; searchPopularity: number };
+
 export const FilterComp = () => {
   const { terms } = useGlobal();
 
   const termId = React.useId();
   const router = useRouter();
+  const [loading, setLoading] = React.useState<boolean>(true);
+  const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
+  const [items, setItems] = React.useState<TopTerm[] | null>(null);
   const [activeFilter, setActiveFilter] = React.useState<string | null>(null);
-  const [isScrolled, setIsScrolled] = React.useState(false);
-
-  // initialize from URL
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      setActiveFilter(params.get("letter"));
-    }
-  }, []);
 
   const form = useForm<SearchFilterProps>({
     resolver: zodResolver(searchFilterSchema),
     defaultValues: { term: "" },
   });
 
+  // initialize from URL
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setActiveFilter(params.get("letter"));
+      const t = params.get("term");
+      if (t) form.setValue("term", t);
+    }
+  }, [form]);
+
   async function onSubmit({ term }: SearchFilterProps) {
-    toast.loading(`Searching for "${term.trim() || "all terms"}"...`, {
+    const value = term.trim();
+    toast.loading(`Searching for "${value || "all terms"}"...`, {
       id: "search",
     });
     try {
+      if (value) {
+        // Record the search and increment popularity on the matching term
+        const res = await fetch("/api/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ term: value }),
+        });
+        if (!res.ok) {
+          throw new Error(`Search record failed: ${res.status}`);
+        }
+
+        // Update URL params to reflect the active search term
+        const params = new URLSearchParams(
+          typeof window !== "undefined" ? window.location.search : "",
+        );
+        params.set("term", value);
+        params.delete("letter");
+        setActiveFilter(null);
+        router.push(`/terms?${params.toString()}`, { scroll: false });
+      }
       toast.success("Search completed!", { id: "search" });
     } catch (error) {
       console.log("Search error", error);
+      toast.error("Search failed.", { id: "search" });
     }
   }
 
@@ -75,31 +104,54 @@ export const FilterComp = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Fetch top searched
+  React.useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/terms/top?limit=3`, {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error(`Failed: ${res.status}`);
+        const data: { items: TopTerm[] } = await res.json();
+        if (!cancelled) setItems(data.items || []);
+      } catch (e) {
+        console.error(e);
+        if (!cancelled) setItems([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
-    <React.Fragment>
+    <>
       <Wrapper className="mt-7 flex flex-col items-center justify-center gap-2 sm:flex-row sm:flex-wrap md:mt-[56px] md:gap-3">
-        <p className="text-sm font-normal sm:text-base">Top Searched</p>
-        <div className="flex items-center gap-1">
-          {terms.isFetching
-            ? Array.from({ length: 3 }).map((_, index) => (
-                <Skeleton
-                  key={index}
-                  className="h-8 w-[130px] first-of-type:w-[100px] last-of-type:w-[80px]"
-                />
-              ))
-            : terms.data.slice(0, 3).map((tag) => (
-                <Badge
-                  key={tag._id}
-                  onClick={() => {
-                    form.setValue("term", tag.name || "");
-                    onSubmit({ term: tag.name || "" });
-                  }}
-                  className="text-foreground bg-primary/15 cursor-pointer px-2 py-1 text-xs font-normal sm:px-4 sm:text-sm"
-                >
-                  {tag.name}
-                </Badge>
-              ))}
-        </div>
+        {(terms.isFetching || loading || (items && items?.length > 0)) && (
+          <React.Fragment>
+            <p className="text-sm font-normal sm:text-base">Top Searched</p>
+            <div className="flex items-center gap-1">
+              {terms.isFetching || loading
+                ? Array.from({ length: 3 }).map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      className="h-8 w-[130px] first-of-type:w-[100px] last-of-type:w-[80px]"
+                    />
+                  ))
+                : items?.map((tag) => (
+                    <Badge
+                      key={tag._id}
+                      className="text-foreground bg-primary/15 px-2 py-1 text-xs font-normal sm:px-4 sm:text-sm"
+                    >
+                      {tag.name}
+                    </Badge>
+                  ))}
+            </div>
+          </React.Fragment>
+        )}
       </Wrapper>
 
       <Form {...form}>
@@ -125,12 +177,31 @@ export const FilterComp = () => {
                           : "h-14 md:h-16 lg:h-[76px]",
                       )}
                     >
-                      <FiSearch className="absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#8E8E8E] md:size-6" />
+                      {(form.watch("term")?.trim()?.length ?? 0) > 0 ? (
+                        <IoClose
+                          role="button"
+                          onClick={() => {
+                            const params = new URLSearchParams(
+                              typeof window !== "undefined"
+                                ? window.location.search
+                                : "",
+                            );
+                            params.delete("term");
+                            setActiveFilter(null);
+                            router.push(`/terms?${params.toString()}`, {
+                              scroll: false,
+                            });
+                            form.reset({ term: "" });
+                          }}
+                          className="absolute top-1/2 left-5 size-5 -translate-y-1/2 cursor-pointer text-[#8E8E8E] md:size-6"
+                        />
+                      ) : (
+                        <FiSearch className="absolute top-1/2 left-5 size-5 -translate-y-1/2 text-[#8E8E8E] md:size-6" />
+                      )}
                       <Input
                         {...field}
                         value={field.value}
-                        // disabled={form.formState.isSubmitting}
-                        disabled
+                        disabled={form.formState.isSubmitting}
                         id={termId}
                         placeholder="Search bitcoin terms"
                         className={cn(
@@ -142,8 +213,9 @@ export const FilterComp = () => {
                         type="submit"
                         loadingText="Searching..."
                         isLoading={form.formState.isSubmitting}
-                        // disabled={!form.formState.isValid}
-                        disabled
+                        disabled={
+                          !form.formState.isValid || form.formState.isSubmitting
+                        }
                         className={cn(
                           "absolute top-1/2 right-2 !h-[calc(100%-12px)] -translate-y-1/2 transition-all",
                           isScrolled ? "right-1.5" : "md:!px-8",
@@ -200,6 +272,6 @@ export const FilterComp = () => {
           )}
         </Wrapper>
       </div>
-    </React.Fragment>
+    </>
   );
 };

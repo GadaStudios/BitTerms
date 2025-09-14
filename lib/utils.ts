@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function assertValue<T>(
   v: T | undefined,
-  errorMessage?: string
+  errorMessage?: string,
 ): NonNullable<T> {
   if (v === undefined || v === null) {
     throw new Error(errorMessage ?? "Missing property");
@@ -38,4 +38,12 @@ export async function generateAudio(text: string): Promise<string> {
     console.error("Audio generation failed:", err);
     return "";
   }
+}
+
+export function slugify(input: string) {
+  return String(input)
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
 }

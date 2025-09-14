@@ -45,8 +45,9 @@ export const TermsComp = () => {
   let filteredTerms = termsData;
 
   if (activeTerm) {
+    const needle = activeTerm.toLowerCase();
     filteredTerms = termsData.filter(
-      (t) => t.name && t.name.toLowerCase() === activeTerm.toLowerCase(),
+      (t) => t.name && t.name.toLowerCase().includes(needle),
     );
   } else if (activeFilter && activeFilter !== "all") {
     if (activeFilter === "symbol") {

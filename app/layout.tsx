@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.default.title,
   },
   icons: {
-    icon: "/hero.svg",
+    icon: "/illustrations/hero.svg",
   },
 };
 

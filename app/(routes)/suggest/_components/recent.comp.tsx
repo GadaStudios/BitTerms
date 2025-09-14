@@ -50,8 +50,10 @@ export const RecentlyAddedComp = () => {
     setActiveTerm(value.trim());
   }
 
+  if (!data.length) return null;
+
   return (
-    <Wrapper className="mt-7 flex flex-col items-center justify-center gap-2 sm:flex-row sm:flex-wrap md:mt-[56px] md:gap-3">
+    <Wrapper className="flex flex-col items-center justify-center gap-2 sm:flex-row sm:flex-wrap md:mt-[56px] md:gap-3">
       <p className="text-sm font-normal sm:text-base">Recently added terms</p>
       <div className="flex items-center gap-1">
         {isFetching

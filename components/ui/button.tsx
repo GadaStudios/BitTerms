@@ -6,17 +6,16 @@ import { cn } from "@/lib/utils";
 import { FiLoader } from "react-icons/fi";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center cursor-pointer gap-2 whitespace-nowrap rounded-full text-base font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center cursor-pointer gap-2 whitespace-nowrap transition-all duration-300 ease-out hover:shadow-[0px_5px_12px_0px_#FFCF991A,0px_21px_21px_0px_#FFCF9917,0px_47px_28px_0px_#FFCF990D,0px_84px_34px_0px_#FFCF9903,0px_131px_37px_0px_#FFCF9900] rounded-full text-base font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-white hover:bg-[#3A3A3A] transition-colors duration-300 ease-out",
+        default: "bg-primary text-white hover:bg-[#3A3A3A]",
         outline: "border border-primary bg-transparent text-primary",
         secondary:
-          "bg-secondary/80 text-secondary-foreground hover:bg-secondary transition-colors duration-300 ease-out",
+          "bg-secondary/80 text-secondary-foreground hover:bg-secondary",
         outline2:
-          "border border-border hover:text-primary hover:border-primary bg-transparent transition-all duration-300 ease-out",
+          "border border-border/30 hover:text-primary hover:border-primary bg-transparent",
       },
       size: {
         default:
@@ -29,7 +28,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 function Button({
