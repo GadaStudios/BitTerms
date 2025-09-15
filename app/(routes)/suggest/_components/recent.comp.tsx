@@ -31,7 +31,7 @@ export const RecentlyAddedComp = () => {
               .map((tag) => (
                 <Badge
                   key={tag._id}
-                  className="text-foreground cursor-pointer bg-[#F9FDE5] px-2 py-1 text-xs font-normal sm:px-4 sm:text-sm"
+                  className="text-foreground bg-[#F9FDE5] px-2 py-1 text-xs font-normal sm:px-4 sm:text-sm"
                 >
                   {tag.name}
                 </Badge>

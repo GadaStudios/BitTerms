@@ -42,18 +42,6 @@
     "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   },
   {
-    "name": "54 B Square",
-    "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
-    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
-    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
-  },
-  {
-    "name": "?P2P Square",
-    "technicalDefinition": "A blockchain is a decentralized and distributed digital ledger that records transactions across a network of computers. In the context of Bitcoin, the blockchain consists of a series of blocks, each containing a list of transactions. The blockchain is maintained through a consensus mechanism, ensuring that all participants agree on the validity of transactions and the state of the ledger.",
-    "definition": "A blockchain is a digital ledger that records all Bitcoin transactions in a secure and transparent way.",
-    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
-  },
-  {
     "name": "Confirmation",
     "technicalDefinition": "A confirmation occurs when a Bitcoin transaction is included in a block and that block is added to the blockchain. Each additional block that builds on top of it increases the number of confirmations, making the transaction more secure and irreversible.",
     "definition": "A confirmation means your Bitcoin transaction has been added to the blockchain and is secure.",
@@ -171,6 +159,42 @@
     "name": "Public Key",
     "technicalDefinition": "A public key is derived from a private key and is used to create Bitcoin addresses. While the public key can be shared freely, it must be paired with the corresponding private key to spend funds.",
     "definition": "A public key is like your Bitcoin address that others use to send you money.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Satoshi",
+    "technicalDefinition": "A satoshi is the smallest unit of Bitcoin, equal to 0.00000001 BTC. It is named after Satoshi Nakamoto, the pseudonymous creator of Bitcoin. Satoshis are used to measure smaller amounts of Bitcoin in everyday transactions.",
+    "definition": "A satoshi is the smallest piece of Bitcoin, like a cent is to a dollar.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Smart Contract",
+    "technicalDefinition": "A smart contract is a self-executing program stored on a blockchain that automatically enforces rules and agreements when predefined conditions are met. While not native to Bitcoin, some implementations like RSK enable smart contracts on the Bitcoin network.",
+    "definition": "A smart contract is a program that runs on blockchain and follows rules automatically.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Testnet",
+    "technicalDefinition": "Testnet is an alternative Bitcoin blockchain used by developers for testing purposes. Testnet coins have no real value and allow experimentation without risking actual funds.",
+    "definition": "Testnet is a fake Bitcoin network developers use for testing.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Transaction",
+    "technicalDefinition": "A Bitcoin transaction is a transfer of value between Bitcoin addresses recorded on the blockchain. It includes inputs (funding sources), outputs (recipients), and a digital signature for security.",
+    "definition": "A transaction is when Bitcoin moves from one address to another.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "UTXO (Unspent Transaction Output)",
+    "technicalDefinition": "UTXO refers to the amount of Bitcoin left unspent after a transaction. Each UTXO represents a discrete chunk of Bitcoin that can be used as input for a new transaction. The Bitcoin network keeps track of all UTXOs to validate ownership and balances.",
+    "definition": "UTXO is the leftover Bitcoin you can still spend after a transaction.",
+    "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
+  },
+  {
+    "name": "Wallet",
+    "technicalDefinition": "A Bitcoin wallet is software or hardware that stores private keys and manages Bitcoin transactions. Wallets come in different forms, such as hot wallets, cold wallets, custodial, and non-custodial.",
+    "definition": "A wallet is where you keep your Bitcoin safely, like a digital purse.",
     "illustration": { "asset": { "url": "/illustrations/hero.svg" } }
   }
 ]

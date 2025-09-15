@@ -41,5 +41,4 @@ yarn-error.log*
 next-env.d.ts
 
 WARP.md
-/scripts/seed.terms.ts
-/scripts/clear.terms.ts
+scripts

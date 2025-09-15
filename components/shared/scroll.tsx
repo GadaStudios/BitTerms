@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { TiArrowSortedUp } from "react-icons/ti";
+import { TbArrowBadgeUpFilled } from "react-icons/tb";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { Button } from "@/components/ui/button";
@@ -28,26 +28,27 @@ export const ScrollToTop = () => {
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ opacity: 0, y: 100 }}
+          initial={{ opacity: 0.5, y: 100, scale: 0 }}
           animate={{
-            opacity: 1,
             y: 0,
+            opacity: 1,
+            scale: 1,
             transition: {
               type: "spring",
               stiffness: 200,
               damping: 15,
             },
           }}
-          exit={{ opacity: 0, y: 100 }}
+          exit={{ opacity: 0.5, y: 100, scale: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-3 md:bottom-4 lg:bottom-6 right-3 md:right-4 lg:right-6 z-50"
+          className="fixed right-3 bottom-3 z-50 md:right-4 md:bottom-4 lg:right-6 lg:bottom-6"
         >
           <Button
             size="icon"
             onClick={backToTop}
-            className="!size-12 md:!size-14 lg:!size-16"
+            className="!size-12 md:!size-14"
           >
-            <TiArrowSortedUp className="size-5 md:size-6" />
+            <TbArrowBadgeUpFilled className="size-5 md:size-6" />
           </Button>
         </motion.div>
       )}

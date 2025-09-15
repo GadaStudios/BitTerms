@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { urlFor } from "@/sanity/lib/image";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface Props {
   term: {
@@ -67,7 +68,11 @@ export const TermItemComp: React.FC<Props> = ({
       <div className="flex max-w-[500px] flex-1 flex-col gap-6">
         <div className="flex flex-col gap-4 md:gap-6">
           <div className="flex items-center gap-4">
-            <p className="text-lg font-medium md:text-xl lg:text-2xl">
+            <p
+              className={cn("text-lg font-medium md:text-xl lg:text-2xl", {
+                "animate-pulse": speakingId === term._id,
+              })}
+            >
               {term.name}
             </p>
             <Button

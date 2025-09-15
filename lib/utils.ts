@@ -21,13 +21,16 @@ export function isActivePath(path: string, pathname: string): boolean {
   return pathname.startsWith(path);
 }
 
-export async function generateAudio(text: string): Promise<string> {
+export async function generateAudio(
+  text: string,
+  voice: "shimmer" | "dan",
+): Promise<string> {
   try {
     const client = await Client.connect("NihalGazi/Text-To-Speech-Unlimited");
     const result = await client.predict("/text_to_speech_app", {
       prompt: text,
-      voice: "shimmer",
-      emotion: "calm",
+      voice: voice ?? "shimmer",
+      emotion: "neutral",
       use_random_seed: true,
       specific_seed: 3,
     });

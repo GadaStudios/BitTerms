@@ -20,6 +20,15 @@ import {
   FileUploaderContent,
   FileUploaderItem,
 } from "@/components/file-upload";
+import {
+  Choicebox,
+  ChoiceboxItem,
+  ChoiceboxItemContent,
+  ChoiceboxItemDescription,
+  ChoiceboxItemHeader,
+  ChoiceboxItemIndicator,
+  ChoiceboxItemTitle,
+} from "@/components/ui/shadcn-io/choicebox";
 import { cn, generateAudio } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -27,8 +36,26 @@ import Wrapper from "@/components/shared/wrapper";
 import { Textarea } from "@/components/ui/textarea";
 import { suggestFormSchema, SuggestFormValues } from "@/lib/validators";
 
+const options = [
+  {
+    value: "shimmer",
+    subtitle: "Bright and friendly",
+    audio: "/voices/shimmer.mp3",
+  },
+  {
+    value: "dan",
+    subtitle: "Calm and confident",
+    audio: "/voices/dan.mp3",
+  },
+];
+
 export const SuggestFormComp = () => {
   const [files, setFiles] = React.useState<File[] | null>(null);
+  const [activeVoice, setActiveVoice] = React.useState<"shimmer" | "dan">(
+    "shimmer",
+  );
+
+  const audioRef = React.useRef<HTMLAudioElement | null>(null);
 
   const dropZoneConfig = {
     maxFiles: 1,
@@ -49,9 +76,21 @@ export const SuggestFormComp = () => {
     },
   });
 
+  React.useEffect(() => {
+    const name = form.getValues("name");
+    if (name) {
+      (async () => {
+        const audioUrl = await generateAudio(name, activeVoice);
+        if (audioUrl) {
+          form.setValue("audio", audioUrl);
+        }
+      })();
+    }
+  }, [activeVoice, form]);
+
   async function handleBlurName(value: string) {
     if (!value) return;
-    const audioUrl = await generateAudio(value);
+    const audioUrl = await generateAudio(value, activeVoice);
     if (audioUrl) {
       form.setValue("audio", audioUrl);
       console.log("onBlur ✅");
@@ -63,14 +102,14 @@ export const SuggestFormComp = () => {
       let finalAudioUrl = values.audio;
 
       if (!finalAudioUrl && values.name) {
-        const audioUrl = await generateAudio(values.name);
+        const audioUrl = await generateAudio(values.name, activeVoice);
         if (audioUrl) {
           finalAudioUrl = audioUrl;
+          form.setValue("audio", audioUrl);
           console.log("onSubmit ✅");
         }
       }
 
-      // Build FormData instead of JSON
       const formData = new FormData();
       formData.append("name", values.name);
       formData.append("definition", values.definition || "");
@@ -101,6 +140,32 @@ export const SuggestFormComp = () => {
       toast.error("An error occurred while submitting");
     }
   }
+
+  const handlePlayVoice = async (value: "shimmer" | "dan") => {
+    if (typeof window === "undefined") return;
+
+    const voice = options.find((vc) => vc.value === value)?.audio;
+    if (!voice) return;
+
+    try {
+      // stop any currently playing audio
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+        audioRef.current = null;
+      }
+
+      const audio = new Audio(voice);
+      audioRef.current = audio;
+
+      audio.onended = () => (audioRef.current = null);
+
+      await audio.play();
+    } catch (error) {
+      console.error(error);
+      audioRef.current = null;
+    }
+  };
 
   return (
     <Wrapper>
@@ -152,6 +217,7 @@ export const SuggestFormComp = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="technicalDefinition"
@@ -193,6 +259,49 @@ export const SuggestFormComp = () => {
                 </FormItem>
               )}
             />
+            <div className="grid grid-cols-1 gap-1">
+              <div className="flex items-center justify-between gap-4">
+                <p className="text-sm font-normal sm:text-base">
+                  Pick a voice for pronunciation
+                </p>
+
+                <div
+                  role="button"
+                  onClick={() =>
+                    handlePlayVoice(activeVoice as "shimmer" | "dan")
+                  }
+                  className="text-primary cursor-pointer text-sm font-medium"
+                >
+                  <span>Play Sound</span>
+                </div>
+              </div>
+              <Choicebox
+                defaultValue="shimmer"
+                className="grid grid-cols-1 gap-4 md:grid-cols-2"
+              >
+                {options.map((option) => (
+                  <ChoiceboxItem
+                    key={option.value}
+                    value={option.value}
+                    onClick={() =>
+                      setActiveVoice(option.value as "shimmer" | "dan")
+                    }
+                  >
+                    <ChoiceboxItemHeader>
+                      <ChoiceboxItemTitle className="capitalize">
+                        {option.value}
+                      </ChoiceboxItemTitle>
+                      <ChoiceboxItemDescription>
+                        {option.subtitle}
+                      </ChoiceboxItemDescription>
+                    </ChoiceboxItemHeader>
+                    <ChoiceboxItemContent>
+                      <ChoiceboxItemIndicator />
+                    </ChoiceboxItemContent>
+                  </ChoiceboxItem>
+                ))}
+              </Choicebox>
+            </div>
             <FormField
               control={form.control}
               name="illustration"
