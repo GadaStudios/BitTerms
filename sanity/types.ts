@@ -13,25 +13,6 @@
  */
 
 // Source: schema.json
-export type SearchTerm = {
-  _id: string;
-  _type: "searchTerm";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  term?: string;
-  searchCount?: number;
-  lastSearched?: string;
-  relatedTerms?: Array<string>;
-  isTrending?: boolean;
-  associatedTerm?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "term";
-  };
-};
-
 export type Term = {
   _id: string;
   _type: "term";
@@ -40,6 +21,17 @@ export type Term = {
   _rev: string;
   name?: string;
   audio?: string;
+  audioFile?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    altText?: string;
+    _type: "file";
+  };
   author?: string;
   approved?: boolean;
   definition?: string;
@@ -177,11 +169,23 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = SearchTerm | Term | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes =
+  | Term
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageHotspot
+  | SanityImageCrop
+  | SanityFileAsset
+  | SanityImageAsset
+  | SanityImageMetadata
+  | Geopoint
+  | Slug
+  | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: sanity/lib/queries.ts
 // Variable: TERM_QUERY
-// Query: *[_type == "term" && approved == true]{      _id,      name,      definition,      technicalDefinition,      illustration{        _key,        asset->{          _id,          url        }      },      author,      audio    } | order(name asc)
+// Query: *[_type == "term" && approved == true]{      _id,      name,      definition,      technicalDefinition,      illustration{        _key,        asset->{          _id,          url        }      },      author,      audio,      "audioUrl": audioFile.asset->url    } | order(name asc)
 export type TERM_QUERYResult = Array<{
   _id: string;
   name: string | null;
@@ -196,12 +200,13 @@ export type TERM_QUERYResult = Array<{
   } | null;
   author: string | null;
   audio: string | null;
+  audioUrl: string | null;
 }>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"term\" && approved == true]{\n      _id,\n      name,\n      definition,\n      technicalDefinition,\n      illustration{\n        _key,\n        asset->{\n          _id,\n          url\n        }\n      },\n      author,\n      audio\n    } | order(name asc)": TERM_QUERYResult;
+    '*[_type == "term" && approved == true]{\n      _id,\n      name,\n      definition,\n      technicalDefinition,\n      illustration{\n        _key,\n        asset->{\n          _id,\n          url\n        }\n      },\n      author,\n      audio,\n      "audioUrl": audioFile.asset->url\n    } | order(name asc)': TERM_QUERYResult;
   }
 }

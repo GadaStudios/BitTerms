@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
 
+import { guidelineData } from "@/lib/constants";
 import Wrapper from "@/components/shared/wrapper";
-import guidelineData from "@/data/guide.json";
 import { buttonVariants } from "@/components/ui/button";
 
 export const GuidelineComp = () => {
@@ -10,19 +10,19 @@ export const GuidelineComp = () => {
     <section className="pt-24 md:pt-[152px]">
       <Wrapper>
         <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-6 text-center max-w-[811px] mx-auto">
-            <h3 className="font-normal leading-none">
+          <div className="mx-auto flex max-w-[811px] flex-col gap-6 text-center">
+            <h3 className="leading-none font-normal">
               Contribution Guidelines
             </h3>
           </div>
 
-          <div className="grid mx-auto grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
+          <div className="mx-auto grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-16">
             {guidelineData.map((guideline, index) => (
               <div
                 key={guideline.title ?? index}
                 className="flex flex-col gap-4 sm:gap-6"
               >
-                <p className="text-[22px] sm:text-2xl md:text-[28px] font-semibold">
+                <p className="text-[22px] font-semibold sm:text-2xl md:text-[28px]">
                   {guideline.title}
                 </p>
 
@@ -30,10 +30,10 @@ export const GuidelineComp = () => {
                   {guideline.guides.map((guides, idx) => (
                     <div
                       key={guides.label || idx}
-                      className="p-6 rounded-3xl border flex items-start gap-6 w-full md:max-w-[472px]"
+                      className="flex w-full items-start gap-6 rounded-3xl border p-6 md:max-w-[472px]"
                     >
                       <div
-                        className={`flex-shrink-0 size-10 rounded-[8px] flex items-center justify-center text-lg font-bold text-background ${
+                        className={`text-background flex size-10 flex-shrink-0 items-center justify-center rounded-[8px] text-lg font-bold ${
                           guideline.title === "Illustration Guide"
                             ? "bg-foreground"
                             : "bg-[#3A9CFF]"
@@ -42,7 +42,7 @@ export const GuidelineComp = () => {
                         {idx + 1}
                       </div>
                       <div className="flex flex-col gap-2">
-                        <p className="text-lg sm:text-xl md:text-[22px] font-semibold">
+                        <p className="text-lg font-semibold sm:text-xl md:text-[22px]">
                           {guides.label}
                         </p>
                         <p className="text-base font-normal tracking-tight">

@@ -1,33 +1,33 @@
 import React from "react";
 import Link from "next/link";
 
+import { processData } from "@/lib/constants";
 import Wrapper from "@/components/shared/wrapper";
-import processData from "@/data/process.json";
 import { buttonVariants } from "@/components/ui/button";
 
 export const ProcessComp = () => {
   return (
-    <section className="pt-24 md:pt-[152px]">
+    <section className="pt-24 md:pt-[152px]" id="guideline">
       <Wrapper>
-        <div className="grid mx-auto grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16">
-          <div className="flex flex-col items-center lg:items-start gap-6 md:gap-8 max-w-2xl mx-auto lg:mx-0 lg:max-w-[472px]">
-            <h3 className="font-normal leading-none">How to Contribute</h3>
-            <div className="flex flex-col text-center lg:text-left gap-4">
-              <p className="text-base md:text-lg lg:text-xl tracking-tight">
+        <div className="mx-auto grid grid-cols-1 gap-8 md:gap-16 lg:grid-cols-2">
+          <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 md:gap-8 lg:mx-0 lg:max-w-[472px] lg:items-start">
+            <h3 className="leading-none font-normal">How to Contribute</h3>
+            <div className="flex flex-col gap-4 text-center lg:text-left">
+              <p className="text-base tracking-tight md:text-lg lg:text-xl">
                 Want to help make Bitcoin more accessible? You’re in the right
                 place. This section shows you how to get involved with BitTerms.
                 Whether you’re simplifying terms, drawing illustrations, or
                 suggesting improvements, we’ve made it easy to jump in and
                 collaborate with the community.
               </p>
-              <p className="text-base md:text-lg lg:text-xl tracking-tight">
+              <p className="text-base tracking-tight md:text-lg lg:text-xl">
                 Help others learn by adding your own simple explanations,
                 suggesting definitions, sharing feedback, or contributing via
                 images. Every bit helps someone else learn.
               </p>
             </div>
 
-            <div className="flex items-center justify-center md:justify-start gap-4">
+            <div className="flex items-center justify-center gap-4 md:justify-start">
               <Link href="/suggest" className={buttonVariants({ size: "lg" })}>
                 <span>Suggest a term</span>
               </Link>
@@ -42,17 +42,17 @@ export const ProcessComp = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 mx-auto md:grid-cols-2 lg:grid-cols-1 gap-4">
+          <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-1">
             {processData.map((process, index) => (
               <div
                 key={process.title || index}
-                className="p-6 rounded-3xl border flex items-start gap-6 w-full md:max-w-[472px]"
+                className="flex w-full items-start gap-6 rounded-3xl border p-6 md:max-w-[472px]"
               >
-                <div className="flex-shrink-0 size-10 rounded-[8px] bg-[#A1BF03] text-background flex items-center justify-center text-lg font-bold">
+                <div className="text-background flex size-10 flex-shrink-0 items-center justify-center rounded-[8px] bg-[#A1BF03] text-lg font-bold">
                   {index + 1}
                 </div>
                 <div className="flex flex-col gap-2">
-                  <p className="text-lg sm:text-xl md:text-[22px] font-semibold">
+                  <p className="text-lg font-semibold sm:text-xl md:text-[22px]">
                     {process.title}
                   </p>
                   <p className="text-base font-normal tracking-tight">

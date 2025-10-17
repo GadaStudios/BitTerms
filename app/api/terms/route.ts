@@ -5,7 +5,10 @@ export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const offset = Math.max(0, Number(searchParams.get("offset") || "0"));
-    const limit = Math.min(Math.max(1, Number(searchParams.get("limit") || "30")), 100);
+    const limit = Math.min(
+      Math.max(1, Number(searchParams.get("limit") || "30")),
+      100,
+    );
     const end = offset + limit;
 
     // Use a read-only client (CDN) for published content
@@ -27,7 +30,8 @@ export async function GET(req: NextRequest) {
             }
           },
           author,
-          audio
+          audio,
+          "audioUrl": audioFile.asset->url
         }
     `;
 
@@ -37,6 +41,9 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ items, nextOffset });
   } catch (error) {
     console.error("/api/terms error", error);
-    return NextResponse.json({ error: "Failed to fetch terms" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch terms" },
+      { status: 500 },
+    );
   }
 }

@@ -18,6 +18,14 @@ export const termsType = defineType({
       type: "url",
     }),
     defineField({
+      name: "audioFile",
+      title: "Audio File",
+      type: "file",
+      options: {
+        accept: "audio/*",
+      },
+    }),
+    defineField({
       name: "author",
       title: "Full Name",
       type: "string",

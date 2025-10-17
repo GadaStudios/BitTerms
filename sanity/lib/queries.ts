@@ -14,6 +14,7 @@ export const TERM_QUERY = defineQuery(
         }
       },
       author,
-      audio
+      audio,
+      "audioUrl": audioFile.asset->url
     } | order(name asc)`,
 );

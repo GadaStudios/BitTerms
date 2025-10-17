@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import introData from "@/data/intro.json";
+import { introData } from "@/lib/constants";
 import Wrapper from "@/components/shared/wrapper";
 import { buttonVariants } from "@/components/ui/button";
 

@@ -25,6 +25,7 @@ interface Props {
     } | null;
     author: string | null;
     audio: string | null;
+    audioUrl: string | null;
   };
   activeToggle: string | null;
   setActiveToggle: React.Dispatch<React.SetStateAction<string | null>>;
@@ -47,18 +48,25 @@ export const TermItemComp: React.FC<Props> = ({
 
   const handlePlaySound = async () => {
     if (typeof window === "undefined") return;
-    if (!term.audio) return;
+
+    const audioSrc = term?.audioUrl || term.audio;
+    if (!audioSrc) return;
 
     try {
-      setSpeakingId(term._id); // mark as speaking
-      const audio = new Audio(term.audio);
+      const audio = new Audio(audioSrc);
+      setSpeakingId(term._id);
+
       audio.onended = () => setSpeakingId(null);
+      audio.onerror = () => setSpeakingId(null);
+
       await audio.play();
     } catch (error) {
-      console.error(error);
+      console.error("Audio playback failed:", error);
       setSpeakingId(null);
     }
   };
+
+  const disableAudio = !term.audio && !term.audioUrl;
 
   return (
     <li
@@ -78,10 +86,10 @@ export const TermItemComp: React.FC<Props> = ({
             <Button
               size="icon"
               onClick={handlePlaySound}
-              disabled={!!speakingId || !term.audio}
+              disabled={!!speakingId || disableAudio}
               variant={speakingId === term._id ? "outline" : "outline2"}
             >
-              {term.audio ? (
+              {!disableAudio ? (
                 <HiOutlineSpeakerWave className="size-5" />
               ) : (
                 <HiOutlineSpeakerXMark className="size-5" />

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import Wrapper from "./wrapper";
 import { socials } from "@/lib/constants";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 export const Footer = () => {
   return (
@@ -24,9 +24,14 @@ export const Footer = () => {
               >
                 <span>Terms</span>
               </Link>
-              <Button variant={"outline2"}>
+              <a
+                href="#guideline"
+                className={buttonVariants({
+                  variant: "outline2",
+                })}
+              >
                 <span>How to contribute</span>
-              </Button>
+              </a>
               <Link
                 href="/suggest"
                 className={buttonVariants({
