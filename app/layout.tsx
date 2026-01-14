@@ -10,16 +10,46 @@ export const metadata: Metadata = {
     default: siteConfig.default.title,
   },
   description: siteConfig.default.description,
+  metadataBase: siteConfig.url,
+  authors: [{ name: siteConfig.default.title, url: siteConfig.url }],
   openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
     title: siteConfig.default.title,
     description: siteConfig.default.description,
-    url: siteConfig.url,
-    type: "website",
-    siteName: siteConfig.default.title,
+    images: [
+      {
+        url: `${siteConfig.url}/svg/logo.svg`,
+        width: 660,
+        height: 190,
+        alt: siteConfig.default.title,
+      },
+    ],
   },
-  icons: {
-    icon: "/svg/hero.svg",
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.default.title,
+    description: siteConfig.default.description,
+    images: [
+      {
+        url: `${siteConfig.url}/svg/logo.svg`,
+        width: 660,
+        height: 190,
+        alt: siteConfig.default.title,
+      },
+    ],
   },
+  icons: [
+    {
+      url: "/svg/favicon.svg",
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      url: "/svg/favicon.svg",
+      media: "(prefers-color-scheme: dark)",
+    },
+  ],
 };
 
 export default function RootLayout({

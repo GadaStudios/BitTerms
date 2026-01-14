@@ -53,7 +53,7 @@ export const GuidelineComp = () => {
           ))}
         </div>
 
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex flex-wrap items-center justify-center gap-4">
           <Link href="/suggest" className={buttonVariants({ size: "lg" })}>
             <span>Suggest a term</span>
           </Link>

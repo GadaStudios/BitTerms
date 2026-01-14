@@ -51,43 +51,70 @@ export const TermItemComp: React.FC<Props> = ({
       key={term.name}
       className="flex justify-between gap-6 border-b py-8 first-of-type:border-t last-of-type:border-b-0"
     >
-      <div className="flex max-w-[500px] flex-1 flex-col gap-6">
-        <div className="flex flex-col gap-4 md:gap-6">
-          <div className="flex items-center gap-4">
-            <p
-              className={cn("text-lg font-medium md:text-xl lg:text-2xl", {
-                "animate-pulse": speakingId === term._id,
-              })}
-            >
-              {term.name}
+      <div className="flex w-full flex-col gap-6">
+        <div className="flex w-full flex-row items-start gap-6 md:gap-8 lg:gap-16">
+          <div className="flex flex-1 flex-col gap-4">
+            <div className="flex items-center gap-4">
+              <p
+                className={cn("text-lg font-medium md:text-xl lg:text-2xl", {
+                  "animate-pulse": speakingId === term._id,
+                })}
+              >
+                {term.name}
+              </p>
+              <Button
+                size="icon"
+                onClick={handlePlaySound}
+                disabled={!!speakingId || !term.audio}
+                variant={speakingId === term._id ? "outline" : "outline2"}
+              >
+                {term.audio ? (
+                  <HiOutlineSpeakerWave className="size-5" />
+                ) : (
+                  <HiOutlineSpeakerXMark className="size-5" />
+                )}
+              </Button>
+            </div>
+
+            <p className="text-base font-normal md:text-lg lg:text-xl">
+              {term.definition ?? term.technicalDefinition}
             </p>
-            <Button
-              size="icon"
-              onClick={handlePlaySound}
-              disabled={!!speakingId || !term.audio}
-              variant={speakingId === term._id ? "outline" : "outline2"}
-            >
-              {term.audio ? (
-                <HiOutlineSpeakerWave className="size-5" />
-              ) : (
-                <HiOutlineSpeakerXMark className="size-5" />
-              )}
-            </Button>
+
+            {!isOpen && (
+              <p
+                role="button"
+                onClick={() =>
+                  term.name && setActiveToggle(isOpen ? null : term.name)
+                }
+                className="text-primary w-max cursor-pointer text-base font-medium italic"
+              >
+                See technical definition
+              </p>
+            )}
           </div>
 
-          <div className="text-base font-normal tracking-[-2%] md:text-lg lg:text-xl">
-            {term.definition ?? term.technicalDefinition}
-          </div>
-
-          {!isOpen && (
-            <p
-              role="button"
-              onClick={() => term.name && setActiveToggle(isOpen ? null : term.name)}
-              className="text-primary w-max cursor-pointer text-base font-medium italic"
-            >
-              See technical definition
-            </p>
-          )}
+          {/* IMAGE with bounce effect */}
+          <motion.div
+            animate={{
+              scale: isOpen ? 1.2 : 1,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 15,
+            }}
+            className="ml-auto size-[92px] origin-top-right md:size-40"
+          >
+            <Image
+              src={term.illustration ?? "/svg/placeholder.svg"}
+              alt={term.name ?? "Term Illustration"}
+              width={190}
+              height={190}
+              priority
+              quality={100}
+              className="size-full object-contain"
+            />
+          </motion.div>
         </div>
 
         <AnimatePresence initial={false}>
@@ -118,7 +145,7 @@ export const TermItemComp: React.FC<Props> = ({
                   Technical Definition
                 </p>
 
-                <div className="text-base font-normal tracking-[-2%] md:text-lg lg:text-xl">
+                <div className="text-sm font-normal tracking-[-2%] md:text-base lg:text-lg">
                   {term.technicalDefinition}
                 </div>
               </div>
@@ -134,29 +161,6 @@ export const TermItemComp: React.FC<Props> = ({
           )}
         </AnimatePresence>
       </div>
-
-      {/* IMAGE with bounce effect */}
-      <motion.div
-        animate={{
-          scale: isOpen ? 1.2 : 1,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 300,
-          damping: 15,
-        }}
-        className="size-[92px] origin-top-right md:size-40"
-      >
-        <Image
-          src={term.illustration ?? "/svg/placeholder.svg"}
-          alt={term.name ?? "Term Illustration"}
-          width={190}
-          height={190}
-          priority
-          quality={100}
-          className="size-full object-contain"
-        />
-      </motion.div>
     </li>
   );
 };

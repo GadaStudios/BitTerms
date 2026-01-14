@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Term } from "@/sanity.types";
 import { client } from "@/sanity/lib/client";
 import { QUERY_TERMS } from "@/sanity/lib/queries";
+import { ScrollToTop } from "./scroll";
 
 export type TermDataProps = {
   _id: string;
@@ -112,7 +113,8 @@ function GlobalProvider(props: { children: React.ReactNode }) {
       activeFilter,
       setActiveFilter,
       handleClick,
-      fetchTerms: (shouldShowLoader: boolean) => handleFetchTerms(shouldShowLoader),
+      fetchTerms: (shouldShowLoader: boolean) =>
+        handleFetchTerms(shouldShowLoader),
       bumpSearchVersion,
       searchVersion,
     }),
@@ -128,6 +130,7 @@ function GlobalProvider(props: { children: React.ReactNode }) {
       />
       <Toaster richColors />
       {props.children}
+      <ScrollToTop />
     </GlobalContext.Provider>
   );
 }

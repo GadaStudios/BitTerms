@@ -16,15 +16,15 @@ export const Footer = () => {
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="flex flex-wrap items-center gap-3 sm:gap-2">
               <Link
-                href="/"
+                href="/about"
                 className={buttonVariants({
                   variant: "outline2",
                 })}
               >
-                <span>Terms</span>
+                <span>About</span>
               </Link>
               <a
-                href="#guideline"
+                href="/about#guideline"
                 className={buttonVariants({
                   variant: "outline2",
                 })}
@@ -65,7 +65,7 @@ export const Footer = () => {
           </div>
 
           <Image
-            src="/svg/logo-white.svg"
+            src="/svg/logo.svg"
             alt="logo"
             width={1010}
             height={310}

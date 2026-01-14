@@ -4,7 +4,6 @@ import * as React from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
-import { env } from "@/lib/env";
 import { cn } from "@/lib/utils";
 import { SearchComp } from "./search.comp";
 import Wrapper from "@/components/wrapper";
@@ -118,19 +117,18 @@ const Terms = () => {
     {},
   );
 
-
   return (
     <Wrapper
       className={cn(
-        "mt-20 flex flex-col gap-4 sm:gap-10 md:mt-40 md:max-w-[752px]",
+        "mt-20 flex flex-col md:mt-40 md:max-w-[752px]",
         terms.data.length === 0 && "min-h-dvh",
       )}
     >
-      <React.Suspense fallback={<div className="h-20 w-full" />}> 
-        <SearchComp className="bg-background" />
+      <React.Suspense fallback={<div className="h-20 w-full" />}>
+        <SearchComp className="bg-background sticky top-0 z-50" />
       </React.Suspense>
 
-      <div className="bg-background sticky top-32 z-50 py-2 sm:top-36">
+      <div className="bg-background sticky top-20 z-50 mt-6 py-2 sm:top-26 md:mt-10">
         {terms.isFetching ? (
           <div className="z-50 flex w-full flex-wrap justify-center gap-1 whitespace-pre md:gap-2">
             {ABC_FILTERS.map((label) => (
@@ -169,7 +167,7 @@ const Terms = () => {
         )}
       </div>
 
-      <div ref={termsRef} className="flex w-full flex-col gap-8">
+      <div ref={termsRef} className="mt-8 flex w-full flex-col gap-8 md:mt-12">
         {terms.isFetching && (
           <div className="flex w-full flex-col gap-8">
             {[...new Array(3)].map((_, index) => (
@@ -258,8 +256,6 @@ const Terms = () => {
               </div>
             );
           })}
-
-
       </div>
     </Wrapper>
   );

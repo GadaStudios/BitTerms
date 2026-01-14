@@ -9,6 +9,7 @@ const FOOTER_SOCIALS = [
   {
     name: "Email",
     icon: MdOutlineEmail,
+    href: "mailto:" + env.contactEmail,
   },
   {
     name: "GitHub",
@@ -18,10 +19,12 @@ const FOOTER_SOCIALS = [
   {
     name: "X",
     icon: FaXTwitter,
+    href: env.twitterUrl
   },
   {
     name: "LinkedIn",
     icon: FaLinkedinIn,
+    href: env.linkedinUrl,
   },
 ];
 

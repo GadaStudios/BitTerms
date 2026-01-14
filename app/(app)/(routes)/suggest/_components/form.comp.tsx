@@ -132,26 +132,6 @@ export const FormComp = () => {
 
             <FormField
               control={form.control}
-              name="technicalDefinition"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    <span>Technical Definition</span>
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      disabled={form.formState.isSubmitting}
-                      {...field}
-                      placeholder="Technical Definition"
-                      className="text-base! placeholder:font-normal placeholder:text-[#B4B4B4]"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
               name="definition"
               render={({ field }) => (
                 <FormItem>
@@ -165,6 +145,26 @@ export const FormComp = () => {
                       {...field}
                       placeholder="Simplified Definition"
                       className="resize-none text-base! placeholder:font-normal placeholder:text-[#B4B4B4]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="technicalDefinition"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    <span>Technical Definition</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      disabled={form.formState.isSubmitting}
+                      {...field}
+                      placeholder="Technical Definition"
+                      className="text-base! placeholder:font-normal placeholder:text-[#B4B4B4]"
                     />
                   </FormControl>
                   <FormMessage />
@@ -245,7 +245,7 @@ export const FormComp = () => {
           <Button
             size="lg"
             type="submit"
-            className="ml-auto w-[186px]"
+            className="ml-auto min-w-[186px]"
             isLoading={form.formState.isSubmitting}
             loadingText="Submitting..."
           >

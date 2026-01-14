@@ -26,7 +26,7 @@ export const ProcessComp = () => {
             </p>
           </div>
 
-          <div className="flex items-center justify-center gap-4 md:justify-start">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:justify-start">
             <Link href="/suggest" className={buttonVariants({ size: "lg" })}>
               <span>Suggest a term</span>
             </Link>

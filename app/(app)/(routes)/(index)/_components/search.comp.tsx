@@ -1,38 +1,38 @@
 "use client";
-
 import React from "react";
+import { Route } from "next";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
-import { FiSearch } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
+import { FiSearch } from "react-icons/fi";
 import { motion, useAnimation } from "motion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { SearchFilterProps, searchFilterSchema } from "@/lib/validators";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useContextProvider } from "@/components/provider";
-import { useRouter } from "next/navigation";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { QUERY_TOP_TERMS } from "@/sanity/lib/queries";
+import { useContextProvider } from "@/components/provider";
+import { SearchFilterProps, searchFilterSchema } from "@/lib/validators";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 
-type TopTerm = { _id: string; name: string; searchPopularity: number };
-
-interface SearchCompProps {
+interface Props {
   reverse?: boolean;
   className?: string;
 }
 
-export const SearchComp: React.FC<SearchCompProps> = ({
-  reverse,
-  className,
-}) => {
+type TopTerm = { _id: string; name: string; searchPopularity: number };
+
+export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const controls = useAnimation();
-  const { terms, fetchTerms, bumpSearchVersion, setTerms } = useContextProvider();
+  const { fetchTerms, bumpSearchVersion, setTerms } = useContextProvider();
 
   const [mounted, setMounted] = React.useState(false);
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -43,35 +43,42 @@ export const SearchComp: React.FC<SearchCompProps> = ({
     defaultValues: { term: "" },
   });
 
-  const router = useRouter();
-
+  // Initialize form value from URL params on component mount
   React.useEffect(() => {
-    // Read URL params on the client only (avoids next/navigation hooks during prerender)
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const paramTerm = params.get("term") ?? "";
-    if (paramTerm) {
-      form.setValue("term", paramTerm);
+    const termParam = searchParams.get("term");
+    if (termParam) {
+      form.setValue("term", termParam);
     }
-  }, []);
+  }, [searchParams, form]);
 
   async function handleBadgeClick(name: string) {
     form.setValue("term", name);
     await onSubmit({ term: name });
   }
 
+  function handleReset() {
+    form.reset({ term: "" });
+
+    // Clear the term parameter from URL
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("term");
+
+    // Update the URL without the term parameter
+    router.push(`${pathname}?${params.toString()}` as Route, { scroll: false });
+  }
+
   async function onSubmit({ term }: SearchFilterProps) {
     const normalized = (term || "").trim();
     if (!normalized) return;
 
-    // Optimistic UI: push term in the URL so Terms page filters immediately
-    const params = new URLSearchParams(
-      typeof window !== "undefined" ? window.location.search : "",
-    );
+    // Create new URLSearchParams from current params
+    const params = new URLSearchParams(searchParams.toString());
     params.set("term", normalized);
     // Ensure letter and term are mutually exclusive
     params.delete("letter");
-    router.push(`/?${params.toString()}`, { scroll: false });
+
+    // Update URL without scrolling
+    router.push(`${pathname}?${params.toString()}` as Route, { scroll: false });
 
     // helper to allow clicking on top terms
 
@@ -87,10 +94,18 @@ export const SearchComp: React.FC<SearchCompProps> = ({
           ...updated[idx],
           searchPopularity: updated[idx].searchPopularity + 1,
         };
-        updated.sort((a, b) => b.searchPopularity - a.searchPopularity || a.name.localeCompare(b.name));
+        updated.sort(
+          (a, b) =>
+            b.searchPopularity - a.searchPopularity ||
+            a.name.localeCompare(b.name),
+        );
         return updated.slice(0, 3);
       }
-      const newItem: TopTerm = { _id: `temp-${Date.now()}`, name: normalized, searchPopularity: 1 };
+      const newItem: TopTerm = {
+        _id: `temp-${Date.now()}`,
+        name: normalized,
+        searchPopularity: 1,
+      };
       return [newItem, ...prevList].slice(0, 3);
     });
 
@@ -99,12 +114,17 @@ export const SearchComp: React.FC<SearchCompProps> = ({
       ...prev,
       data: prev.data.map((t) =>
         t.name?.toLowerCase() === normLower
-          ? { ...t, searchPopularity: (t as any).searchPopularity ? (t as any).searchPopularity + 1 : 1 }
+          ? {
+              ...t,
+              searchPopularity: (t as any).searchPopularity
+                ? (t as any).searchPopularity + 1
+                : 1,
+            }
           : t,
       ),
     }));
 
-    // Fire: record the search server-side and then refresh terms
+    // record the search server-side and then refresh terms
     try {
       await fetch(`/api/search`, {
         method: "POST",
@@ -116,9 +136,10 @@ export const SearchComp: React.FC<SearchCompProps> = ({
       if (fetchTerms) await fetchTerms(false);
 
       try {
-
         const q = QUERY_TOP_TERMS();
-        const top: TopTerm[] = await client.withConfig({ useCdn: true, token: undefined }).fetch(q, { limit: 3 });
+        const top: TopTerm[] = await client
+          .withConfig({ useCdn: true, token: undefined })
+          .fetch(q, { limit: 3 });
         setItems(top || []);
       } catch (e) {
         console.error("Failed to refresh top items", e);
@@ -138,7 +159,9 @@ export const SearchComp: React.FC<SearchCompProps> = ({
     (async () => {
       try {
         const q = QUERY_TOP_TERMS();
-        const data: TopTerm[] = await client.withConfig({ useCdn: true, token: undefined }).fetch(q, { limit: 3 });
+        const data: TopTerm[] = await client
+          .withConfig({ useCdn: true, token: undefined })
+          .fetch(q, { limit: 3 });
         if (!cancelled) setItems(data || []);
       } catch (e) {
         console.error(e);
@@ -178,21 +201,19 @@ export const SearchComp: React.FC<SearchCompProps> = ({
   }, [controls, reverse]);
 
   return (
-    <motion.div
-      animate={mounted ? controls : undefined}
-      initial={{
-        y: reverse ? 0 : 100,
-        opacity: reverse ? 1 : 0,
-        pointerEvents: reverse ? "auto" : "none",
-      }}
-      transition={{ duration: 0.25 }}
-      className={cn(
-        "sticky top-0 z-50 flex flex-col gap-2 py-4 sm:gap-4",
-        className,
-      )}
-    >
+    <React.Fragment>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        <motion.form
+          animate={mounted ? controls : undefined}
+          initial={{
+            y: reverse ? 0 : 100,
+            opacity: reverse ? 1 : 0,
+            pointerEvents: reverse ? "auto" : "none",
+          }}
+          transition={{ duration: 0.25 }}
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={cn("w-full py-4", className)}
+        >
           <div className="mx-auto w-full max-w-[702px]">
             <FormField
               control={form.control}
@@ -200,12 +221,12 @@ export const SearchComp: React.FC<SearchCompProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <div className="border-primary relative flex h-16 items-center rounded-full border p-1.5 transition-all duration-300 md:h-[76px]">
+                    <div className="border-primary relative flex h-14 items-center rounded-full border p-1.5 transition-all duration-300 sm:h-16 md:h-[76px]">
                       <span className="pl-4 sm:pl-6">
                         {(form.watch("term")?.trim()?.length ?? 0) > 0 ? (
                           <IoClose
                             role="button"
-                            onClick={() => form.reset({ term: "" })}
+                            onClick={handleReset}
                             className="size-5 cursor-pointer text-[#8E8E8E] md:size-6"
                           />
                         ) : (
@@ -214,6 +235,7 @@ export const SearchComp: React.FC<SearchCompProps> = ({
                       </span>
 
                       <Input
+                        type="text"
                         autoComplete="off"
                         className="h-full! rounded-full border-transparent bg-transparent px-4! shadow-none placeholder:text-[#B4B4B4] focus-visible:border-transparent focus-visible:ring-0 md:text-lg"
                         placeholder="Search bitcoin terms"
@@ -234,41 +256,42 @@ export const SearchComp: React.FC<SearchCompProps> = ({
               )}
             />
           </div>
-        </form>
+        </motion.form>
       </Form>
 
-      <div className="mx-auto flex flex-row justify-center gap-2 sm:flex-wrap md:gap-3">
-        {terms.isFetching || loading || (items && items?.length > 0) ? (
-          <React.Fragment>
-            <p className="mt-1 text-sm font-normal sm:text-base">
-              Top Searched
-            </p>
-            <div className="flex flex-1 flex-wrap items-center gap-1">
-              {terms.isFetching || loading
-                ? Array.from({ length: 3 }).map((_, index) => (
-                    <Skeleton
-                      key={index}
-                      className="h-8 w-[130px] first-of-type:w-[100px] last-of-type:w-20"
-                    />
-                  ))
-                : items?.map((tag, idx) => (
-                    <Badge
-                      key={idx}
-                      role="button"
-                      onClick={() => handleBadgeClick(tag.name)}
-                      className="cursor-pointer bg-primary/80 px-2 py-1 text-xs font-normal text-white sm:px-4 sm:text-sm"
-                    >
-                      {tag.name}
-                    </Badge>
-                  ))}
-            </div>
-          </React.Fragment>
-        ) : (
-          <p className="text-muted-foreground mt-1 text-sm font-normal sm:text-base">
-            No Top Searched
-          </p>
-        )}
-      </div>
-    </motion.div>
+      <motion.div
+        animate={mounted ? controls : undefined}
+        initial={{
+          y: reverse ? 0 : 100,
+          opacity: reverse ? 1 : 0,
+          pointerEvents: reverse ? "auto" : "none",
+        }}
+        transition={{ duration: 0.25 }}
+        className="mx-auto flex flex-row flex-wrap items-center justify-center gap-2 sm:items-start md:gap-3"
+      >
+        <p className="mt-1 text-sm font-normal sm:text-base">
+          {items && items?.length > 0 ? "Top Searched" : ""}
+        </p>
+        <div className="flex flex-wrap items-center justify-center gap-1">
+          {loading
+            ? Array.from({ length: 3 }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  className="h-8 w-[130px] first-of-type:w-[100px] last-of-type:w-20"
+                />
+              ))
+            : items?.map((tag, idx) => (
+                <Badge
+                  key={idx}
+                  role="button"
+                  onClick={() => handleBadgeClick(tag.name)}
+                  className="bg-primary/80 cursor-pointer px-2 py-1 text-xs font-normal text-white sm:px-4 sm:text-sm"
+                >
+                  {tag.name}
+                </Badge>
+              ))}
+        </div>
+      </motion.div>
+    </React.Fragment>
   );
 };
