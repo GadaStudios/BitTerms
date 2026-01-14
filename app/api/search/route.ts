@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { client } from "@/sanity/lib/client";
+import { client, writeClient } from "@/sanity/lib/client";
 
 export async function POST(req: Request) {
   try {
@@ -18,15 +18,15 @@ export async function POST(req: Request) {
     );
 
     if (existing) {
-      // Increment count
-      await client
+      // Increment count using writeClient
+      await writeClient
         .patch(existing._id)
         .inc({ searchCount: 1 })
         .set({ lastSearched: new Date().toISOString() })
         .commit();
     } else {
-      // Create new doc
-      await client.create({
+      // Create new doc using writeClient
+      await writeClient.create({
         _type: "searchTerm",
         term: normalized,
         searchCount: 1,
@@ -34,14 +34,14 @@ export async function POST(req: Request) {
       });
     }
 
-    // Additionally, increment searchPopularity on the matching term document
+    // Additionally, increment searchPopularity on the matching term document using writeClient
     const termDoc = await client.fetch(
       `*[_type == "term" && lower(name) == $term][0]{ _id }`,
       { term: normalized },
     );
 
     if (termDoc?._id) {
-      await client
+      await writeClient
         .patch(termDoc._id)
         .setIfMissing({ searchPopularity: 0 })
         .inc({ searchPopularity: 1 })

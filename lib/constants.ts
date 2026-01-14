@@ -1,9 +1,11 @@
-import { MdOutlineEmail } from "react-icons/md";
 import { FaGithub } from "react-icons/fa6";
 import { FaXTwitter } from "react-icons/fa6";
 import { FaLinkedinIn } from "react-icons/fa6";
+import { MdOutlineEmail } from "react-icons/md";
 
-export const socials = [
+import { env } from "./env";
+
+const FOOTER_SOCIALS = [
   {
     name: "Email",
     icon: MdOutlineEmail,
@@ -11,7 +13,7 @@ export const socials = [
   {
     name: "GitHub",
     icon: FaGithub,
-    href: "https://github.com/BitTerms",
+    href: env.githubUrl,
   },
   {
     name: "X",
@@ -23,13 +25,64 @@ export const socials = [
   },
 ];
 
-export const abcFilters = [
+const ABC_FILTERS = [
   "all",
   ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)),
   "symbol",
 ];
 
-export const processData = [
+const INTRO_DATA = [
+  {
+    title: "CoinJoin",
+    description:
+      "CoinJoin mixes your Bitcoin with others in one transaction to make it harder to trace, for more privacy.",
+    illustration: "coinjoin",
+    bgColor: "#F9FDE5",
+    borderColor: "#D6FF0066",
+    rotate: 2.83,
+  },
+  {
+    title: "Hash",
+    description:
+      "A hash is a shuffled digital fingerprint used to secure Bitcoin data.",
+    illustration: "hash",
+    bgColor: "#FFF8F0",
+    borderColor: "#F7931B66",
+    rotate: -3.33,
+  },
+  {
+    title: "Node",
+    description:
+      "A node is a computer that helps run, support, and share information on the Bitcoin network.",
+    illustration: "node",
+    bgColor: "#EEF7FF",
+    borderColor: "#3A9CFF66",
+    rotate: 0.6,
+  },
+];
+
+const SUPPORT_DATA = [
+  {
+    title: "Terms Simplification",
+    description:
+      "We turn complex Bitcoin lingo into plain, everyday language. If you can explain it to a friend over coffee, to a 9 year old, or to a grandpa,  you’ll find it here.",
+    icon: "✏️",
+  },
+  {
+    title: "Illustrations",
+    description:
+      "We pair clear definitions with simple illustrations to make learning intuitive. Because sometimes, a sketch does what a paragraph can’t; it bridges the gap between confusion and clarity.",
+    icon: "🎨",
+  },
+  {
+    title: "Open Source",
+    description:
+      "Add your own plain-language definitions, suggest edits, share feedback, or upload visuals. Every contribution makes Bitcoin clearer for someone else. Bit by bit, together, we build understanding.",
+    icon: "🌐",
+  },
+];
+
+const PROCESS_DATA = [
   {
     title: "Fork and Suggest",
     description:
@@ -52,37 +105,7 @@ export const processData = [
   },
 ];
 
-export const introData = [
-  {
-    title: "CoinJoin",
-    description:
-      "CoinJoin mixes your Bitcoin with others in one transaction to make it harder to trace, for more privacy.",
-    illustration: "coinjoin",
-    bgColor: "#F9FDE5",
-    borderColor: "#D6FF0066",
-    rotate: 3.83,
-  },
-  {
-    title: "Hash",
-    description:
-      "A hash is a shuffled digital fingerprint used to secure Bitcoin data.",
-    illustration: "hash",
-    bgColor: "#FFF8F0",
-    borderColor: "#F7931B66",
-    rotate: -6.52,
-  },
-  {
-    title: "Node",
-    description:
-      "A node is a computer that helps run, support, and share information on the Bitcoin network.",
-    illustration: "node",
-    bgColor: "#EEF7FF",
-    borderColor: "#3A9CFF66",
-    rotate: 0.6,
-  },
-];
-
-export const guidelineData = [
+const GUIDELINE_DATA = [
   {
     title: "Terms Simplification Guide",
     guides: [
@@ -135,23 +158,11 @@ export const guidelineData = [
   },
 ];
 
-export const understandData = [
-  {
-    title: "Terms Simplification",
-    description:
-      "We turn complex Bitcoin lingo into plain, everyday language. If you can explain it to a friend over coffee, to a 9 year old, or to a grandpa,  you’ll find it here.",
-    icon: "✏️",
-  },
-  {
-    title: "Illustrations",
-    description:
-      "We pair clear definitions with simple illustrations to make learning intuitive. Because sometimes, a sketch does what a paragraph can’t; it bridges the gap between confusion and clarity.",
-    icon: "🎨",
-  },
-  {
-    title: "Open Source",
-    description:
-      "Add your own plain-language definitions, suggest edits, share feedback, or upload visuals. Every contribution makes Bitcoin clearer for someone else. Bit by bit, together, we build understanding.",
-    icon: "🌐",
-  },
-];
+export {
+  FOOTER_SOCIALS,
+  ABC_FILTERS,
+  INTRO_DATA,
+  SUPPORT_DATA,
+  PROCESS_DATA,
+  GUIDELINE_DATA,
+};

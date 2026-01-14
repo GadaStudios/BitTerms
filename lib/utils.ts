@@ -6,6 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function isActivePath(path: string, pathname: string): boolean {
+  if (path === "/") return pathname === "/";
+  return pathname.startsWith(path);
+}
+
 export function assertValue<T>(
   v: T | undefined,
   errorMessage?: string,
@@ -16,37 +21,15 @@ export function assertValue<T>(
   return v;
 }
 
-export function isActivePath(path: string, pathname: string): boolean {
-  if (path === "/") return pathname === "/";
-  return pathname.startsWith(path);
-}
 
-export async function generateAudio(
-  text: string,
-  voice: "shimmer" | "dan",
-): Promise<string> {
-  try {
-    const client = await Client.connect("NihalGazi/Text-To-Speech-Unlimited");
-    const result = await client.predict("/text_to_speech_app", {
-      prompt: text,
-      voice: voice ?? "shimmer",
-      emotion: "neutral",
-      use_random_seed: true,
-      specific_seed: 3,
-    });
-
-    const data = result?.data as Array<{ url: string }>;
-    return data?.[0]?.url || "";
-  } catch (err) {
-    console.error("Audio generation failed:", err);
-    return "";
-  }
-}
-
-export function slugify(input: string) {
-  return String(input)
-    .toLowerCase()
+export function slugify(value: string) {
+  return String(value)
     .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+    .toLowerCase()
+    .replace(/[()]/g, "")
+    .replace(/\//g, " ")
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-\u0370-\u03FF]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }

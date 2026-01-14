@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { VisualEditing } from "next-sanity/visual-editing";
 
 import "./globals.css";
-import { cn } from "@/lib/utils";
-import { naughtyMonster } from "@/fonts";
-import { SanityLive } from "@/sanity/lib/live";
+import { fontVariable } from "@/lib/fonts";
 import { siteConfig } from "@/config/site.config";
-import { draftMode } from "next/headers";
-import { GlobalProvider } from "./provider";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -29,29 +18,19 @@ export const metadata: Metadata = {
     siteName: siteConfig.default.title,
   },
   icons: {
-    icon: "/illustrations/hero.svg",
+    icon: "/svg/hero.svg",
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          "flex flex-1 flex-col antialiased",
-          inter.variable,
-          naughtyMonster.variable,
-        )}
-      >
-        <GlobalProvider>
-          {children}
-          <SanityLive />
-          {(await draftMode()).isEnabled && <VisualEditing />}
-        </GlobalProvider>
+      <body className={fontVariable("flex flex-1 flex-col antialiased")}>
+        {children}
       </body>
     </html>
   );

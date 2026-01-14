@@ -1,24 +1,19 @@
 import { assertValue } from "./utils";
 
-export const apiVersion =
-  process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2025-09-11";
-
-export const siteUrl = assertValue(
+const siteUrl = assertValue(
   process.env.NEXT_PUBLIC_SITE_URL,
-  "Missing environment variable: NEXT_PUBLIC_SITE_URL",
+  "Missing environment variable: NEXT_PUBLIC_SITE_URL"
 );
 
-export const dataset = assertValue(
-  process.env.NEXT_PUBLIC_SANITY_DATASET,
-  "Missing environment variable: NEXT_PUBLIC_SANITY_DATASET",
+const githubUrl = assertValue(
+  process.env.NEXT_PUBLIC_GITHUB_URL,
+  "Missing environment variable: NEXT_PUBLIC_GITHUB_URL"
 );
 
-export const projectId = assertValue(
-  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-  "Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID",
-);
 
-export const PAGE_SIZE = assertValue(
-  process.env.NEXT_PUBLIC_PAGE_SIZE,
-  "Missing environment variable: NEXT_PUBLIC_PAGE_SIZE",
-);
+const env = {
+  siteUrl,
+  githubUrl,
+};
+
+export { env };

@@ -27,7 +27,6 @@ export const suggestFormSchema = z.object({
     .min(2, "Technical Definition must be at least 2 characters")
     .max(1000, "Technical Definition must be at most 1000 characters"),
   illustration: z.instanceof(File).optional(),
-  audio: z.string().optional(),
 });
 
 export type SuggestFormValues = z.infer<typeof suggestFormSchema>;

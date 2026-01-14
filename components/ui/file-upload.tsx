@@ -70,7 +70,7 @@ export const FileUploader = forwardRef<
       dir,
       ...props
     },
-    ref
+    ref,
   ) => {
     const [isFileTooBig, setIsFileTooBig] = useState(false);
     const [isLOF, setIsLOF] = useState(false);
@@ -93,7 +93,7 @@ export const FileUploader = forwardRef<
         const newFiles = value.filter((_, index) => index !== i);
         onValueChange(newFiles);
       },
-      [value, onValueChange]
+      [value, onValueChange],
     );
 
     const handleKeyDown = useCallback(
@@ -149,7 +149,7 @@ export const FileUploader = forwardRef<
         }
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [value, activeIndex, removeFileFromSet]
+      [value, activeIndex, removeFileFromSet],
     );
 
     const onDrop = useCallback(
@@ -179,7 +179,7 @@ export const FileUploader = forwardRef<
           for (let i = 0; i < rejectedFiles.length; i++) {
             if (rejectedFiles[i].errors[0]?.code === "file-too-large") {
               toast.error(
-                `File is too large. Max size is ${maxSize / 1024 / 1024}MB`
+                `File is too large. Max size is ${maxSize / 1024 / 1024}MB`,
               );
               break;
             }
@@ -190,7 +190,7 @@ export const FileUploader = forwardRef<
           }
         }
       },
-      [maxFiles, maxSize, onValueChange, reSelectAll, value]
+      [maxFiles, maxSize, onValueChange, reSelectAll, value],
     );
 
     useEffect(() => {
@@ -231,11 +231,11 @@ export const FileUploader = forwardRef<
           tabIndex={0}
           onKeyDownCapture={handleKeyDown}
           className={cn(
-            "grid w-full focus:outline-none overflow-hidden ",
+            "grid w-full overflow-hidden focus:outline-none",
             className,
             {
               "gap-2": value && value.length > 0,
-            }
+            },
           )}
           dir={dir}
           {...props}
@@ -244,7 +244,7 @@ export const FileUploader = forwardRef<
         </div>
       </FileUploaderContext.Provider>
     );
-  }
+  },
 );
 
 FileUploader.displayName = "FileUploader";
@@ -266,9 +266,9 @@ export const FileUploaderContent = forwardRef<
         {...props}
         ref={ref}
         className={cn(
-          "flex rounded-xl gap-1",
+          "flex gap-1 rounded-xl",
           orientation === "horizontal" ? "flex-raw flex-wrap" : "flex-col",
-          className
+          className,
         )}
       >
         {children}
@@ -290,25 +290,25 @@ export const FileUploaderItem = forwardRef<
       ref={ref}
       className={cn(
         buttonVariants({ variant: "outline2" }),
-        "h-6 p-1 justify-between cursor-pointer relative",
+        "relative h-6 cursor-pointer justify-between p-1",
         className,
-        isSelected ? "bg-muted" : ""
+        isSelected ? "bg-muted" : "",
       )}
       {...props}
     >
-      <div className="font-medium leading-none tracking-tight flex items-center gap-1.5 h-full w-full">
+      <div className="flex h-full w-full items-center gap-1.5 leading-none font-medium tracking-tight">
         {children}
       </div>
       <button
         type="button"
         className={cn(
           "absolute -translate-y-1/2",
-          direction === "rtl" ? "top-1/2 left-4" : "top-1/2 right-4"
+          direction === "rtl" ? "top-1/2 left-4" : "top-1/2 right-4",
         )}
         onClick={() => removeFileFromSet(index)}
       >
         <span className="sr-only">remove item {index}</span>
-        <GrTrash className="size-5 hover:stroke-destructive duration-200 ease-in-out" />
+        <GrTrash className="hover:stroke-destructive size-5 duration-200 ease-in-out" />
       </button>
     </div>
   );
@@ -327,20 +327,19 @@ export const FileInput = forwardRef<
       ref={ref}
       {...props}
       className={`relative w-full ${
-        isLOF ? "opacity-50 cursor-not-allowed " : "cursor-pointer "
+        isLOF ? "cursor-not-allowed opacity-50" : "cursor-pointer"
       }`}
     >
       <div
         className={cn(
-          `w-full rounded-lg duration-300 ease-in-out
-         ${
-           dropzoneState.isDragAccept
-             ? "border-green-500"
-             : dropzoneState.isDragReject || isFileTooBig
-             ? "border-red-500"
-             : "border-gray-300"
-         }`,
-          className
+          `w-full rounded-lg duration-300 ease-in-out ${
+            dropzoneState.isDragAccept
+              ? "border-green-500"
+              : dropzoneState.isDragReject || isFileTooBig
+                ? "border-red-500"
+                : "border-gray-300"
+          }`,
+          className,
         )}
         {...rootProps}
       >

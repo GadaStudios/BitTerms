@@ -15,7 +15,7 @@ const buttonVariants = cva(
         secondary:
           "bg-secondary/80 text-secondary-foreground hover:bg-secondary",
         outline2:
-          "border border-border/30 hover:text-primary hover:border-primary bg-transparent",
+          "border border-border/20 hover:text-primary hover:border-primary bg-transparent",
       },
       size: {
         default:
@@ -28,7 +28,7 @@ const buttonVariants = cva(
       variant: "default",
       size: "default",
     },
-  },
+  }
 );
 
 function Button({

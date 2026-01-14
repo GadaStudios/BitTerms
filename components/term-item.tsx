@@ -2,31 +2,15 @@
 
 import React from "react";
 import Image from "next/image";
+import { motion, AnimatePresence } from "motion/react";
 import { HiOutlineSpeakerWave, HiOutlineSpeakerXMark } from "react-icons/hi2";
 
-import { motion, AnimatePresence } from "framer-motion";
-
-import { urlFor } from "@/sanity/lib/image";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { TermDataProps } from "./provider";
+import { Button } from "@/components/ui/button";
 
 interface Props {
-  term: {
-    _id: string;
-    name: string | null;
-    definition: string | null;
-    technicalDefinition: string | null;
-    illustration: {
-      _key: null;
-      asset: {
-        _id: string;
-        url: string | null;
-      } | null;
-    } | null;
-    author: string | null;
-    audio: string | null;
-    audioUrl: string | null;
-  };
+  term: TermDataProps;
   activeToggle: string | null;
   setActiveToggle: React.Dispatch<React.SetStateAction<string | null>>;
   speakingId: string | null;
@@ -42,14 +26,10 @@ export const TermItemComp: React.FC<Props> = ({
 }) => {
   const isOpen = activeToggle === term.name;
 
-  const illustrationUrl = term.illustration
-    ? urlFor(term.illustration)?.url()
-    : null;
-
   const handlePlaySound = async () => {
     if (typeof window === "undefined") return;
 
-    const audioSrc = term?.audioUrl || term.audio;
+    const audioSrc = term.audio;
     if (!audioSrc) return;
 
     try {
@@ -65,8 +45,6 @@ export const TermItemComp: React.FC<Props> = ({
       setSpeakingId(null);
     }
   };
-
-  const disableAudio = !term.audio && !term.audioUrl;
 
   return (
     <li
@@ -86,10 +64,10 @@ export const TermItemComp: React.FC<Props> = ({
             <Button
               size="icon"
               onClick={handlePlaySound}
-              disabled={!!speakingId || disableAudio}
+              disabled={!!speakingId || !term.audio}
               variant={speakingId === term._id ? "outline" : "outline2"}
             >
-              {!disableAudio ? (
+              {term.audio ? (
                 <HiOutlineSpeakerWave className="size-5" />
               ) : (
                 <HiOutlineSpeakerXMark className="size-5" />
@@ -104,7 +82,7 @@ export const TermItemComp: React.FC<Props> = ({
           {!isOpen && (
             <p
               role="button"
-              onClick={() => setActiveToggle(isOpen ? null : term.name)}
+              onClick={() => term.name && setActiveToggle(isOpen ? null : term.name)}
               className="text-primary w-max cursor-pointer text-base font-medium italic"
             >
               See technical definition
@@ -167,10 +145,10 @@ export const TermItemComp: React.FC<Props> = ({
           stiffness: 300,
           damping: 15,
         }}
-        className="size-[92px] origin-top-right md:size-[160px]"
+        className="size-[92px] origin-top-right md:size-40"
       >
         <Image
-          src={illustrationUrl ?? "/placeholder.svg"}
+          src={term.illustration ?? "/svg/placeholder.svg"}
           alt={term.name ?? "Term Illustration"}
           width={190}
           height={190}

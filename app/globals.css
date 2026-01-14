@@ -6,8 +6,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-naughty-monster);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -95,7 +95,7 @@
   }
 
   .lenis.lenis-smooth {
-    @apply !scroll-auto;
+    @apply scroll-auto!;
   }
 
   .lenis.lenis-smooth [data-lenis-prevent] {

@@ -6,6 +6,11 @@ export const termsType = defineType({
   title: "Term",
   type: "document",
   icon: MdOutlineBrandingWatermark,
+  groups: [
+    {name: "details",title: "Details", default: true},
+    {name: "media",title: "Media"},
+    {name: "popularity",title: "Popularity"},
+  ],
   fields: [
     defineField({
       name: "name",
@@ -14,16 +19,12 @@ export const termsType = defineType({
     }),
     defineField({
       name: "audio",
-      title: "Term Audio",
-      type: "url",
-    }),
-    defineField({
-      name: "audioFile",
       title: "Audio File",
       type: "file",
       options: {
         accept: "audio/*",
       },
+      group: "media",
     }),
     defineField({
       name: "author",
@@ -40,16 +41,19 @@ export const termsType = defineType({
       name: "definition",
       title: "Simplified Definition",
       type: "text",
+      group: "details",
     }),
     defineField({
       name: "technicalDefinition",
       title: "Technical Definition",
       type: "text",
+      group: "details",
     }),
     defineField({
       name: "illustration",
       title: "Illustration",
       type: "image",
+      group: "media",
     }),
     defineField({
       name: "searchPopularity",
@@ -58,6 +62,7 @@ export const termsType = defineType({
       description: "How often this term is searched",
       initialValue: 0,
       readOnly: true,
+      group: "popularity",
     }),
   ],
   orderings: [
