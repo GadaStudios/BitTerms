@@ -49,11 +49,11 @@ export const metadata: Metadata = {
     description: siteConfig.default.description,
     images: [
       {
-        url: `${siteConfig.url}/svg/favicon.svg`,
-        width: 189,
-        height: 209,
+        url: `${siteConfig.url}/og-image.png`,
+        width: 1200,
+        height: 630,
         alt: siteConfig.default.title,
-        type: "image/svg+xml",
+        type: "image/png",
       },
     ],
   },
@@ -62,14 +62,7 @@ export const metadata: Metadata = {
     title: siteConfig.default.title,
     description: siteConfig.default.description,
     creator: "@bit_terms",
-    images: [
-      {
-        url: `${siteConfig.url}/svg/favicon.svg`,
-        width: 189,
-        height: 209,
-        alt: siteConfig.default.title,
-      },
-    ],
+    images: [`${siteConfig.url}/og-image.png`],
   },
   icons: [
     {
