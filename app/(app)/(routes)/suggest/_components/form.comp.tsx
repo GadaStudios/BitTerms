@@ -68,15 +68,42 @@ export const FormComp = () => {
       const result = await response.json();
 
       if (result.success) {
-        toast.success("Term submitted successfully!");
+        toast.custom(() => (
+          <div className="bg-primary text-background w-sm rounded-2xl p-4 shadow-md">
+            <h3 className="text-lg font-medium md:text-xl">{result.message}</h3>
+            <p className="text-sm">
+              Thank you for your contribution to BitTerms. We will review your
+              submission shortly.
+            </p>
+          </div>
+        ));
         form.reset();
         setFiles([]);
       } else {
-        toast.error("Submission failed: " + result.error);
+        toast.custom(() => (
+          <div className="bg-destructive text-background w-sm rounded-2xl p-4 shadow-md">
+            <h3 className="text-lg font-medium md:text-xl">
+              Something went wrong
+            </h3>
+            <p className="text-sm">
+              {result.error ??
+                "Something went wrong during submission. Please try again in a bit."}
+            </p>
+          </div>
+        ));
       }
     } catch (error) {
       console.error("Submission error:", error);
-      toast.error("An error occurred while submitting");
+      toast.custom(() => (
+        <div className="bg-destructive text-background w-sm rounded-2xl p-4 shadow-md">
+          <h3 className="text-lg font-medium md:text-xl">Submission Failed</h3>
+          <p className="text-sm">
+            {error instanceof Error
+              ? error.message
+              : "An error occurred while submitting"}
+          </p>
+        </div>
+      ));
     }
   }
 

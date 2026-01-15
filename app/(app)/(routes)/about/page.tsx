@@ -9,11 +9,23 @@ import { GuidelineComp } from "./_components/guideline.comp";
 export const metadata: Metadata = {
   title: siteConfig.about.title,
   description: siteConfig.about.description,
+  keywords: [
+    "about BitTerms",
+    "Bitcoin education project",
+    "cryptocurrency learning",
+    "open source Bitcoin terms",
+  ],
   openGraph: {
     title: siteConfig.about.title,
     description: siteConfig.about.description,
     type: "website",
     siteName: siteConfig.about.title,
+    url: `${siteConfig.url}/about`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.about.title,
+    description: siteConfig.about.description,
   },
 };
 

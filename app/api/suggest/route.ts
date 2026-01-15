@@ -49,8 +49,12 @@ export async function POST(request: NextRequest) {
     // Send email notification
     if (process.env.RESEND_API_KEY) {
       try {
-        const studioUrl = `https://bitterms.com/studio/structure/terminology;awaitingApproval`;
-        const date = new Date().toLocaleDateString("en-US");
+        const siteUrl =
+          process.env.NEXT_PUBLIC_SITE_URL ?? "https://bitterms.com";
+        const studioUrl = `${siteUrl}/studio/structure/terminology;awaitingApproval`;
+        const datetime = `${new Date().toLocaleString("en-US")} (UTC${
+          -new Date().getTimezoneOffset() / 60
+        })`;
 
         // Use inline styles for email compatibility
         await resend.emails.send({
@@ -128,7 +132,7 @@ ${technicalDefinition}
                             <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-top: 1px solid #edf2f7; padding-top: 20px; margin-bottom: 30px;">
                                 <tr>
                                     <td align="left">
-                                    <p style="font-size: 13px; color: #718096; margin: 5px 0;"><strong>Date:</strong> ${date}</p>
+                                    <p style="font-size: 13px; color: #718096; margin: 5px 0;"><strong>Datetime:</strong> ${datetime}</p>
                                     <p style="font-size: 13px; color: #718096; margin: 5px 0;"><strong>Submitted By:</strong> ${author ? author : "Anonymous"}</p>
                                     <p style="font-size: 13px; color: #718096; margin: 5px 0;"><strong>Illustration:</strong> ${illustration ? "Available ✅" : "Not Available ❌"}</p>
                                     </td>
@@ -176,7 +180,10 @@ ${technicalDefinition}
   } catch (error) {
     console.error("Submission error:", error);
     return NextResponse.json(
-      { success: false, error: "Failed to submit term" },
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "Failed to submit term",
+      },
       { status: 500 },
     );
   }

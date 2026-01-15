@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>BitTerms</ShortName>
+  <Description>Search Bitcoin and cryptocurrency terms on BitTerms</Description>
+  <Url type="text/html" template="https://bitterms.com/?term={searchTerms}"/>
+  <Url type="application/x-suggestions+json" template="https://bitterms.com/api/search?q={searchTerms}"/>
+  <Image height="16" width="16" type="image/x-icon">https://bitterms.com/svg/favicon.svg</Image>
+  <Contact>support@bitterms.com</Contact>
+  <Tags>bitcoin cryptocurrency crypto terms definitions learning education</Tags>
+  <LongDescription>
+    BitTerms is an open-source platform that helps you understand Bitcoin and cryptocurrency terminology. Find clear, simple definitions paired with visual illustrations and optional audio explanations.
+  </LongDescription>
+  <Attribution>BitTerms - Making Bitcoin Simple</Attribution>
+  <SyndicationRight>open</SyndicationRight>
+  <Developer>BitTerms</Developer>
+</OpenSearchDescription>

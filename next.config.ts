@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   experimental: {
     typedEnv: true,
   },
+  compress: true,
+  poweredByHeader: false,
+  generateEtags: true,
+  productionBrowserSourceMaps: false,
   images: {
     remotePatterns: [
       {
@@ -15,6 +19,35 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/webp", "image/avif"],
     qualities: [100],
+    minimumCacheTTL: 31536000, // 1 year for static images
+  },
+  headers: async () => {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+          {
+            key: "X-XSS-Protection",
+            value: "1; mode=block",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+        ],
+      },
+    ];
+  },
+  redirects: async () => {
+    return [];
   },
 };
 

@@ -1,0 +1,26 @@
+{
+  "name": "BitTerms - Learn Bitcoin Terms Simply",
+  "short_name": "BitTerms",
+  "description": "BitTerms help you ease into Bitcoin with less jargon and no confusion. It meets wherever you are, helping you make sense of Bitcoin, one clear definition at a time, with friendly visuals.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/svg/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["education"],
+  "screenshots": [
+    {
+      "src": "/svg/favicon.svg",
+      "sizes": "540x720",
+      "type": "image/svg+xml"
+    }
+  ]
+}
