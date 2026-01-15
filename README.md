@@ -74,16 +74,6 @@ You can contribute through two methods:
 - Avoid personal opinions; stick to factual information
 - Include sources if claiming specific facts
 
-## 🛠 Tech Stack
-
-- **Framework:** Next.js 16
-- **CMS:** Sanity.io
-- **Styling:** Tailwind CSS
-- **Forms:** React Hook Form + Zod
-- **UI Components:** Custom shadcn components
-- **Animations:** Motion/Framer Motion
-- **Image Optimization:** Next.js Image
-
 ## 📊 Features
 
 - **Search Functionality** - Quickly find Bitcoin terms
