@@ -3,6 +3,7 @@ import Link from "next/link";
 import { env } from "@/lib/env";
 import Wrapper from "@/components/wrapper";
 import { PROCESS_DATA } from "@/lib/constants";
+import { AboutCard } from "@/components/about-card";
 import { buttonVariants } from "@/components/ui/button";
 
 export const ProcessComp = () => {
@@ -42,23 +43,14 @@ export const ProcessComp = () => {
         </div>
 
         <div className="mx-auto grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-1">
-          {PROCESS_DATA.map((process, index) => (
-            <div
-              key={process.title || index}
-              className="flex w-full items-start gap-6 rounded-3xl border p-6 md:max-w-[472px]"
-            >
-              <div className="text-background flex size-10 shrink-0 items-center justify-center rounded-xl bg-[#A1BF03] text-lg font-bold">
-                {index + 1}
-              </div>
-              <div className="flex flex-col gap-2">
-                <p className="text-lg font-semibold sm:text-xl md:text-[22px]">
-                  {process.title}
-                </p>
-                <p className="text-base font-normal tracking-tight">
-                  {process.description}
-                </p>
-              </div>
-            </div>
+          {PROCESS_DATA.map((item, idx) => (
+            <AboutCard
+              key={idx}
+              index={idx}
+              label={item.title}
+              description={item.description}
+              className="bg-[#A1BF03]"
+            />
           ))}
         </div>
       </div>

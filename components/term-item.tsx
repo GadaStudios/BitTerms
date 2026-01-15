@@ -141,11 +141,11 @@ export const TermItemComp: React.FC<Props> = ({
               className="flex flex-col gap-4 overflow-hidden md:gap-6"
             >
               <div className="flex flex-col gap-2 md:gap-4">
-                <p className="text-base font-medium tracking-[-2%] italic md:text-lg lg:text-xl">
+                <p className="text-base font-medium italic md:text-lg lg:text-xl">
                   Technical Definition
                 </p>
 
-                <div className="text-sm font-normal tracking-[-2%] md:text-base lg:text-lg">
+                <div className="text-base font-normal md:text-lg lg:text-xl">
                   {term.technicalDefinition}
                 </div>
               </div>

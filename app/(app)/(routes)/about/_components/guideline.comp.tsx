@@ -4,6 +4,7 @@ import Wrapper from "@/components/wrapper";
 import { GUIDELINE_DATA } from "@/lib/constants";
 import { buttonVariants } from "@/components/ui/button";
 import { env } from "@/lib/env";
+import { AboutCard } from "@/components/about-card";
 
 export const GuidelineComp = () => {
   return (
@@ -25,28 +26,17 @@ export const GuidelineComp = () => {
 
               <div className="grid grid-cols-1 gap-4">
                 {guideline.guides.map((guides, idx) => (
-                  <div
-                    key={guides.label || idx}
-                    className="flex w-full items-start gap-6 rounded-3xl border p-6 md:max-w-[472px]"
-                  >
-                    <div
-                      className={`text-background flex size-10 shrink-0 items-center justify-center rounded-xl text-lg font-bold ${
-                        guideline.title === "Illustration Guide"
-                          ? "bg-foreground"
-                          : "bg-[#3A9CFF]"
-                      }`}
-                    >
-                      {idx + 1}
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <p className="text-lg font-semibold sm:text-xl md:text-[22px]">
-                        {guides.label}
-                      </p>
-                      <p className="text-base font-normal tracking-tight">
-                        {guides.description}
-                      </p>
-                    </div>
-                  </div>
+                  <AboutCard
+                    key={idx}
+                    index={idx}
+                    label={guides.label}
+                    description={guides.description}
+                    className={
+                      guideline.title === "Illustration Guide"
+                        ? "bg-foreground"
+                        : "bg-[#3A9CFF]"
+                    }
+                  />
                 ))}
               </div>
             </div>

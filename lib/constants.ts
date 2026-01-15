@@ -19,7 +19,7 @@ const FOOTER_SOCIALS = [
   {
     name: "X",
     icon: FaXTwitter,
-    href: env.twitterUrl
+    href: env.twitterUrl,
   },
   {
     name: "LinkedIn",
@@ -87,24 +87,24 @@ const SUPPORT_DATA = [
 
 const PROCESS_DATA = [
   {
-    title: "Fork and Suggest",
+    title: "Web Interface",
     description:
-      "Start by forking the BitTerms repository on GitHub. You can suggest edits, illustrations, or new terms via pull requests.",
+      "For Non-Technical Users, visit BitTerms, navigate to the 'Suggest a Term' page, fill out the form with your contribution details, and submit. We'll review and add it to the platform.",
   },
   {
-    title: "Use the Contribution Template",
+    title: "GitHub Issue",
     description:
-      "Follow our structured template when submitting new terms or edits, it helps us review faster.",
+      "For Technical Contributors, create a new GitHub issue using our template with required fields (term name, technical definition) and optional fields (simple definition, illustration, audio file, author name).",
   },
   {
-    title: "Be Respectful and Collaborative",
+    title: "Ensure Quality Standards",
     description:
-      "BitTerms is a team effort. Share feedback kindly, stay open to suggestions, and respect other contributors.",
+      "Make sure your definitions are accurate and up-to-date, use clear and concise language, include sources for specific facts, and keep illustrations clean and easy to understand.",
   },
   {
-    title: "Check the Issues Tab",
+    title: "Be Respectful & Collaborative",
     description:
-      "Look out for open tasks, terms needing illustrations, or definitions that need simplification, make a suggestion where you feel most confident.",
+      "BitTerms is a community effort. Share feedback kindly, stay open to suggestions, respect other contributors, and focus on making Bitcoin clearer for everyone.",
   },
 ];
 
