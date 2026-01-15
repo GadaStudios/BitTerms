@@ -1,4 +1,3 @@
-import { Client } from "@gradio/client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -20,7 +19,6 @@ export function assertValue<T>(
   }
   return v;
 }
-
 
 export function slugify(value: string) {
   return String(value)
