@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
       try {
         const siteUrl =
           process.env.NEXT_PUBLIC_SITE_URL ?? "https://bitterms.com";
-        const studioUrl = `${siteUrl}/studio/structure/terminology;awaitingApproval`;
+        const studioUrl = `${siteUrl}/studio/structure/terminology;awaitingApproval;${result._id}`;
         const datetime = `${new Date().toLocaleString("en-US")} (UTC${
           -new Date().getTimezoneOffset() / 60
         })`;
@@ -94,15 +94,15 @@ export async function POST(request: NextRequest) {
                 <table class="container" border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
                     <!-- Header -->
                     <tr>
-                        <td style="background-color: #f7931b; padding: 30px; text-align: left;">
-                          <img src="https://bitterms.com/svg/logo-white.svg" alt="Visual representation of the term" style="width: 100%; max-width: 150px; height: auto; display: block;">
+                        <td style="background-color: #f7931b; text-align: center;">
+                          <img src="https://www.bitterms.com/og-image.png" alt="Visual representation of the term" style="width: 100%; height: auto; display: block;">
                         </td>
                     </tr>
 
                     <!-- Body Content -->
                     <tr>
                         <td class="content-box" style="padding: 40px; padding-top: 20px; text-align: left;">
-                            <p style="font-size: 16px; line-height: 24px; margin-bottom: 25px; text-align: left; font-weight: 400;">
+                            <p style="font-size: 16px; line-height: 20px; margin-bottom: 25px; text-align: left; font-weight: 400;">
                               New Term Submission <br />
                                 A new entry has been submitted, and it is awaiting your approval.
                             </p>
@@ -115,14 +115,14 @@ export async function POST(request: NextRequest) {
 
                             <!-- Definitions -->
                             <div style="margin-bottom: 25px; text-align: left;">
-                                <h3 style="font-size: 14px; color: #f7931b; margin-bottom: 8px; font-weight: 600;">💡 Simple Definition</h3>
+                                <h3 style="font-size: 14px; color: #f7931b; margin-bottom: 8px; font-weight: 600;">Simple Definition</h3>
                                 <p style="font-size: 15px; font-style: italic; color: #4b5563; margin: 0; padding-left: 10px; border-left: 2px solid #e5e7eb; text-align: left;">
 ${definition}
                                 </p>
                             </div>
 
                             <div style="margin-bottom: 30px; text-align: left;">
-                                <h3 style="font-size: 14px; color: #f7931b; margin-bottom: 8px; font-weight: 600;">🛠️ Technical Definition</h3>
+                                <h3 style="font-size: 14px; color: #f7931b; margin-bottom: 8px; font-weight: 600;">Technical Definition</h3>
                                 <p style="font-size: 15px; color: #4b5563; margin: 0; padding-left: 10px; border-left: 2px solid #e5e7eb; text-align: left;">
 ${technicalDefinition}
                                 </p>
@@ -152,9 +152,9 @@ ${technicalDefinition}
 
                     <!-- Footer -->
                     <tr>
-                        <td style="padding: 0 40px 40px 40px; text-align: left;">
+                        <td style="padding: 20px; text-align: left;">
                             <p style="font-size: 12px; color: #9ca3af; margin: 0; font-weight: 400;">
-                                This is an automated notification from the <strong>BitTerms</strong> Knowledge Management System.
+                                This is an automated notification from the <strong>BitTerms</strong>.
                             </p>
                         </td>
                     </tr>
