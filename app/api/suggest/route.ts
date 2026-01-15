@@ -50,6 +50,7 @@ export async function POST(request: NextRequest) {
     if (process.env.RESEND_API_KEY) {
       try {
         const studioUrl = `https://bitterms.com/studio/structure/terminology;awaitingApproval`;
+        const date = new Date().toLocaleDateString("en-US");
 
         // Use inline styles for email compatibility
         await resend.emails.send({
@@ -58,174 +59,107 @@ export async function POST(request: NextRequest) {
           subject: "New Term Submitted to BitTerms",
           html: `
           <!DOCTYPE html>
-<html dir="ltr" lang="en">
-  <head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <meta name="x-apple-disable-message-reformatting" />
-  </head>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>New Term Submission - BitTerms</title>
+    <!-- Import Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Mobile responsive styles */
+        @media only screen and (max-width: 600px) {
+            .container {
+                width: 100% !important;
+                padding: 10px !important;
+            }
+            .content-box {
+                padding: 15px !important;
+            }
+        }
+        /* Fallback for email clients that don't support web fonts */
+        body, table, td, p, h1, h2, h3, a {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f6f9fc; font-family: 'Inter', Helvetica, Arial, sans-serif; color: #333;">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <table class="container" border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <!-- Header -->
+                    <tr>
+                        <td style="background-color: #f7931b; padding: 30px; text-align: left;">
+                          <img src="https://bitterms.com/svg/logo-white.svg" alt="Visual representation of the term" style="width: 100%; max-width: 150px; height: auto; display: block;">
+                        </td>
+                    </tr>
 
-  <body style="background-color:rgb(255,255,255);font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
-    <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
-      <tr>
-        <td
-          style='background-color:rgb(255,255,255);color:rgb(33,33,33)'>
-          
-          <table
-            align="center"
-            width="100%"
-            cellpadding="0"
-            cellspacing="0"
-            role="presentation"
-            style="max-width:600px;padding:15px;margin:auto;background-color:#f5f5f5"
-          >
-            <tr>
-              <td>
-                <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="background-color:#ffffff">
-                  <tr>
-                    <td>
-                      
-                      <table
-                        width="100%"
-                        cellpadding="0"
-                        cellspacing="0"
-                        role="presentation"
-                        style="background-color:#f7931b;padding:25px 30px 20px;"
-                      >
-                        <tr>
-                          <td>
-                            <a 
-                                href="https://bitterms.com"
-                                target="_blank">
-<svg width="130" height="39" viewBox="0 0 66 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_704_430)">
-<path d="M13.1542 8.71492L10.7156 8.67327C10.7156 8.95856 10.5955 15.6015 10.7156 17.0363L13.1457 16.8405C13.0557 15.7452 13.1199 10.6037 13.1542 8.71492ZM11.8685 4.55008C11.5574 4.55221 11.2526 4.63473 10.9852 4.78916C10.7178 4.94359 10.4975 5.16438 10.347 5.42886C10.1702 5.72354 10.0746 6.05752 10.0693 6.39857C10.0641 6.73962 10.1494 7.07623 10.317 7.37592C10.4729 7.63428 10.6969 7.84761 10.9658 7.994C11.2347 8.1404 11.5389 8.21457 11.847 8.20889C12.0979 8.21731 12.348 8.17639 12.5823 8.08859C12.8165 8.0008 13.0301 7.86794 13.2102 7.69797C13.3903 7.528 13.5332 7.32444 13.6304 7.09949C13.7276 6.87453 13.777 6.63282 13.7757 6.38886C13.7748 6.14723 13.7249 5.90814 13.6287 5.68532C13.5325 5.4625 13.392 5.26034 13.2152 5.09045C13.0383 4.92057 12.8287 4.78629 12.5984 4.69535C12.368 4.6044 12.1214 4.55857 11.8728 4.56049L11.8685 4.55008Z" fill="#ffffff"/>
-<path d="M27.2183 4.31893C27.0769 6.31389 26.8583 9.8186 26.9419 11.1909C27.0726 13.2879 26.929 17.0217 26.9226 17.1716L24.4882 17.0821C24.4882 17.0446 24.6339 13.315 24.5096 11.3325C24.4218 9.89357 24.6211 6.55337 24.7646 4.46054C23.6739 4.5355 22.5788 4.61672 21.5202 4.70418L21.3059 2.3448C21.3381 2.3448 24.5611 2.07617 27.9491 1.89916C35.0444 1.52849 35.9466 1.88458 36.3794 2.05742L35.4601 4.25021C34.7658 4.02114 31.2556 4.09403 27.2183 4.31893Z" fill="#ffffff"/>
-<path d="M45.8214 16.8031H43.3848C43.3848 16.068 41.5462 13.9189 39.2682 11.9219L39.2446 17.0404H36.8081L36.8402 9.92898L36.8788 1.66802L37.916 1.52017C41.7197 0.978739 42.9777 1.52017 43.7727 2.17821C44.5677 2.83626 44.9449 3.81499 44.9556 5.17898C44.9749 7.70495 42.8127 9.5125 41.2354 10.4954C41.6897 10.9119 42.2148 11.395 42.7355 11.9281C45.5021 14.6811 45.8214 16.0284 45.8214 16.8031ZM42.5191 5.17273C42.5191 4.54801 42.4012 4.13152 42.1848 3.95243C41.8098 3.63799 40.8411 3.55886 39.3068 3.71296L39.2832 8.85237C40.554 8.18183 42.5319 6.79494 42.5191 5.17273Z" fill="#ffffff"/>
-<path d="M56.6861 8.09228C56.6861 8.81904 56.6368 9.96646 56.5875 11.0639C56.5382 12.1613 56.4932 13.2588 56.4932 13.9355C56.4932 14.2812 56.4182 15.16 56.2961 16.5656C56.2125 17.5298 56.1075 18.7272 56.1075 18.9979H53.6709C53.6709 18.6522 53.7459 17.7734 53.8681 16.3678C53.9517 15.4037 54.0567 14.2063 54.0567 13.9355C54.0567 13.2088 54.106 12.0614 54.1531 10.9639C54.2003 9.8665 54.2495 8.76906 54.2495 8.09436C54.2495 7.65289 54.1938 6.85532 54.1274 6.03901C53.9731 6.44092 53.8467 6.79077 53.7802 7.0115C53.3666 8.39631 52.5502 12.8069 52.5416 12.8423C52.4918 13.1155 52.3448 13.363 52.1262 13.5416C51.9076 13.7201 51.6314 13.8183 51.3458 13.8189C51.061 13.8186 50.7852 13.7214 50.5664 13.5442C50.3475 13.3669 50.1995 13.1208 50.1479 12.8485C50.1479 12.7965 49.1665 7.68621 48.6886 6.06817C48.6543 5.95155 48.5964 5.78287 48.5257 5.58504C48.5257 5.64752 48.515 5.70374 48.5107 5.75164C48.4079 7.18643 48.425 10.1039 48.5107 11.4887C48.5471 12.053 48.68 12.9027 48.8193 13.8023C49.0122 15.0309 49.2115 16.3012 49.2115 17.1904H46.7706C46.7706 16.4824 46.5778 15.2475 46.4063 14.1584C46.2563 13.2046 46.117 12.3029 46.0742 11.6303C45.9842 10.1726 45.9649 7.14686 46.0742 5.59129C46.1213 4.89993 46.3913 2.96328 46.402 2.88415C46.4414 2.6002 46.5854 2.33973 46.8072 2.15098C47.029 1.96222 47.3137 1.85797 47.6085 1.85751H48.8279C49.0721 1.85744 49.3108 1.92867 49.5129 2.06197C49.7151 2.19526 49.8713 2.38448 49.9615 2.6051C50.0472 2.81334 50.8187 4.68752 51.033 5.41845C51.1273 5.73914 51.2473 6.17437 51.3544 6.6679C51.3866 6.5492 51.4166 6.44092 51.4466 6.34304C51.7359 5.37888 52.7838 2.87165 52.9038 2.59469C52.9653 2.44562 53.0577 2.31045 53.1753 2.1976C53.2929 2.08475 53.4332 1.99663 53.5874 1.93873C53.7416 1.88032 53.9064 1.85298 54.0718 1.85835C54.2372 1.86372 54.3997 1.90169 54.5496 1.96996L55.6403 2.46975C55.8303 2.55646 55.9938 2.68951 56.1151 2.85592C56.2364 3.02233 56.3113 3.21644 56.3325 3.41933C56.3411 3.56302 56.6861 6.83658 56.6861 8.09228Z" fill="#ffffff"/>
-<path d="M65.4592 14.0355C65.1806 16.0097 63.6098 17.434 61.6383 17.4965H61.409C60.0547 17.4965 58.9853 17.0988 58.2267 16.3158C57.6353 15.7035 56.9731 14.5561 57.1702 12.5528V12.5091L59.6025 12.6486C59.6025 12.6757 59.6025 12.7194 59.5918 12.7777C59.4803 13.8981 59.7525 14.4437 59.9989 14.6936C60.299 15.0038 60.8218 15.1496 61.5547 15.1246C62.5062 15.0955 62.9476 14.375 63.0398 13.7107C63.1619 12.834 62.7183 11.6282 61.0597 11.1264C57.8453 10.1476 56.9688 7.76744 57.2024 6.02862C57.3082 5.06445 57.7645 4.1686 58.4892 3.50212C59.214 2.83565 60.1596 2.44227 61.1561 2.39271C62.9541 2.299 63.9163 2.95913 64.4048 3.53179C65.4999 4.81248 65.1056 6.55338 65.0584 6.74705L63.8734 6.46801L62.6862 6.19937C62.7441 5.9474 62.7826 5.33309 62.5276 5.04155C62.2726 4.75001 61.6426 4.7396 61.289 4.75834C60.8638 4.77986 60.4608 4.94998 60.1545 5.23736C59.8481 5.52474 59.6589 5.91003 59.6218 6.32224C59.4739 7.45507 60.2882 8.40466 61.7969 8.86695C64.7027 9.75615 65.7292 12.103 65.4592 14.0355Z" fill="#ffffff"/>
-<path d="M21.1431 13.442C21.0896 13.6898 20.7274 14.9372 18.9659 15.108C18.2759 15.1704 18.0016 14.9476 17.9137 14.8726C17.5023 14.5332 17.3694 13.8627 17.3501 13.6232L17.318 12.5153C17.2955 11.6362 17.3277 10.7565 17.4144 9.88108H21.6082V7.47796H17.7873L18.3187 4.6542L15.8972 4.22314L15.2843 7.47796H14.0564V9.87067H14.9414C14.8594 10.7707 14.8301 11.6745 14.8536 12.5778L14.8857 13.7294C14.8857 13.9189 15.01 15.6036 16.2894 16.676C16.9693 17.2354 17.8374 17.5319 18.728 17.509C18.878 17.509 19.0345 17.509 19.1973 17.4861C22.1653 17.2091 23.3482 15.0142 23.5582 13.8918L21.1431 13.442Z" fill="#ffffff"/>
-<path d="M8.8019 10.2518C8.0596 9.67538 7.18705 9.27855 6.25607 9.09393C7.48613 8.15268 8.59618 6.8345 8.58332 5.15191C8.58332 3.78792 8.18687 2.80711 7.40041 2.15114C7.20378 1.98815 6.98798 1.84835 6.75752 1.73466V0.318613H4.78815V1.29735C4.4248 1.27952 4.06075 1.27952 3.69739 1.29735V0.0083313H1.72802V1.48269L1.54801 1.50559L0.504395 1.65345L0.540824 17.5902L1.63801 17.6922H1.72802V18.9979H3.69739V17.6839C3.8174 17.6839 3.93955 17.6673 4.06384 17.6548C4.31242 17.6298 4.55457 17.5965 4.78815 17.559V18.6793H6.75752V17.0321C7.36182 16.7994 7.92174 16.47 8.41403 16.0575C8.89526 15.6423 9.28116 15.1332 9.54662 14.5635C9.81208 13.9937 9.95116 13.3761 9.95481 12.7507C9.97203 12.2762 9.87706 11.8042 9.67719 11.371C9.47732 10.9378 9.17788 10.5549 8.8019 10.2518ZM5.81249 3.94827C6.02678 4.12944 6.1425 4.53968 6.14679 5.16857C6.14679 6.29099 4.75601 7.29264 3.92026 7.79033C3.59239 7.98608 3.26237 8.15892 2.95164 8.30886L2.94093 3.70879C4.47314 3.55886 5.43747 3.63799 5.81249 3.95244V3.94827ZM6.79824 14.2771C5.86391 15.083 4.17741 15.3183 2.96879 15.3495L2.95807 11.1847C4.576 11.116 6.43608 11.3929 7.2054 12.0468C7.30768 12.1196 7.38979 12.2159 7.44439 12.3271C7.49899 12.4383 7.52437 12.561 7.51827 12.684C7.52535 12.9852 7.46457 13.2842 7.34019 13.5601C7.2158 13.836 7.03084 14.0821 6.79824 14.2812V14.2771Z" fill="#ffffff"/>
-<path d="M33.2293 13.7606C32.8585 14.6227 32.3999 14.6498 32.2242 14.6623C31.6842 14.6977 31.5042 14.5394 31.4442 14.4853C31.0906 14.1729 30.9449 13.3879 30.8827 12.7007C31.0735 12.6319 31.2899 12.5507 31.5256 12.4529C32.3811 12.1016 33.2059 11.6838 33.9922 11.2034C35.3636 10.3392 35.9744 9.57704 35.9744 8.73366C35.9744 7.06772 35.3636 5.7433 34.3007 5.11858C33.7907 4.82079 32.7214 4.43138 31.2642 5.17272C29.1962 6.22434 28.3326 9.25843 28.3991 11.799C28.4376 13.5003 28.6369 15.2121 29.8005 16.247C30.4255 16.7835 31.2388 17.066 32.0721 17.0363C32.1792 17.0363 32.2864 17.0363 32.3892 17.0259C33.7907 16.9342 34.8986 16.0763 35.5094 14.6061C35.7626 13.9838 35.9186 13.3282 35.9723 12.6611L33.54 12.5133C33.5004 12.9417 33.3957 13.362 33.2293 13.7606ZM32.3935 7.25931C32.5506 7.17524 32.7232 7.12216 32.9014 7.10312C32.9494 7.10145 32.997 7.113 33.0385 7.13644C33.2271 7.24473 33.495 7.70702 33.5314 8.54207C33.36 8.73157 32.85 9.15431 31.7528 9.72489C31.4678 9.87274 31.1977 9.99977 30.9513 10.1122C31.1849 8.74407 31.7335 7.59457 32.3935 7.25931Z" fill="#ffffff"/>
-</g>
-<defs>
-<clipPath id="clip0_704_430">
-<rect width="130" height="39" fill="white" transform="translate(0.5)"/>
-</clipPath>
-</defs>
-</svg>
-                            </a>
-                          </td>
-                        </tr>
-                      </table>
-
-                      <table
-                        width="100%"
-                        cellpadding="0"
-                        cellspacing="0"
-                        role="presentation"
-                        style="padding:30px"
-                      >
-                        <tr>
-                          <td>
-                            <h1
-                              style="font-size:20px;font-weight:700;color:#333;margin:0 0 8px 0"
-                            >
-                              New term submitted
-                            </h1>
-
-                            <p
-                              style="font-size:14px;line-height:24px;color:#333;margin:0 0 24px 0"
-                            >
-                              ${author ? `${author} submitted a new term and is awaiting your review` : "A new term has been submitted to BitTerms and is awaiting your review."}
+                    <!-- Body Content -->
+                    <tr>
+                        <td class="content-box" style="padding: 40px; padding-top: 20px; text-align: left;">
+                            <p style="font-size: 16px; line-height: 24px; margin-bottom: 25px; text-align: left; font-weight: 400;">
+                              New Term Submission <br />
+                                A new entry has been submitted, and it is awaiting your approval.
                             </p>
 
-                            <p
-                              style="font-size:14px;line-height:24px;color:#333;margin:16px 0"
-                            >
-                              <strong>Term name</strong><br />
-                              ${name}
-                            </p>
+                            <!-- Term Section -->
+                            <div style="background-color: #fff9f2; border-left: 4px solid #f7931b; padding: 20px; margin-bottom: 30px; text-align: left;">
+                                <span style="text-transform: uppercase; font-size: 12px; font-weight: 700; color: #f7931b; letter-spacing: 0.05em;">Term Name</span>
+                                <h2 style="margin: 5px 0 0 0; color: #111827; font-size: 22px; font-weight: 600;">${name}</h2>
+                            </div>
 
-                            <p
-                              style="font-size:14px;line-height:24px;color:#333;margin:16px 0"
-                            >
-                              <strong>Simple definition</strong><br />
-                              ${definition}
-                            </p>
+                            <!-- Definitions -->
+                            <div style="margin-bottom: 25px; text-align: left;">
+                                <h3 style="font-size: 14px; color: #f7931b; margin-bottom: 8px; font-weight: 600;">💡 Simple Definition</h3>
+                                <p style="font-size: 15px; font-style: italic; color: #4b5563; margin: 0; padding-left: 10px; border-left: 2px solid #e5e7eb; text-align: left;">
+${definition}
+                                </p>
+                            </div>
 
-                            <p
-                              style="font-size:14px;line-height:24px;color:#333;margin:16px 0"
-                            >
-                              <strong>Technical definition</strong><br />
-                              ${technicalDefinition}
-                            </p>
+                            <div style="margin-bottom: 30px; text-align: left;">
+                                <h3 style="font-size: 14px; color: #f7931b; margin-bottom: 8px; font-weight: 600;">🛠️ Technical Definition</h3>
+                                <p style="font-size: 15px; color: #4b5563; margin: 0; padding-left: 10px; border-left: 2px solid #e5e7eb; text-align: left;">
+${technicalDefinition}
+                                </p>
+                            </div>
 
-                            <table
-                              align="center"
-                              width="100%"
-                              cellpadding="0"
-                              cellspacing="0"
-                              role="presentation"
-                              style="margin-top:30px;"
-                            >
-                              <tr>
-                                <td>
-                                  <a
-                                    href="${studioUrl}"
-                                    target="_blank"
-                                    style="display:inline-block;padding:13px 20px;background-color:#f7931b;color:#ffffff;text-decoration:none;font-size:14px;border-radius:300px"
-                                  >
-                                    Open BitTerms Studio
-                                  </a>
-                                </td>
-                              </tr>
+                            <!-- Metadata -->
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-top: 1px solid #edf2f7; padding-top: 20px; margin-bottom: 30px;">
+                                <tr>
+                                    <td align="left">
+                                    <p style="font-size: 13px; color: #718096; margin: 5px 0;"><strong>Date:</strong> ${date}</p>
+                                    <p style="font-size: 13px; color: #718096; margin: 5px 0;"><strong>Submitted By:</strong> ${author ? author : "Anonymous"}</p>
+                                    <p style="font-size: 13px; color: #718096; margin: 5px 0;"><strong>Illustration:</strong> ${illustration ? "Available ✅" : "Not Available ❌"}</p>
+                                    </td>
+                                </tr>
                             </table>
 
-                          </td>
-                        </tr>
-                      </table>
+                            <!-- CTA Button (Left Aligned & Rounded) -->
+                            <div style="text-align: left;">
+                                <a href="${studioUrl}"
+                                    target="_blank" 
+                                    style="display:inline-block;padding:13px 20px;background-color:#f7931b;color:#ffffff;text-decoration:none;font-size:14px;border-radius:300px">
+                                    Review on BitTerms Studio
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
 
-                      <hr style="border:none;border-top:1px solid #eaeaea" />
-
-                      <table
-                        width="100%"
-                        cellpadding="0"
-                        cellspacing="0"
-                        role="presentation"
-                        style="padding:20px 30px"
-                      >
-                        <tr>
-                          <td>
-                            <p
-                              style="font-size:13px;line-height:22px;color:#555;margin:0"
-                            >
-                              You are receiving this email because you manage BitTerms submissions.
+                    <!-- Footer -->
+                    <tr>
+                        <td style="padding: 0 40px 40px 40px; text-align: left;">
+                            <p style="font-size: 12px; color: #9ca3af; margin: 0; font-weight: 400;">
+                                This is an automated notification from the <strong>BitTerms</strong> Knowledge Management System.
                             </p>
-                          </td>
-                        </tr>
-                      </table>
-
-                    </td>
-                  </tr>
+                        </td>
+                    </tr>
                 </table>
-
-                <p
-                  style="font-size:12px;line-height:22px;color:#666;margin:24px 0 0 0;padding:0 20px;text-align:center"
-                >
-                  © 2026 BitTerms. All rights reserved.
-                </p>
-
-              </td>
-            </tr>
-          </table>
-
-        </td>
-      </tr>
+            </td>
+        </tr>
     </table>
-  </body>
-</html>
-          `,
+</body>
+</html>`,
         });
       } catch (error) {
         console.error("Error sending email:", error);

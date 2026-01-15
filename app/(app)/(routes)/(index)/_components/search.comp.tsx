@@ -224,7 +224,10 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <div className="border-primary relative flex h-14 items-center rounded-full border p-1.5 transition-all duration-300 sm:h-16 md:h-[76px]">
+                    <div
+                      id={React.useId()}
+                      className="border-primary relative flex h-14 items-center rounded-full border p-1.5 transition-all duration-300 sm:h-16 md:h-[76px]"
+                    >
                       <span className="pl-4 sm:pl-6">
                         {(form.watch("term")?.trim()?.length ?? 0) > 0 ? (
                           <IoClose
