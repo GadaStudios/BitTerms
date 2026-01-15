@@ -95,10 +95,6 @@ Found a bug or have a suggestion? [Create an issue](https://github.com/GadaStudi
 - Expected vs. actual behavior
 - Screenshots (if relevant)
 
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
 ## 🙏 Acknowledgments
 
 - Special thanks to all contributors who help make Bitcoin more accessible
@@ -110,6 +106,8 @@ This project is open source and available under the [MIT License](LICENSE).
 - [**Twitter**](https://x.com/bit_terms)
 - [**LinkedIn**](https://www.linkedin.com/company/bitterms)
 
----
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
 
 **Help us make Bitcoin education accessible to everyone! Every contribution matters.** 🚀
