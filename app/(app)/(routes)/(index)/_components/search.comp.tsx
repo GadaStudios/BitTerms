@@ -43,11 +43,14 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
     defaultValues: { term: "" },
   });
 
-  // Initialize form value from URL params on component mount
+  // Sync form value with URL params (including when other component clears)
   React.useEffect(() => {
     const termParam = searchParams.get("term");
     if (termParam) {
       form.setValue("term", termParam);
+    } else {
+      // If URL param is cleared (by other component), clear this form too
+      form.setValue("term", "");
     }
   }, [searchParams, form]);
 

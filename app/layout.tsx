@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     description: siteConfig.default.description,
     images: [
       {
-        url: `${siteConfig.url}/svg/logo.svg`,
-        width: 660,
-        height: 190,
+        url: `${siteConfig.url}/svg/favicon.svg`,
+        width: 189,
+        height: 209,
         alt: siteConfig.default.title,
       },
     ],
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     description: siteConfig.default.description,
     images: [
       {
-        url: `${siteConfig.url}/svg/logo.svg`,
-        width: 660,
-        height: 190,
+        url: `${siteConfig.url}/svg/favicon.svg`,
+        width: 189,
+        height: 209,
         alt: siteConfig.default.title,
       },
     ],

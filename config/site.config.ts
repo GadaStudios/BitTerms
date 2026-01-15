@@ -4,17 +4,16 @@ export const siteConfig = {
   default: {
     title: "BitTerms",
     description:
-      "BitTerms help you ease into Bitcoin with less jargon and no confusion. It meets wherever you are, helping you make sense of Bitcoin, one clear definition at a time, with friendly visuals so you understand and remember.",
+      "The open-source project dedicated to demystifying Bitcoin terminology with clear definitions and friendly visuals.",
   },
   about: {
     title: "About",
     description:
-      "BitTerms is a simple, open source project to help you make sense of Bitcoin, one clear definition at a time, with friendly visuals so you understand and remember.",
+      "Learn more about BitTerms, our mission, and how we aim to make Bitcoin terminology accessible to everyone.",
   },
   suggest: {
     title: "Suggest a Term",
-    description:
-      "Confusing jargon? Not here. From the market woman to the tech bro, BitTerms helps everyone make sense of Bitcoin, one simple definition at a time.",
+    description: "Suggest a new term to be added to the BitTerms database.",
   },
   url: env.siteUrl,
 };
