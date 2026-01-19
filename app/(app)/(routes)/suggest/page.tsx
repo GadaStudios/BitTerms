@@ -19,12 +19,23 @@ export const metadata: Metadata = {
     description: siteConfig.suggest.description,
     type: "website",
     siteName: siteConfig.suggest.title,
-    url: `${siteConfig.url}/suggest`,
+    url: `${siteConfig.url}/about`,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: siteConfig.suggest.title,
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.suggest.title,
     description: siteConfig.suggest.description,
+    creator: "@bit_terms",
+    images: ["/twitter-image.png"],
   },
 };
 
