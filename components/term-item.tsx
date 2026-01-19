@@ -106,7 +106,7 @@ export const TermItemComp: React.FC<Props> = ({
             className="ml-auto size-[92px] origin-top-right md:size-40"
           >
             <Image
-              src={term.illustration ?? "/svg/placeholder.svg"}
+              src={term.illustration ?? "/svg/logo.svg"}
               alt={term.name ?? "Term Illustration"}
               width={190}
               height={190}

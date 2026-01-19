@@ -24,7 +24,7 @@ export const Footer = () => {
       <div className="pointer-events-none absolute -top-16 -right-60 size-full bg-[url('/svg/texture.svg')] bg-cover" />
 
       <Wrapper className="relative overflow-clip pt-5">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 md:gap-16">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="flex flex-wrap items-center gap-3 sm:gap-2">
               {footerRoutes.map((route, idx) => {

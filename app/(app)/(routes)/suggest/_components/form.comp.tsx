@@ -69,7 +69,7 @@ export const FormComp = () => {
 
       if (result.success) {
         toast.custom(() => (
-          <div className="bg-primary text-background w-sm rounded-2xl p-4 shadow-md">
+          <div className="bg-primary text-background w-full max-w-sm rounded-2xl p-4 shadow-md">
             <h3 className="text-lg font-medium md:text-xl">{result.message}</h3>
             <p className="text-sm">
               Thank you for your contribution to BitTerms. We will review your
@@ -81,7 +81,7 @@ export const FormComp = () => {
         setFiles([]);
       } else {
         toast.custom(() => (
-          <div className="bg-destructive text-background w-sm rounded-2xl p-4 shadow-md">
+          <div className="bg-destructive text-background w-full max-w-sm rounded-2xl p-4 shadow-md">
             <h3 className="text-lg font-medium md:text-xl">
               Something went wrong
             </h3>
@@ -95,7 +95,7 @@ export const FormComp = () => {
     } catch (error) {
       console.error("Submission error:", error);
       toast.custom(() => (
-        <div className="bg-destructive text-background w-sm rounded-2xl p-4 shadow-md">
+        <div className="bg-destructive text-background w-full max-w-sm rounded-2xl p-4 shadow-md">
           <h3 className="text-lg font-medium md:text-xl">Submission Failed</h3>
           <p className="text-sm">
             {error instanceof Error

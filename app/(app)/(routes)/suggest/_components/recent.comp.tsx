@@ -8,15 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useContextProvider } from "@/components/provider";
 import { client } from "@/sanity/lib/client";
 import { QUERY_RECENT_ADDED } from "@/sanity/lib/queries";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const RecentlyAddedComp = () => {
-  const {
-    searchVersion,
-    // bumpSearchVersion,
-  } = useContextProvider();
+  const { searchVersion, bumpSearchVersion } = useContextProvider();
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const [loading, setLoading] = React.useState(true);
   const [items, setItems] = React.useState<
@@ -45,19 +42,19 @@ export const RecentlyAddedComp = () => {
     };
   }, [searchVersion]);
 
-  // async function handleRecentClick(term: string) {
-  //   try {
-  //     router.push(`/?term=${encodeURIComponent(term)}`, { scroll: false });
-  //     await fetch('/api/search', {
-  //       method: 'POST',
-  //       headers: { 'Content-Type': 'application/json' },
-  //       body: JSON.stringify({ term }),
-  //     });
-  //     if (bumpSearchVersion) bumpSearchVersion();
-  //   } catch (e) {
-  //     console.error('Failed to record search', e);
-  //   }
-  // }
+  async function handleRecentClick(term: string) {
+    try {
+      router.push(`/?term=${encodeURIComponent(term)}`, { scroll: false });
+      await fetch("/api/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ term }),
+      });
+      if (bumpSearchVersion) bumpSearchVersion();
+    } catch (e) {
+      console.error("Failed to record search", e);
+    }
+  }
 
   if (!items.length) return null;
 
@@ -76,7 +73,7 @@ export const RecentlyAddedComp = () => {
               <Badge
                 key={idx}
                 role="button"
-                // onClick={() => handleRecentClick(tag.name)}
+                onClick={() => handleRecentClick(tag.name)}
                 className="text-foreground cursor-pointer bg-[#F9FDE5] px-2 py-1 text-xs font-normal sm:px-4 sm:text-sm"
               >
                 {tag.name}
