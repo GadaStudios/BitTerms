@@ -10,17 +10,17 @@
   "scope": "/",
   "icons": [
     {
-      "src": "/svg/favicon.svg",
+      "src": "/logo.png",
       "sizes": "any",
-      "type": "image/svg+xml"
+      "type": "image/png"
     }
   ],
   "categories": ["education"],
   "screenshots": [
     {
-      "src": "/svg/favicon.svg",
+      "src": "/logo.png",
       "sizes": "540x720",
-      "type": "image/svg+xml"
+      "type": "image/png"
     }
   ]
 }

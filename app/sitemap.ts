@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { env } from "@/lib/env";
+import { siteConfig } from "@/config/site.config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = env.siteUrl;
+  const baseUrl = siteConfig.url;
 
   return [
     {

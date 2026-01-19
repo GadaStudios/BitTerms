@@ -6,7 +6,7 @@ import { siteConfig } from "@/config/site.config";
 
 export const metadata: Metadata = {
   title: {
-    template: `%s • ${siteConfig.default.title}`,
+    template: `${siteConfig.default.title}: %s`,
     default: siteConfig.default.title,
   },
   description: siteConfig.default.description,
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "crypto terms",
     "Bitcoin explained",
   ],
-  metadataBase: siteConfig.url,
+  metadataBase: new URL(siteConfig.url),
   authors: [{ name: siteConfig.default.title, url: siteConfig.url }],
   creator: siteConfig.default.title,
   publisher: siteConfig.default.title,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description: siteConfig.default.description,
     images: [
       {
-        url: `${siteConfig.url}/og-image.png`,
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: siteConfig.default.title,
@@ -62,18 +62,13 @@ export const metadata: Metadata = {
     title: siteConfig.default.title,
     description: siteConfig.default.description,
     creator: "@bit_terms",
-    images: [`${siteConfig.url}/og-image.png`],
+    images: ["/twitter-image.png"],
   },
-  icons: [
-    {
-      url: "/svg/favicon.svg",
-      media: "(prefers-color-scheme: light)",
-    },
-    {
-      url: "/svg/favicon.svg",
-      media: "(prefers-color-scheme: dark)",
-    },
-  ],
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/shortcut-icon.png",
+    apple: "/apple-icon.png",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",

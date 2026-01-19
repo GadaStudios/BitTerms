@@ -5,7 +5,6 @@ import NextJSTopLoader from "nextjs-toploader";
 
 import { Toaster } from "./ui/sonner";
 import { useRouter } from "next/navigation";
-import { Term } from "@/sanity.types";
 import { client } from "@/sanity/lib/client";
 import { QUERY_TERMS } from "@/sanity/lib/queries";
 import { ScrollToTop } from "./scroll";
