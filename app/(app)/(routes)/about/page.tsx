@@ -21,11 +21,22 @@ export const metadata: Metadata = {
     type: "website",
     siteName: siteConfig.about.title,
     url: `${siteConfig.url}/about`,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: siteConfig.about.title,
+        type: "image/png",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.about.title,
     description: siteConfig.about.description,
+    creator: "@bit_terms",
+    images: ["/twitter-image.png"],
   },
 };
 
