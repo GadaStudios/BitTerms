@@ -15,5 +15,6 @@ export const siteConfig = {
     description:
       "Submit a Bitcoin term for review and possible inclusion in BitTerms.",
   },
+  xCreator: "@bit_terms",
   url: env.siteUrl,
 };

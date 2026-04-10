@@ -8,16 +8,23 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useContextProvider } from "@/components/provider";
 import { client } from "@/sanity/lib/client";
 import { QUERY_RECENT_ADDED } from "@/sanity/lib/queries";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
+import { useParams } from "next/navigation";
+import { Locale } from "@/lib/i18n-config";
+import { Route } from "next";
+import { useTranslations } from "next-intl";
 
 export const RecentlyAddedComp = () => {
+  const t = useTranslations("search");
   const { searchVersion, bumpSearchVersion } = useContextProvider();
 
   const router = useRouter();
+  const params = useParams();
+  const lang = params.locale as Locale;
 
   const [loading, setLoading] = React.useState(true);
   const [items, setItems] = React.useState<
-    Array<{ name: string; searchCount: number }>
+    Array<{ name: string; slug: string; searchCount: number }>
   >([]);
 
   React.useEffect(() => {
@@ -27,7 +34,7 @@ export const RecentlyAddedComp = () => {
       try {
         const data = await client
           .withConfig({ useCdn: true, token: undefined })
-          .fetch(QUERY_RECENT_ADDED(), { limit: 3 });
+          .fetch(QUERY_RECENT_ADDED(), { limit: 3, lang });
         if (!cancelled) setItems(data || []);
       } catch (e) {
         console.error(e);
@@ -40,15 +47,17 @@ export const RecentlyAddedComp = () => {
     return () => {
       cancelled = true;
     };
-  }, [searchVersion]);
+  }, [searchVersion, lang]);
 
-  async function handleRecentClick(term: string) {
+  async function handleRecentClick(name: string, slug: string) {
     try {
-      router.push(`/?term=${encodeURIComponent(term)}`, { scroll: false });
+      router.push(`/?term=${encodeURIComponent(slug)}` as Route, {
+        scroll: false,
+      });
       await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ term }),
+        body: JSON.stringify({ term: name, slug }),
       });
       if (bumpSearchVersion) bumpSearchVersion();
     } catch (e) {
@@ -60,7 +69,7 @@ export const RecentlyAddedComp = () => {
 
   return (
     <Wrapper className="mt-6 flex flex-col items-center justify-center gap-2 sm:mt-10 sm:flex-row sm:flex-wrap md:mt-14 md:gap-3">
-      <p className="text-sm font-normal sm:text-base">Recently added</p>
+      <p className="text-sm font-normal sm:text-base">{t("recent")}</p>
       <div className="flex items-center gap-1">
         {loading
           ? Array.from({ length: 4 }).map((_, index) => (
@@ -73,7 +82,7 @@ export const RecentlyAddedComp = () => {
               <Badge
                 key={idx}
                 role="button"
-                onClick={() => handleRecentClick(tag.name)}
+                onClick={() => handleRecentClick(tag.name, tag.slug)}
                 className="text-foreground cursor-pointer bg-[#F9FDE5] px-2 py-1 text-xs font-normal sm:px-4 sm:text-sm"
               >
                 {tag.name}

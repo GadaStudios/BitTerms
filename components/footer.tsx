@@ -1,22 +1,25 @@
 "use client";
-import Link from "next/link";
 import { Route } from "next";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 
-import Wrapper from "../../../components/wrapper";
 import { FOOTER_SOCIALS } from "@/lib/constants";
 import { buttonVariants } from "@/components/ui/button";
-import { isActivePath } from "@/lib/utils";
-
-const footerRoutes = [
-  { name: "About", href: "/about" },
-  { name: "How to contribute", href: "/about#guideline" },
-  { name: "Suggest a term", href: "/suggest" },
-];
+import { Locale } from "@/lib/i18n-config";
+import { usePathname, Link } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import Wrapper from "@/components/wrapper";
 
 export const Footer = () => {
+  const t = useTranslations("navigation");
+  const locale = useLocale() as Locale;
   const pathname = usePathname();
+
+  const footerRoutes = [
+    { name: t("about"), href: "/about" },
+    { name: t("contribute"), href: "/about#guideline" },
+    { name: t("suggest"), href: "/suggest" },
+  ];
 
   return (
     <footer className="text-background bg-foreground relative mt-24 overflow-x-clip md:mt-[152px]">
@@ -28,7 +31,8 @@ export const Footer = () => {
           <div className="flex flex-wrap items-center justify-between gap-6">
             <div className="flex flex-wrap items-center gap-3 sm:gap-2">
               {footerRoutes.map((route, idx) => {
-                const isActive = isActivePath(route.href, pathname);
+                const isActive =
+                  pathname === route.href || pathname === `${route.href}/`;
 
                 return (
                   <Link
@@ -47,24 +51,32 @@ export const Footer = () => {
               })}
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 sm:gap-2">
-              {FOOTER_SOCIALS.map((social) => {
-                const Comp = social.href ? Link : "span";
+            <div className="flex items-center justify-between gap-6">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-2">
+                {FOOTER_SOCIALS.map((social) => {
+                  const Comp = social.href ? "a" : "span";
 
-                return (
-                  <Comp
-                    key={social.name}
-                    target="_blank"
-                    href={{ pathname: social.href }}
-                    rel={social.href ? "noopener noreferrer" : undefined}
-                    aria-label={social.name}
-                    title={social.name}
-                    className={buttonVariants({ variant: "outline2" })}
-                  >
-                    <social.icon className="size-5" />
-                  </Comp>
-                );
-              })}
+                  return (
+                    <Comp
+                      key={social.name}
+                      target="_blank"
+                      href={social.href}
+                      rel={social.href ? "noopener noreferrer" : undefined}
+                      aria-label={social.name}
+                      title={social.name}
+                      className={buttonVariants({ variant: "outline2" })}
+                    >
+                      <social.icon className="size-5" />
+                    </Comp>
+                  );
+                })}
+              </div>
+
+              <LanguageSwitcher
+                lang={locale}
+                variant="outline2"
+                className="size-10 sm:size-11"
+              />
             </div>
           </div>
 

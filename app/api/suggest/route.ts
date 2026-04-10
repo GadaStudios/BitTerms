@@ -1,6 +1,7 @@
 import { writeClient } from "@/sanity/lib/client";
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { slugify } from "@/lib/utils";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -9,10 +10,12 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
 
     const name = (formData.get("name") as string) || "";
+    const slug = slugify(name);
     const definition = (formData.get("definition") as string) || "";
     const technicalDefinition =
       (formData.get("technicalDefinition") as string) || "";
     const author = (formData.get("author") as string) || "";
+    const language = (formData.get("language") as string) || "en";
 
     // Handle illustration upload
     let illustrationRef = undefined;
@@ -36,14 +39,20 @@ export async function POST(request: NextRequest) {
 
     // Create term in Sanity
     const result = await writeClient.create({
+      _id: `term-${slug}-${language}`,
       _type: "term",
       name,
+      slug: {
+        _type: "slug",
+        current: slug,
+      },
       author,
       audio: undefined,
       approved: false,
       definition,
       technicalDefinition,
       illustration: illustrationRef,
+      language,
     });
 
     // Send email notification
@@ -142,7 +151,7 @@ ${technicalDefinition}
                             <!-- CTA Button (Left Aligned & Rounded) -->
                             <div style="text-align: left;">
                                 <a href="${studioUrl}"
-                                    target="_blank" 
+                                    target="_blank"
                                     style="display:inline-block;padding:13px 20px;background-color:#f7931b;color:#ffffff;text-decoration:none;font-size:14px;border-radius:300px">
                                     Review on BitTerms Studio
                                 </a>

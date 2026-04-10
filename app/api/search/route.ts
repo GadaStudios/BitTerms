@@ -3,7 +3,7 @@ import { client, writeClient } from "@/sanity/lib/client";
 
 export async function POST(req: Request) {
   try {
-    const { term } = await req.json();
+    const { term, slug } = await req.json();
     if (!term) {
       return NextResponse.json({ error: "Missing term" }, { status: 400 });
     }
@@ -13,8 +13,8 @@ export async function POST(req: Request) {
 
     // Try to find existing searchTerm doc
     const existing = await client.fetch(
-      `*[_type == "searchTerm" && lower(term) == $term][0]{_id, searchCount}`,
-      { term: normalized },
+      `*[_type == "searchTerm" && (lower(term) == $term || (defined(slug) && slug == $slug))][0]{_id, searchCount}`,
+      { term: normalized, slug: slug || "" },
     );
 
     if (existing) {
@@ -29,6 +29,7 @@ export async function POST(req: Request) {
       await writeClient.create({
         _type: "searchTerm",
         term: normalized,
+        slug: slug,
         searchCount: 1,
         lastSearched: new Date().toISOString(),
       });
@@ -36,8 +37,8 @@ export async function POST(req: Request) {
 
     // Additionally, increment searchPopularity on the matching term document using writeClient
     const termDoc = await client.fetch(
-      `*[_type == "term" && lower(name) == $term][0]{ _id }`,
-      { term: normalized },
+      `*[_type == "term" && (lower(name) == $term || (defined(slug.current) && slug.current == $slug))][0]{ _id }`,
+      { term: normalized, slug: slug || "" },
     );
 
     if (termDoc?._id) {

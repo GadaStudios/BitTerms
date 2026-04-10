@@ -7,9 +7,10 @@ import { IoClose } from "react-icons/io5";
 import { FiSearch } from "react-icons/fi";
 import { motion, useAnimation } from "motion/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/routing";
+import { useSearchParams, useParams } from "next/navigation";
 
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -19,19 +20,30 @@ import { QUERY_TOP_TERMS } from "@/sanity/lib/queries";
 import { useContextProvider } from "@/components/provider";
 import { SearchFilterProps, searchFilterSchema } from "@/lib/validators";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Locale } from "@/lib/i18n-config";
+import { useTranslations } from "next-intl";
 
 interface Props {
   reverse?: boolean;
   className?: string;
 }
 
-type TopTerm = { _id: string; name: string; searchPopularity: number };
+type TopTerm = {
+  _id: string;
+  name: string;
+  slug: string;
+  searchPopularity: number;
+};
 
 export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
+  const t = useTranslations("search");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const params = useParams();
+  const lang = params.locale as Locale;
   const controls = useAnimation();
+  const id = React.useId();
   const { fetchTerms, bumpSearchVersion, setTerms } = useContextProvider();
 
   const [mounted, setMounted] = React.useState(false);
@@ -54,9 +66,9 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
     }
   }, [searchParams, form]);
 
-  async function handleBadgeClick(name: string) {
-    form.setValue("term", name);
-    await onSubmit({ term: name });
+  async function handleBadgeClick(term: TopTerm) {
+    form.setValue("term", term.name);
+    await onSubmit({ term: term.name }, term.slug);
   }
 
   function handleReset() {
@@ -70,13 +82,20 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
     router.push(`${pathname}?${params.toString()}` as Route, { scroll: false });
   }
 
-  async function onSubmit({ term }: SearchFilterProps) {
+  async function onSubmit(
+    data: SearchFilterProps,
+    forcedSlug?: string | React.BaseSyntheticEvent,
+  ) {
+    const { term } = data;
     const normalized = (term || "").trim();
     if (!normalized) return;
 
+    const slug =
+      typeof forcedSlug === "string" ? forcedSlug : slugify(normalized);
+
     // Create new URLSearchParams from current params
     const params = new URLSearchParams(searchParams.toString());
-    params.set("term", normalized);
+    params.set("term", slug);
     // Ensure letter and term are mutually exclusive
     params.delete("letter");
 
@@ -90,7 +109,9 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
 
     setItems((prev) => {
       const prevList = prev ?? [];
-      const idx = prevList.findIndex((t) => t.name.toLowerCase() === normLower);
+      const idx = prevList.findIndex(
+        (t) => t.name.toLowerCase() === normLower || t.slug === slug,
+      );
       if (idx >= 0) {
         const updated = [...prevList];
         updated[idx] = {
@@ -107,6 +128,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
       const newItem: TopTerm = {
         _id: `temp-${Date.now()}`,
         name: normalized,
+        slug: slug,
         searchPopularity: 1,
       };
       return [newItem, ...prevList].slice(0, 3);
@@ -116,12 +138,10 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
     setTerms((prev) => ({
       ...prev,
       data: prev.data.map((t) =>
-        t.name?.toLowerCase() === normLower
+        t.name?.toLowerCase() === normLower || t.slug === slug
           ? {
               ...t,
-              searchPopularity: (t as any).searchPopularity
-                ? (t as any).searchPopularity + 1
-                : 1,
+              searchPopularity: (t.searchPopularity ?? 0) + 1,
             }
           : t,
       ),
@@ -132,7 +152,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
       await fetch(`/api/search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ term: normalized }),
+        body: JSON.stringify({ term: normalized, slug }),
       });
 
       // After server records the search, refresh terms and top badges
@@ -142,7 +162,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
         const q = QUERY_TOP_TERMS();
         const top: TopTerm[] = await client
           .withConfig({ useCdn: true, token: undefined })
-          .fetch(q, { limit: 3 });
+          .fetch(q, { limit: 3, lang });
         setItems(top || []);
       } catch (e) {
         console.error("Failed to refresh top items", e);
@@ -164,7 +184,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
         const q = QUERY_TOP_TERMS();
         const data: TopTerm[] = await client
           .withConfig({ useCdn: true, token: undefined })
-          .fetch(q, { limit: 3 });
+          .fetch(q, { limit: 3, lang });
         if (!cancelled) setItems(data || []);
       } catch (e) {
         console.error(e);
@@ -176,7 +196,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [lang]);
 
   React.useEffect(() => {
     setMounted(true);
@@ -225,7 +245,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
                 <FormItem>
                   <FormControl>
                     <div
-                      id={React.useId()}
+                      id={id}
                       className="border-primary relative flex h-14 items-center rounded-full border p-1.5 transition-all duration-300 sm:h-16 md:h-[76px]"
                     >
                       <span className="pl-4 sm:pl-6">
@@ -244,7 +264,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
                         type="text"
                         autoComplete="off"
                         className="h-full! rounded-full border-transparent bg-transparent px-4! shadow-none placeholder:text-[#B4B4B4] focus-visible:border-transparent focus-visible:ring-0 md:text-lg"
-                        placeholder="Search bitcoin terms"
+                        placeholder={t("placeholder")}
                         {...field}
                       />
                       <Button
@@ -254,7 +274,9 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
                         }
                         className="h-full! md:px-8!"
                       >
-                        <span className="text-sm sm:text-base">Search</span>
+                        <span className="text-sm sm:text-base">
+                          {t("search_button")}
+                        </span>
                       </Button>
                     </div>
                   </FormControl>
@@ -276,7 +298,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
         className="mx-auto flex flex-row flex-wrap items-center justify-center gap-2 sm:items-start md:gap-3"
       >
         <p className="mt-1 text-sm font-normal sm:text-base">
-          {items && items?.length > 0 ? "Top Searched" : ""}
+          {items && items?.length > 0 ? t("top_searched") : ""}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-1">
           {loading
@@ -290,7 +312,7 @@ export const SearchComp: React.FC<Props> = ({ reverse, className }) => {
                 <Badge
                   key={idx}
                   role="button"
-                  onClick={() => handleBadgeClick(tag.name)}
+                  onClick={() => handleBadgeClick(tag)}
                   className="bg-primary/80 cursor-pointer px-2 py-1 text-xs font-normal text-white sm:px-4 sm:text-sm"
                 >
                   {tag.name}

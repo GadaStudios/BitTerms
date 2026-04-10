@@ -4,14 +4,17 @@ import React from "react";
 import NextJSTopLoader from "nextjs-toploader";
 
 import { Toaster } from "./ui/sonner";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+
 import { client } from "@/sanity/lib/client";
-import { QUERY_TERMS } from "@/sanity/lib/queries";
+import { QUERY_TERMS_PAGED } from "@/sanity/lib/queries";
 import { ScrollToTop } from "./scroll";
+import { Locale } from "@/lib/i18n-config";
 
 export type TermDataProps = {
   _id: string;
   name?: string;
+  slug?: string;
   definition?: string;
   technicalDefinition?: string;
   author?: string;
@@ -23,6 +26,8 @@ export type TermDataProps = {
 type TermProps = {
   data: Array<TermDataProps>;
   isFetching: boolean;
+  isFetchingMore: boolean;
+  hasMore: boolean;
   error: string | null;
 };
 
@@ -32,8 +37,8 @@ interface GlobalContextProps {
   activeFilter: string | null;
   setActiveFilter: React.Dispatch<React.SetStateAction<string | null>>;
 
-  handleClick: (label: string) => void;
   fetchTerms: (shouldShowLoader: boolean) => Promise<void>;
+  fetchMoreTerms: () => Promise<void>;
   bumpSearchVersion: () => void;
   searchVersion: number;
 }
@@ -42,14 +47,16 @@ const GlobalContext = React.createContext<GlobalContextProps | undefined>(
   undefined,
 );
 
-function GlobalProvider(props: { children: React.ReactNode }) {
-  const router = useRouter();
+function GlobalProvider(props: { children: React.ReactNode; lang: Locale }) {
+  const searchParams = useSearchParams();
 
   const [activeFilter, setActiveFilter] =
     React.useState<GlobalContextProps["activeFilter"]>(null);
   const [terms, setTerms] = React.useState<TermProps>({
     data: [],
     isFetching: true,
+    isFetchingMore: false,
+    hasMore: true,
     error: null,
   });
 
@@ -59,51 +66,87 @@ function GlobalProvider(props: { children: React.ReactNode }) {
     setSearchVersion((v) => v + 1);
   }, []);
 
-  const handleFetchTerms = async (shouldShowLoader: boolean) => {
-    setTerms((prev) => ({ ...prev, isFetching: shouldShowLoader ?? true }));
+  const pageSize = 20;
+  const termParam = (searchParams.get("term") ?? "").trim().toLowerCase();
+  const letterParam = (searchParams.get("letter") ?? "").trim();
+  const termsCountRef = React.useRef(0);
+
+  React.useEffect(() => {
+    termsCountRef.current = terms.data.length;
+  }, [terms.data.length]);
+
+  const handleFetchTerms = React.useCallback(
+    async (shouldShowLoader: boolean) => {
+      setTerms((prev) => ({
+        ...prev,
+        isFetching: shouldShowLoader ?? true,
+        isFetchingMore: false,
+        hasMore: true,
+        error: null,
+        data: [],
+      }));
+      try {
+        const query = QUERY_TERMS_PAGED();
+        const items: Array<TermDataProps> = await client.fetch(query, {
+          lang: props.lang,
+          term: termParam || null,
+          letter: letterParam || null,
+          offset: 0,
+          end: pageSize,
+        });
+
+        setTerms((prev) => ({
+          ...prev,
+          isFetching: false,
+          hasMore: items.length === pageSize,
+          data: items,
+        }));
+      } catch (error) {
+        const errMsg =
+          error instanceof Error ? error.message : "Problem fetching terms";
+        setTerms((prev) => ({ ...prev, isFetching: false, error: errMsg }));
+      }
+    },
+    [letterParam, props.lang, termParam],
+  );
+
+  const handleFetchMore = React.useCallback(async () => {
+    setTerms((prev) => {
+      if (prev.isFetching || prev.isFetchingMore || !prev.hasMore) return prev;
+      return { ...prev, isFetchingMore: true, error: null };
+    });
+
     try {
-      const query = QUERY_TERMS();
-      const items: Array<TermDataProps> = await client.fetch(query);
+      const query = QUERY_TERMS_PAGED();
+      const offset = termsCountRef.current;
+      const items: Array<TermDataProps> = await client.fetch(query, {
+        lang: props.lang,
+        term: termParam || null,
+        letter: letterParam || null,
+        offset,
+        end: offset + pageSize,
+      });
 
       setTerms((prev) => ({
         ...prev,
-        isFetching: false,
-        data: items,
+        isFetchingMore: false,
+        hasMore: items.length === pageSize,
+        data: [...prev.data, ...items],
       }));
     } catch (error) {
       const errMsg =
-        error instanceof Error ? error.message : "Problem fetching terms";
-      setTerms((prev) => ({ ...prev, isFetching: false, error: errMsg }));
+        error instanceof Error ? error.message : "Problem fetching more terms";
+      setTerms((prev) => ({ ...prev, isFetchingMore: false, error: errMsg }));
     }
-  };
-
-  const handleClick = React.useCallback(
-    (label: string) => {
-      const params = new URLSearchParams(
-        typeof window !== "undefined" ? window.location.search : "",
-      );
-
-      if (label === "all") {
-        params.delete("letter");
-        params.delete("term");
-      } else {
-        params.set("letter", label);
-        params.delete("term");
-      }
-
-      setActiveFilter(label === "all" ? null : label);
-      router.push(`/?${params.toString()}`, { scroll: false });
-    },
-    [router],
-  );
+  }, [letterParam, props.lang, termParam]);
 
   React.useEffect(() => {
     handleFetchTerms(true);
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      setActiveFilter(params.get("letter"));
-    }
-  }, []);
+  }, [handleFetchTerms]);
+
+  React.useEffect(() => {
+    setActiveFilter(searchParams.get("letter"));
+  }, [searchParams]);
 
   const contextValue: GlobalContextProps = React.useMemo(
     () => ({
@@ -111,13 +154,21 @@ function GlobalProvider(props: { children: React.ReactNode }) {
       setTerms,
       activeFilter,
       setActiveFilter,
-      handleClick,
       fetchTerms: (shouldShowLoader: boolean) =>
         handleFetchTerms(shouldShowLoader),
+      fetchMoreTerms: () => handleFetchMore(),
       bumpSearchVersion,
       searchVersion,
     }),
-    [activeFilter, handleClick, terms, bumpSearchVersion, searchVersion],
+    [
+      terms,
+      activeFilter,
+      setActiveFilter,
+      handleFetchMore,
+      handleFetchTerms,
+      bumpSearchVersion,
+      searchVersion,
+    ],
   );
 
   return (
