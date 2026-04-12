@@ -1,20 +1,25 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { motion, useAnimation } from "motion/react";
+import { usePathname, Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
-import Wrapper from "@/components/wrapper";
-import { cn, isActivePath } from "@/lib/utils";
-import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { Locale } from "@/lib/i18n-config";
+import Wrapper from "./wrapper";
+import { Separator } from "./ui/separator";
+import { LanguageSwitcher } from "./language-switcher";
 
 export const Header = () => {
+  const t = useTranslations("navigation");
+  const locale = useLocale() as Locale;
   const pathname = usePathname();
   const controls = useAnimation();
   const [mounted, setMounted] = React.useState(false);
 
-  const disabled = pathname !== "/";
+  const disabled = pathname !== "/" && pathname !== "";
 
   React.useEffect(() => {
     setMounted(true);
@@ -42,7 +47,8 @@ export const Header = () => {
       className="fixed top-6 left-0 z-50 w-full"
     >
       <Wrapper>
-        <nav className="mx-auto flex h-14 w-full max-w-[369px] items-center justify-center rounded-full bg-black/70 px-7 py-2 backdrop-blur-xs sm:h-[60px]">
+        {/* <nav className="mx-auto flex h-14 w-full max-w-fit items-center justify-center rounded-full bg-black/70 px-7 py-2 backdrop-blur-xs sm:h-[60px]"> */}
+        <nav className="mx-auto flex h-14 w-full max-w-fit items-center justify-center rounded-full bg-black/70 py-2 pr-4 pl-7 backdrop-blur-xs sm:h-[60px]">
           <div className="flex h-5 items-center justify-between">
             <Link href="/">
               <svg
@@ -50,7 +56,7 @@ export const Header = () => {
                 className={cn(
                   "fill-background hover:fill-primary h-4 w-14 min-[390px]:h-5 min-[390px]:w-16",
                   {
-                    "fill-primary": isActivePath("/", pathname),
+                    "fill-primary": pathname === "/" || pathname === "",
                   },
                 )}
               >
@@ -75,13 +81,15 @@ export const Header = () => {
               className={cn(
                 "hover:text-primary text-background font-normal tracking-[-2%]",
                 {
-                  "text-primary": isActivePath("/about", pathname),
-                  "hover:italic": !isActivePath("/about", pathname),
+                  "text-primary":
+                    pathname === "/about" || pathname === "/about/",
+                  "hover:italic":
+                    pathname !== "/about" && pathname !== "/about/",
                 },
               )}
             >
               <span className="text-xs min-[390px]:text-sm md:text-base">
-                About
+                {t("about")}
               </span>
             </Link>
 
@@ -95,16 +103,25 @@ export const Header = () => {
               className={cn(
                 "hover:text-primary text-background font-normal tracking-[-2%]",
                 {
-                  "text-primary": isActivePath("/suggest", pathname),
-                  "hover:italic": !isActivePath("/suggest", pathname),
+                  "text-primary":
+                    pathname === "/suggest" || pathname === "/suggest/",
+                  "hover:italic":
+                    pathname !== "/suggest" && pathname !== "/suggest/",
                 },
               )}
             >
               <span className="text-xs min-[390px]:text-sm md:text-base">
-                Suggest a term
+                {t("suggest")}
               </span>
             </Link>
           </div>
+
+          <Separator
+            orientation="vertical"
+            className="bg-background/40 mx-4 h-4!"
+          />
+
+          <LanguageSwitcher lang={locale} />
         </nav>
       </Wrapper>
     </motion.header>

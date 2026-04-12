@@ -1,32 +1,45 @@
 import z from "zod";
 
 export const searchFilterSchema = z.object({
-  term: z
-    .string()
-    .min(1, "Minimum of 1 characters allowed")
-    .max(50, "Maximum of 50 characters allowed"),
+  term: z.string().min(1).max(50),
 });
 
 export type SearchFilterProps = z.infer<typeof searchFilterSchema>;
 
-export const suggestFormSchema = z.object({
-  author: z
-    .string()
-    .max(50, "First Name must be at most 50 characters")
-    .optional(),
-  name: z
-    .string()
-    .min(3, "Term name must be at least 3 characters")
-    .max(100, "Term name must be at most 100 characters"),
-  definition: z
-    .string()
-    .max(300, "Simplify Definition must be at most 300 characters")
-    .optional(),
-  technicalDefinition: z
-    .string()
-    .min(2, "Technical Definition must be at least 2 characters")
-    .max(1000, "Technical Definition must be at most 1000 characters"),
-  illustration: z.instanceof(File).optional(),
-});
+export type SuggestValidationMessages = {
+  name_min?: string;
+  name_max?: string;
+  author_max?: string;
+  definition_max?: string;
+  technical_min?: string;
+  technical_max?: string;
+};
 
-export type SuggestFormValues = z.infer<typeof suggestFormSchema>;
+export const getSuggestFormSchema = (dictionary?: SuggestValidationMessages) =>
+  z.object({
+    author: z
+      .string()
+      .max(50, dictionary?.author_max)
+      .optional()
+      .or(z.literal("")),
+    name: z
+      .string()
+      .min(3, dictionary?.name_min)
+      .max(100, dictionary?.name_max),
+    definition: z
+      .string()
+      .max(300, dictionary?.definition_max)
+      .optional()
+      .or(z.literal("")),
+    technicalDefinition: z
+      .string()
+      .min(2, dictionary?.technical_min)
+      .max(1000, dictionary?.technical_max),
+    illustration: z.instanceof(File).optional(),
+  });
+
+export const suggestFormSchema = getSuggestFormSchema();
+
+export type SuggestFormValues = z.infer<
+  ReturnType<typeof getSuggestFormSchema>
+>;

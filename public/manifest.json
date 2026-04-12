@@ -10,7 +10,7 @@
   "scope": "/",
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "/icon.png",
       "sizes": "any",
       "type": "image/png"
     }
@@ -18,7 +18,7 @@
   "categories": ["education"],
   "screenshots": [
     {
-      "src": "/logo.png",
+      "src": "/icon.png",
       "sizes": "540x720",
       "type": "image/png"
     }

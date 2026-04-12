@@ -3,6 +3,8 @@
 import * as React from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "@/i18n/routing";
+import { Route } from "next";
 
 import { cn } from "@/lib/utils";
 import { SearchComp } from "./search.comp";
@@ -12,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TermItemComp } from "@/components/term-item";
 import { TermDataProps, useContextProvider } from "@/components/provider";
+import { useTranslations } from "next-intl";
 
 export const TermsComp = () => {
   return (
@@ -27,10 +30,7 @@ export const TermsComp = () => {
                 </div>
                 <ul className="flex flex-col">
                   {[...new Array(2)].map((_, idx) => (
-                    <li
-                      key={idx}
-                      className="flex justify-between gap-3.5 border-b py-8 first-of-type:border-t last-of-type:border-b-0"
-                    >
+                    <li key={idx} className="flex justify-between gap-4 py-8">
                       <div className="flex max-w-[500px] flex-1 flex-col gap-6">
                         <div className="flex flex-col gap-4 md:gap-6">
                           <div className="flex items-center gap-4">
@@ -60,9 +60,26 @@ export const TermsComp = () => {
 };
 
 const Terms = () => {
-  const { terms, handleClick } = useContextProvider();
-
+  const t = useTranslations("terms");
+  const { terms, fetchMoreTerms } = useContextProvider();
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const handleClick = (label: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (label === "all") {
+      params.delete("letter");
+      params.delete("term");
+    } else {
+      params.set("letter", label);
+      params.delete("term");
+    }
+
+    router.push(`${pathname}?${params.toString()}` as Route, { scroll: false });
+  };
+
   const activeFilter = searchParams.get("letter");
   const activeTerm = searchParams.get("term") ?? "";
 
@@ -70,6 +87,7 @@ const Terms = () => {
   const [activeToggle, setActiveToggle] = React.useState<string | null>(null);
 
   const termsRef = React.useRef<HTMLDivElement | null>(null);
+  const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     if ((activeFilter || activeTerm) && termsRef.current) {
@@ -85,16 +103,36 @@ const Terms = () => {
     }
   }, [activeFilter, activeTerm]);
 
+  React.useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry?.isIntersecting) return;
+        if (terms.isFetching || terms.isFetchingMore || !terms.hasMore) return;
+        fetchMoreTerms();
+      },
+      { rootMargin: "600px" },
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [fetchMoreTerms, terms.hasMore, terms.isFetching, terms.isFetchingMore]);
+
   const termsData = (terms?.data ?? []) as TermDataProps[];
   let filteredTerms = termsData;
 
   if (activeTerm) {
     const needle = activeTerm.toLowerCase();
     filteredTerms = termsData.filter(
-      (t) => t.name && t.name.toLowerCase().includes(needle),
+      (t) =>
+        (t.name && t.name.toLowerCase().includes(needle)) ||
+        (t.slug && t.slug.toLowerCase() === needle),
     );
   } else if (activeFilter && activeFilter !== "all") {
-    if (activeFilter === "symbol") {
+    if (activeFilter === "#") {
       filteredTerms = termsData.filter(
         (t) => t.name && !/^[A-Z]/i.test(t.name[0]),
       );
@@ -109,7 +147,7 @@ const Terms = () => {
   const groupedTerms = filteredTerms.reduce(
     (acc: Record<string, Term[]>, term) => {
       const firstChar = term.name ? term.name[0].toUpperCase() : "";
-      const letter = /^[A-Z]$/.test(firstChar) ? firstChar : "symbol";
+      const letter = /^[A-Z]$/.test(firstChar) ? firstChar : "#";
       if (!acc[letter]) acc[letter] = [];
       acc[letter].push(term);
       return acc;
@@ -141,7 +179,12 @@ const Terms = () => {
         ) : (
           <div className="flex w-full flex-wrap justify-center gap-1 whitespace-pre md:gap-2">
             {ABC_FILTERS.map((label) => {
-              const displayLabel = label === "symbol" ? "#" : label;
+              const displayLabel =
+                label === "all"
+                  ? t("abc_filters.all")
+                  : label === "#"
+                    ? t("abc_filters.symbol")
+                    : label;
               const isActive =
                 label === "all"
                   ? activeFilter === null
@@ -211,7 +254,7 @@ const Terms = () => {
               { "mx-auto": filteredTerms.length === 0 },
             )}
           >
-            <span>Search Result:</span>
+            <span>{t("search_result")}:</span>
             <strong>{filteredTerms.length}</strong>
           </p>
         )}
@@ -228,23 +271,20 @@ const Terms = () => {
           />
         )}
 
-        {!terms.isFetching &&
-          ABC_FILTERS.filter((f) => f !== "all").map((letter) => {
-            const displayLabel = letter === "symbol" ? "#" : letter;
-            const termsForLetter = groupedTerms[letter];
-            if (!termsForLetter?.length) return null;
-
-            return (
+        <div className="flex w-full flex-col gap-8 md:gap-12">
+          {Object.entries(groupedTerms)
+            .sort(([a], [b]) =>
+              a === "#" ? 1 : b === "#" ? -1 : a.localeCompare(b),
+            )
+            .map(([letter, items]) => (
               <div key={letter} className="flex flex-col gap-2">
-                {/* {!activeFilter && !activeTerm && ( */}
                 <p className="py-2 text-[40px] font-medium md:text-5xl lg:text-[64px]">
-                  {displayLabel}.
+                  {letter}.
                 </p>
-                {/* )} */}
                 <ul className="flex flex-col">
-                  {termsForLetter.map((term, idx) => (
+                  {items.map((term) => (
                     <TermItemComp
-                      key={idx}
+                      key={term.slug}
                       term={term}
                       activeToggle={activeToggle}
                       setActiveToggle={setActiveToggle}
@@ -254,8 +294,54 @@ const Terms = () => {
                   ))}
                 </ul>
               </div>
-            );
-          })}
+            ))}
+        </div>
+
+        <div ref={loadMoreRef} className="h-px w-full" />
+
+        {terms.error && terms.data.length > 0 && (
+          <div className="mx-auto flex w-full max-w-md flex-col items-center gap-3 py-8 text-center">
+            <p className="text-muted-foreground text-sm">
+              {t("load_more_error")}
+            </p>
+            <p className="text-muted-foreground text-xs">{terms.error}</p>
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => fetchMoreTerms()}
+              disabled={terms.isFetchingMore || !terms.hasMore}
+            >
+              {t("retry")}
+            </Button>
+          </div>
+        )}
+
+        {terms.isFetchingMore && (
+          <div className="flex flex-col gap-2">
+            <div className="flex items-end gap-2">
+              <Skeleton className="h-10 w-max rounded-[12px] px-6 font-medium md:h-12 lg:h-16" />
+              <Skeleton className="mb-2 size-4 rounded-full" />
+            </div>
+            <ul className="flex flex-col">
+              <li className="flex justify-between gap-4 py-8">
+                <div className="flex max-w-[500px] flex-1 flex-col gap-6">
+                  <div className="flex flex-col gap-4 md:gap-6">
+                    <div className="flex items-center gap-4">
+                      <Skeleton className="h-[18px] w-32 font-medium md:h-5 lg:h-6" />
+                      <Skeleton className="size-9 lg:size-12" />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-2">
+                      <Skeleton className="h-4 w-full md:h-[18px]" />
+                      <Skeleton className="h-4 w-[80%] md:h-[18px]" />
+                    </div>
+                    <Skeleton className="h-4 w-[60%]" />
+                  </div>
+                </div>
+                <Skeleton className="size-[92px] origin-top-right rounded-[12px] md:size-40" />
+              </li>
+            </ul>
+          </div>
+        )}
       </div>
     </Wrapper>
   );

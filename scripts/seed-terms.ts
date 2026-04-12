@@ -103,11 +103,16 @@ async function main() {
         _id,
         _type: "term",
         name,
+        slug: {
+          _type: "slug",
+          current: slug,
+        },
         definition: term.definition || "",
         technicalDefinition: term.technicalDefinition || "",
         audio: audio || undefined,
         illustration: illustration || undefined,
         approved: true,
+        language: "en",
       };
 
       const created = await writeClient.createOrReplace(doc);

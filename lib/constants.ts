@@ -31,7 +31,7 @@ const FOOTER_SOCIALS = [
 const ABC_FILTERS = [
   "all",
   ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)),
-  "symbol",
+  "#",
 ];
 
 const INTRO_DATA = [

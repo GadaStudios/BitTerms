@@ -21,7 +21,6 @@ import {
 } from "react-dropzone";
 import { toast } from "sonner";
 import { GrTrash } from "react-icons/gr";
-import { buttonVariants } from "@/components/ui/button";
 
 type DirectionOptions = "rtl" | "ltr" | undefined;
 
@@ -289,14 +288,13 @@ export const FileUploaderItem = forwardRef<
     <div
       ref={ref}
       className={cn(
-        buttonVariants({ variant: "outline2" }),
         "relative h-6 cursor-pointer justify-between p-1",
         className,
         isSelected ? "bg-muted" : "",
       )}
       {...props}
     >
-      <div className="flex h-full w-full items-center gap-1.5 leading-none font-medium tracking-tight">
+      <div className="flex h-full w-full items-center leading-none font-medium tracking-tight">
         {children}
       </div>
       <button
@@ -346,8 +344,10 @@ export const FileInput = forwardRef<
         {children}
       </div>
       <Input
+        // eslint-disable-next-line react-hooks/refs
         ref={dropzoneState.inputRef}
         disabled={isLOF}
+        // eslint-disable-next-line react-hooks/refs
         {...dropzoneState.getInputProps()}
         className={`${isLOF ? "cursor-not-allowed" : ""}`}
       />

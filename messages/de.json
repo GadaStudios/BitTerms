@@ -1,0 +1,218 @@
+{
+  "navigation": {
+    "about": "Über uns",
+    "suggest": "Begriff vorschlagen",
+    "contribute": "Wie man beiträgt"
+  },
+  "hero": {
+    "title_part1": "BITCOIN",
+    "title_part2": "BEGRIFFE",
+    "subtitle": "ENDLICH EINFACH GEMACHT",
+    "description": "Tauchen Sie mit weniger Fachjargon und ohne Verwirrung in Bitcoin ein. Bit Terms ist überall für Sie da und hilft Ihnen, Bitcoin zu verstehen – eine klare Definition nach der anderen, mit freundlichen Bildern, damit Sie verstehen und sich erinnern."
+  },
+  "search": {
+    "placeholder": "Bitcoin-Begriffe suchen",
+    "no_results": "Keine Ergebnisse gefunden",
+    "recent": "Kürzlich hinzugefügt",
+    "top_searched": "Am häufigsten gesucht:",
+    "search_button": "Suchen"
+  },
+  "terms": {
+    "simplified": "Vereinfachte Definition",
+    "technical": "Technische Definition",
+    "author": "Autor",
+    "all": "Alle",
+    "see_technical": "Technische Definition anzeigen",
+    "see_less": "Weniger anzeigen",
+    "search_result": "Suchergebnis",
+    "load_more_error": "Weitere Begriffe konnten nicht geladen werden.",
+    "retry": "Erneut versuchen",
+    "abc_filters": {
+      "all": "alle",
+      "symbol": "#"
+    }
+  },
+  "about": {
+    "title": "Willkommen bei Bit Terms",
+    "description": "Bitcoin kann eine Menge „hashe dies“, „Node jenes“ sein. Es ist, als hätte es eine eigene Sprache. Es ist fast normal, sich verloren oder sogar etwas gestresst zu fühlen, wenn man versucht, Schritt zu halten. BitTerms macht Bitcoin-Begriffe zu normalen Wörtern. Wir nehmen diese komplizierten Begriffe und übersetzen sie in alltägliche Gespräche. Kein Stress. Lernen Sie einfach in Ihrem eigenen Tempo.",
+    "intro_button": "Alle Begriffe ansehen",
+    "intro_data": [
+      {
+        "title": "CoinJoin",
+        "description": "CoinJoin mischt Ihr Bitcoin mit dem anderer in einer einzigen Transaktion, um die Rückverfolgung zu erschweren – für mehr Privatsphäre."
+      },
+      {
+        "title": "Hash",
+        "description": "Ein Hash ist ein gemischter digitaler Fingerabdruck, der zur Sicherung von Bitcoin-Daten verwendet wird."
+      },
+      {
+        "title": "Knoten",
+        "description": "Ein Knoten ist ein Computer, der hilft, das Bitcoin-Netzwerk zu betreiben, zu unterstützen und Informationen zu teilen."
+      }
+    ],
+    "contribute": {
+      "title": "Wie man beiträgt",
+      "p1": "Möchten Sie helfen, Bitcoin zugänglicher zu machen? Sie sind hier richtig. Dieser Abschnitt zeigt Ihnen, wie Sie sich bei BitTerms einbringen können. Ob Sie Begriffe vereinfachen, Illustrationen zeichnen oder Verbesserungen vorschlagen – wir haben es einfach gemacht, einzusteigen und mit der Community zusammenzuarbeiten.",
+      "p2": "Helfen Sie anderen beim Lernen, indem Sie Ihre eigenen einfachen Erklärungen hinzufügen, Definitionen vorschlagen, Feedback teilen oder mit Bildern beitragen. Jeder kleine Beitrag hilft jemand anderem beim Lernen.",
+      "suggest_button": "Begriff vorschlagen",
+      "github_button": "GitHub-Repo ansehen",
+      "process_data": [
+        {
+          "title": "Weboberfläche",
+          "description": "Für nicht-technische Benutzer: Besuchen Sie BitTerms, navigieren Sie zur Seite 'Begriff vorschlagen', füllen Sie das Formular mit Ihren Beitragsdetails aus und senden Sie es ab. Wir werden es prüfen und zur Plattform hinzufügen."
+        },
+        {
+          "title": "GitHub-Issue",
+          "description": "Für technische Mitwirkende: Erstellen Sie ein neues GitHub-Issue mit unserer Vorlage, die Pflichtfelder (Begriffsname, technische Definition) und optionale Felder (einfache Definition, Illustration, Audiodatei, Autorenname) enthält."
+        },
+        {
+          "title": "Qualitätsstandards sicherstellen",
+          "description": "Stellen Sie sicher, dass Ihre Definitionen genau und aktuell sind, verwenden Sie eine klare und präzise Sprache, fügen Sie Quellen für spezifische Fakten hinzu und halten Sie Illustrationen sauber und leicht verständlich."
+        },
+        {
+          "title": "Respektvoll und kooperativ sein",
+          "description": "BitTerms ist eine Gemeinschaftsarbeit. Teilen Sie Feedback freundlich, bleiben Sie offen für Vorschläge, respektieren Sie andere Mitwirkende und konzentrieren Sie sich darauf, Bitcoin für alle klarer zu machen."
+        }
+      ]
+    },
+    "support": {
+      "title": "Menschen helfen, Bitcoin zu verstehen – ein Wort nach dem anderen!",
+      "description": "BitTerms ist nicht nur eine Liste von Wörtern; es ist ein fortlaufendes Projekt, um Wissen zu teilen und Bitcoin für jeden zugänglich zu machen. So machen wir es.",
+      "support_data": [
+        {
+          "title": "Begriffsvereinfachung",
+          "description": "Wir verwandeln komplexes Bitcoin-Fachchinesisch in eine einfache, alltägliche Sprache. Wenn Sie es einem Freund bei einer Tasse Kaffee, einem 9-jährigen Kind oder einem Opa erklären können, finden Sie es hier."
+        },
+        {
+          "title": "Illustrationen",
+          "description": "Wir kombinieren klare Definitionen mit einfachen Illustrationen, um das Lernen intuitiv zu gestalten. Denn manchmal schafft eine Skizze, was ein Absatz nicht kann: Sie überbrückt die Lücke zwischen Verwirrung und Klarheit."
+        },
+        {
+          "title": "Open Source",
+          "description": "Fügen Sie Ihre eigenen einfachen Definitionen hinzu, schlagen Sie Bearbeitungen vor, teilen Sie Feedback oder laden Sie Bilder hoch. Jeder Beitrag macht Bitcoin für jemand anderen klarer. Stück für Stück bauen wir gemeinsam Verständnis auf."
+        }
+      ]
+    },
+    "guidelines": {
+      "title": "Richtlinien für Beiträge",
+      "suggest_button": "Begriff vorschlagen",
+      "github_button": "GitHub-Repo ansehen",
+      "guideline_data": [
+        {
+          "title": "Leitfaden zur Begriffsvereinfachung",
+          "guides": [
+            {
+              "label": "Für alle schreiben",
+              "description": "Verwenden Sie eine alltägliche, anfängerfreundliche Sprache. Vermeiden Sie Fachjargon oder übermäßig technische Begriffe, es sei denn, es ist absolut notwendig, und erklären Sie sie, wenn Sie sie verwenden."
+            },
+            {
+              "label": "Kurz halten",
+              "description": "Zielen Sie auf 1–2 klare Sätze pro vereinfachter Definition ab. Stellen Sie sich vor, Sie erklären es einem neugierigen 12-Jährigen."
+            },
+            {
+              "label": "Keine Gedankenstriche oder komplexe Formatierung",
+              "description": "Vermeiden Sie lange Gedankenstriche oder übermäßig strukturierte Formate; bleiben Sie im Konversationston und menschlich."
+            },
+            {
+              "label": "Bleiben Sie der Bedeutung treu",
+              "description": "Verzerren Sie bei der Vereinfachung nicht die ursprüngliche Bedeutung. Überprüfen Sie sie mit der Standarddefinition, um die Genauigkeit zu gewährleisten."
+            }
+          ]
+        },
+        {
+          "title": "Illustrationsleitfaden",
+          "guides": [
+            {
+              "label": "Verwenden Sie den Strichmännchen-Stil",
+              "description": "Alle Illustrationen sollten dem verspielten, minimalistischen Strichmännchen-Stil folgen, den wir übernommen haben: einfache Formen, klare Aktionen und ausdrucksstarke Gesten."
+            },
+            {
+              "label": "Zur Definition passen",
+              "description": "Illustrationen sollten die vereinfachte Definition des Begriffs visuell darstellen und den Benutzern helfen, sie auf einen Blick zu verstehen."
+            },
+            {
+              "label": "Nur weißer Hintergrund",
+              "description": "Halten Sie alle Illustrationen auf einem einfarbigen weißen Hintergrund, um die visuelle Konsistenz im gesamten Projekt zu gewährleisten."
+            },
+            {
+              "label": "Verwenden Sie Vektorformat",
+              "description": "Reichen Sie Ihre Illustrationen als skalierbare Vektorgrafiken (SVG oder hochauflösendes PNG) ein, um sicherzustellen, dass sie scharf und anpassungsfähig bleiben."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "suggest": {
+    "title": "Begriff vorschlagen",
+    "description": "Verwirrender Fachjargon? Nicht hier. Von der Marktfrau bis zum Technikfreak – BitTerms hilft jedem, Bitcoin zu verstehen, eine einfache Definition nach der anderen.",
+    "form": {
+      "name": "Name des Begriffs",
+      "slug": "Slug",
+      "definition": "Vereinfachte Definition",
+      "technical": "Technische Definition",
+      "author": "Vollständiger Name",
+      "submit": "Absenden",
+      "success_title": "Vorschlag gesendet!",
+      "success_description": "Vielen Dank für Ihren Beitrag zu BitTerms. Wir werden Ihre Einsendung in Kürze prüfen.",
+      "error_title": "Etwas ist schiefgelaufen",
+      "error_description": "Beim Absenden ist ein Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+      "optional": "(Optional)",
+      "upload_illustration": "Illustration hochladen",
+      "drag_drop": "Dokument hierher ziehen und ablegen oder durchsuchen",
+      "supported_files": "Unterstützte Dateien: JPEG, PNG, SVG.",
+      "max_file_size": "Max. Dateigröße:",
+      "submitting": "Wird gesendet...",
+      "submission_failed": "Sendung fehlgeschlagen",
+      "submission_error": "Beim Senden ist ein Fehler aufgetreten",
+      "validation": {
+        "name_min": "Der Begriffname muss mindestens 3 Zeichen lang sein",
+        "name_max": "Der Begriffname darf höchstens 100 Zeichen lang sein",
+        "author_max": "Der Autorenname darf höchstens 50 Zeichen lang sein",
+        "definition_max": "Die vereinfachte Definition darf höchstens 300 Zeichen lang sein",
+        "technical_min": "Die technische Definition muss mindestens 2 Zeichen lang sein",
+        "technical_max": "Die technische Definition darf höchstens 1000 Zeichen lang sein"
+      }
+    }
+  },
+  "not_found": {
+    "title": "Seite nicht gefunden",
+    "back_to_home": "Zurück zur Startseite"
+  },
+  "metadata": {
+    "title": "BitTerms",
+    "description": "Bitcoin-Begriffe endlich einfach gemacht. Tauchen Sie mit weniger Fachjargon und freundlichen Bildern in Bitcoin ein.",
+    "keywords": [
+      "Bitcoin",
+      "Kryptowährung",
+      "Bitcoin-Begriffe",
+      "Krypto-Glossar",
+      "Bitcoin-Bildung",
+      "Bitcoin lernen",
+      "Bitcoin-Definitionen",
+      "Blockchain",
+      "Krypto-Begriffe",
+      "Bitcoin erklärt"
+    ],
+    "about": {
+      "title": "Über BitTerms",
+      "description": "Erfahren Sie mehr über unsere Mission, die Bitcoin-Terminologie für alle zugänglich zu machen.",
+      "keywords": [
+        "über BitTerms",
+        "Bitcoin-Bildungsprojekt",
+        "Kryptowährung lernen",
+        "Open-Source-Bitcoin-Begriffe"
+      ]
+    },
+    "suggest": {
+      "title": "Begriff vorschlagen",
+      "description": "Reichen Sie einen Bitcoin-Begriff zur Prüfung und möglichen Aufnahme in BitTerms ein.",
+      "keywords": [
+        "Bitcoin-Begriff vorschlagen",
+        "zu BitTerms beitragen",
+        "Bitcoin-Definitionsbeitrag",
+        "von der Community beigesteuerte Begriffe"
+      ]
+    }
+  }
+}

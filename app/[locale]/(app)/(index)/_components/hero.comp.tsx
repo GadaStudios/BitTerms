@@ -3,8 +3,11 @@ import Wrapper from "@/components/wrapper";
 import { SearchComp } from "./search.comp";
 import { IllustrationComp } from "./illustration.comp";
 import React from "react";
+import { useTranslations } from "next-intl";
 
 export const HeroComp = () => {
+  const t = useTranslations("hero");
+
   return (
     <section className="text-background bg-foreground relative w-full">
       <Image
@@ -21,17 +24,14 @@ export const HeroComp = () => {
           <div className="mb-6 flex flex-col gap-4">
             <h1 className="flex flex-col text-center leading-[0.95]">
               <span className="flex items-end justify-center leading-[0.95]">
-                BITCOIN{" "}
+                {t("title_part1")}{" "}
                 <IllustrationComp className="ml-3 w-[102px] sm:mr-3 sm:ml-6 sm:w-[132px] md:w-[165px] lg:w-[189px]" />{" "}
-                TERMS
+                {t("title_part2")}
               </span>
-              <span>FINALLY MADE SIMPLE</span>
+              <span>{t("subtitle")}</span>
             </h1>
             <p className="mx-auto w-full max-w-[790px] text-base md:text-lg lg:text-xl">
-              Ease into Bitcoin with less jargon and no confusion. Bit Terms
-              meets wherever you are, helping you make sense of Bitcoin, one
-              clear definition at a time, with friendly visuals so you
-              understand and remember.
+              {t("description")}
             </p>
           </div>
 

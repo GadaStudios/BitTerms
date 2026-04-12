@@ -6,16 +6,47 @@ export const termsType = defineType({
   title: "Term",
   type: "document",
   icon: MdOutlineBrandingWatermark,
-  groups: [
-    {name: "details",title: "Details", default: true},
-    {name: "media",title: "Media"},
-    {name: "popularity",title: "Popularity"},
-  ],
   fields: [
+    defineField({
+      name: "language",
+      title: "Language",
+      type: "string",
+      readOnly: true,
+      // The document-internationalization plugin handles this field
+    }),
     defineField({
       name: "name",
       title: "Name of Term",
       type: "string",
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "name",
+        maxLength: 96,
+        isUnique: async (value, context) => {
+          const doc = context.document as
+            | { _id?: string; language?: string }
+            | undefined;
+          const language = doc?.language ?? "en";
+          const currentId = doc?._id;
+          const id = currentId?.replace(/^drafts\./, "");
+          const draft = id ? `drafts.${id}` : "";
+          const published = id ?? "";
+          const query = `count(*[_type == "term" && slug.current == $slug && language == $language && !(_id in [$draft, $published])]) == 0`;
+          return await context
+            .getClient({ apiVersion: "2025-02-19" })
+            .fetch(query, {
+              slug: value,
+              language,
+              draft,
+              published,
+            });
+        },
+      },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "audio",
@@ -24,7 +55,6 @@ export const termsType = defineType({
       options: {
         accept: "audio/*",
       },
-      group: "media",
     }),
     defineField({
       name: "author",
@@ -41,19 +71,16 @@ export const termsType = defineType({
       name: "definition",
       title: "Simplified Definition",
       type: "text",
-      group: "details",
     }),
     defineField({
       name: "technicalDefinition",
       title: "Technical Definition",
       type: "text",
-      group: "details",
     }),
     defineField({
       name: "illustration",
       title: "Illustration",
       type: "image",
-      group: "media",
     }),
     defineField({
       name: "searchPopularity",
@@ -62,7 +89,6 @@ export const termsType = defineType({
       description: "How often this term is searched",
       initialValue: 0,
       readOnly: true,
-      group: "popularity",
     }),
   ],
   orderings: [

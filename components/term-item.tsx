@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { TermDataProps } from "./provider";
 import { Button } from "@/components/ui/button";
 
+import { useTranslations } from "next-intl";
+
 interface Props {
   term: TermDataProps;
   activeToggle: string | null;
@@ -24,6 +26,7 @@ export const TermItemComp: React.FC<Props> = ({
   speakingId,
   setSpeakingId,
 }) => {
+  const t = useTranslations("terms");
   const isOpen = activeToggle === term.name;
 
   const handlePlaySound = async () => {
@@ -88,7 +91,7 @@ export const TermItemComp: React.FC<Props> = ({
                 }
                 className="text-primary w-max cursor-pointer text-base font-medium italic"
               >
-                See technical definition
+                {t("see_technical")}
               </p>
             )}
           </div>
@@ -142,7 +145,7 @@ export const TermItemComp: React.FC<Props> = ({
             >
               <div className="flex flex-col gap-2 md:gap-4">
                 <p className="text-base font-medium italic md:text-lg lg:text-xl">
-                  Technical Definition
+                  {t("technical")}
                 </p>
 
                 <div className="text-base font-normal md:text-lg lg:text-xl">
@@ -155,7 +158,7 @@ export const TermItemComp: React.FC<Props> = ({
                 onClick={() => setActiveToggle(null)}
                 className="text-primary w-max cursor-pointer text-base font-medium italic"
               >
-                See less
+                {t("see_less")}
               </p>
             </motion.div>
           )}
