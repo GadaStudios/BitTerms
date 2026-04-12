@@ -9,7 +9,7 @@ import { Footer } from "@/components/footer";
 import { GlobalProvider } from "@/components/provider";
 import { SanityLive } from "@/sanity/lib/live";
 import { routing } from "@/i18n/routing";
-import { Locale } from "@/lib/i18n-config";
+import { Locale } from "@/lib/i18n";
 
 export default async function RoutesLayout(props: {
   children: React.ReactNode;

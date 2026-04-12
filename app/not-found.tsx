@@ -3,7 +3,7 @@ import Wrapper from "@/components/wrapper";
 import { Link } from "@/i18n/routing";
 import { Header } from "@/components/header";
 import { buttonVariants } from "@/components/ui/button";
-import { i18n } from "@/lib/i18n-config";
+import { i18n } from "@/lib/i18n";
 import { getMessages, getTranslations } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 

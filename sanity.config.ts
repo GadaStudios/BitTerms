@@ -13,7 +13,7 @@ import { apiVersion, dataset, projectId } from "@/sanity/env";
 import { schema } from "@/sanity/schema";
 import { structure } from "@/sanity/structure";
 import { documentInternationalization } from "@sanity/document-internationalization";
-import { i18n } from "@/lib/i18n-config";
+import { i18n, languageNames } from "@/lib/i18n";
 
 export default defineConfig({
   basePath: "/studio",
@@ -30,7 +30,7 @@ export default defineConfig({
       // Required configuration
       supportedLanguages: i18n.locales.map((locale) => ({
         id: locale,
-        title: i18n.languageNames[locale],
+        title: languageNames[locale],
       })),
       schemaTypes: ["term"],
     }),
