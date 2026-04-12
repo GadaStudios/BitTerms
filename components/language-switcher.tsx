@@ -1,18 +1,27 @@
 "use client";
 
-import React from "react";
 import { usePathname, useRouter } from "@/i18n/routing";
-import { i18n, Locale } from "@/lib/i18n-config";
+import { i18n, languageNames, Locale } from "@/lib/i18n-config";
 import { cn } from "@/lib/utils";
-import { US, ES, FR, DE, TZ } from "country-flag-icons/react/3x2";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import { LuLanguages } from "react-icons/lu";
+
+// ✅ shadcn command
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@/components/ui/command";
+import { MdRadioButtonChecked } from "react-icons/md";
+import { getFlag } from "@/lib/language";
 
 export const LanguageSwitcher = ({
   lang,
@@ -30,15 +39,6 @@ export const LanguageSwitcher = ({
     router.replace(pathname, { locale: newLocale });
   };
 
-  const languageNames = i18n.languageNames;
-  const flags: Record<Locale, React.ComponentType<{ className?: string }>> = {
-    en: US,
-    es: ES,
-    fr: FR,
-    de: DE,
-    sw: TZ,
-  };
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -51,28 +51,47 @@ export const LanguageSwitcher = ({
           <span className="sr-only">Switch language</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-44 rounded-[14px]!">
-        {i18n.locales.map((locale) => (
-          <DropdownMenuCheckboxItem
-            key={locale}
-            checked={lang === locale}
-            onCheckedChange={(checked) => {
-              if (checked) {
-                handleLocaleChange(locale);
-              }
-            }}
-            className={cn("rounded-[12px]!", {
-              "bg-accent": lang === locale,
-            })}
-          >
-            <span className="flex items-center gap-2">
-              {React.createElement(flags[locale], {
-                className: "h-3 w-5",
+
+      <DropdownMenuContent
+        align="end"
+        className="min-w-56 overflow-hidden rounded-[14px]! p-0"
+      >
+        <Command>
+          {/* 🔍 Search input */}
+          <CommandInput placeholder="Search language..." />
+
+          {/* 📜 Scrollable list */}
+          <CommandList className="max-h-64 overflow-y-auto">
+            <CommandEmpty>No language found.</CommandEmpty>
+
+            <CommandGroup>
+              {i18n.locales.map((locale) => {
+                const Flag = getFlag(locale);
+
+                return (
+                  <CommandItem
+                    key={locale}
+                    onSelect={() => handleLocaleChange(locale)}
+                    className={cn(
+                      "flex cursor-pointer items-center gap-2 rounded-[10px]!",
+                      {
+                        "bg-accent": lang === locale,
+                      },
+                    )}
+                  >
+                    {Flag && <Flag className="h-3 w-5" />}
+                    <span className="flex-1">{languageNames[locale]}</span>
+
+                    {/* ✅ Selected indicator */}
+                    {lang === locale && (
+                      <MdRadioButtonChecked className="text-primary h-4 w-4" />
+                    )}
+                  </CommandItem>
+                );
               })}
-              <span>{languageNames[locale]}</span>
-            </span>
-          </DropdownMenuCheckboxItem>
-        ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
       </DropdownMenuContent>
     </DropdownMenu>
   );

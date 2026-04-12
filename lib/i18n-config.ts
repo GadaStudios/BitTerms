@@ -1,13 +1,17 @@
+import { getLanguageName } from "./language";
+import { baseLocales, defaultLocale } from "./generated-locales";
+
+if (!baseLocales.includes(defaultLocale as Locale)) {
+  throw new Error("defaultLocale must exist in baseLocales");
+}
+
 export const i18n = {
-  defaultLocale: "en",
-  locales: ["en", "es", "fr", "de", "sw"] as const,
-  languageNames: {
-    en: "English",
-    es: "Español",
-    fr: "Français",
-    de: "Deutsch",
-    sw: "Kiswahili",
-  } as const,
+  defaultLocale,
+  locales: baseLocales,
 } as const;
 
-export type Locale = (typeof i18n)["locales"][number];
+export type Locale = (typeof baseLocales)[number];
+
+export const languageNames = Object.fromEntries(
+  i18n.locales.map((locale) => [locale, getLanguageName(locale)]),
+) as Record<Locale, string>;
