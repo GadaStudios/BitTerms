@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
 import { cn } from "@/lib/utils";
-import { Locale } from "@/lib/i18n-config";
+import { Locale } from "@/lib/i18n";
 import Wrapper from "./wrapper";
 import { Separator } from "./ui/separator";
 import { LanguageSwitcher } from "./language-switcher";

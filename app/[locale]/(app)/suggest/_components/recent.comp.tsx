@@ -10,7 +10,7 @@ import { client } from "@/sanity/lib/client";
 import { QUERY_RECENT_ADDED } from "@/sanity/lib/queries";
 import { useRouter } from "@/i18n/routing";
 import { useParams } from "next/navigation";
-import { Locale } from "@/lib/i18n-config";
+import { Locale } from "@/lib/i18n";
 import { Route } from "next";
 import { useTranslations } from "next-intl";
 

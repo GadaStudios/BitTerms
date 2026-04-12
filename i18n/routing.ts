@@ -1,6 +1,6 @@
 import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
-import { i18n } from "@/lib/i18n-config";
+import { i18n } from "@/lib/i18n";
 
 export const routing = defineRouting({
   locales: i18n.locales as unknown as string[],

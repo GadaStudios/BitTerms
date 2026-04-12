@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "@/i18n/routing";
-import { i18n, languageNames, Locale } from "@/lib/i18n-config";
+import { i18n, languageNames, Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
