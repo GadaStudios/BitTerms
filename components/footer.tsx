@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { FOOTER_SOCIALS } from "@/lib/constants";
 import { buttonVariants } from "@/components/ui/button";
-import { Locale } from "@/lib/i18n";
+import { Locale } from "@/i18n/config";
 import { usePathname, Link } from "@/i18n/routing";
 import { useTranslations, useLocale } from "next-intl";
 import { LanguageSwitcher } from "@/components/language-switcher";

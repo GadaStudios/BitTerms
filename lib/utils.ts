@@ -5,8 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function isActivePath(path: string, pathname: string, lang?: string): boolean {
-  const normalizedPathname = lang ? pathname.replace(`/${lang}`, "") || "/" : pathname;
+export function isActivePath(
+  path: string,
+  pathname: string,
+  lang?: string,
+): boolean {
+  const normalizedPathname = lang
+    ? pathname.replace(`/${lang}`, "") || "/"
+    : pathname;
   if (path === "/") return normalizedPathname === "/";
   return normalizedPathname.startsWith(path);
 }

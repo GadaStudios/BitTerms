@@ -20,7 +20,7 @@ import { QUERY_TOP_TERMS } from "@/sanity/lib/queries";
 import { useContextProvider } from "@/components/provider";
 import { SearchFilterProps, searchFilterSchema } from "@/lib/validators";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { Locale } from "@/lib/i18n";
+import { Locale } from "@/i18n/config";
 import { useTranslations } from "next-intl";
 
 interface Props {

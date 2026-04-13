@@ -1,16 +1,16 @@
 import Image from "next/image";
-import Wrapper from "@/components/wrapper";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages, getTranslations } from "next-intl/server";
+
 import { Link } from "@/i18n/routing";
+import Wrapper from "@/components/wrapper";
 import { Header } from "@/components/header";
 import { buttonVariants } from "@/components/ui/button";
-import { i18n } from "@/lib/i18n";
-import { getMessages, getTranslations } from "next-intl/server";
-import { NextIntlClientProvider } from "next-intl";
 
 export default async function NotFound() {
-  const lang = i18n.defaultLocale;
+  const lang = await getLocale();
   const t = await getTranslations({ locale: lang, namespace: "not_found" });
-  const messages = await getMessages({ locale: lang });
+  const messages = await getMessages();
 
   return (
     <NextIntlClientProvider locale={lang} messages={messages}>
