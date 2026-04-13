@@ -4,17 +4,17 @@ import React from "react";
 import { motion, useAnimation } from "motion/react";
 import { usePathname, Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
-// import { useLocale } from "next-intl";
+import { useLocale } from "next-intl";
 
 import { cn } from "@/lib/utils";
-// import { Locale } from "@/i18n/config";
+import { Locale } from "@/i18n/config";
 import Wrapper from "./wrapper";
 import { Separator } from "./ui/separator";
-// import { LanguageSwitcher } from "./language-switcher";
+import { LanguageSwitcher } from "./language-switcher";
 
 export const Header = () => {
   const t = useTranslations("navigation");
-  // const locale = useLocale() as Locale;
+  const locale = useLocale() as Locale;
   const pathname = usePathname();
   const controls = useAnimation();
   const [mounted, setMounted] = React.useState(false);
@@ -47,8 +47,8 @@ export const Header = () => {
       className="fixed top-6 left-0 z-50 w-full"
     >
       <Wrapper>
-        <nav className="mx-auto flex h-14 w-full max-w-fit items-center justify-center rounded-full bg-black/70 px-7 py-2 backdrop-blur-xs sm:h-[60px]">
-          {/* <nav className="mx-auto flex h-14 w-full max-w-fit items-center justify-center rounded-full bg-black/70 py-2 pr-4 pl-7 backdrop-blur-xs sm:h-[60px]"> */}
+        {/* <nav className="mx-auto flex h-14 w-full max-w-fit items-center justify-center rounded-full bg-black/70 px-7 py-2 backdrop-blur-xs sm:h-[60px]"> */}
+        <nav className="mx-auto flex h-14 w-full max-w-fit items-center justify-center rounded-full bg-black/70 py-2 pr-4 pl-7 backdrop-blur-xs sm:h-[60px]">
           <div className="flex h-5 items-center justify-between">
             <Link href="/">
               <svg
@@ -116,12 +116,12 @@ export const Header = () => {
             </Link>
           </div>
 
-          {/* <Separator
+          <Separator
             orientation="vertical"
             className="bg-background/40 mx-4 h-4!"
           />
 
-          <LanguageSwitcher lang={locale} /> */}
+          <LanguageSwitcher lang={locale} />
         </nav>
       </Wrapper>
     </motion.header>
