@@ -1,9 +1,10 @@
+import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+
 import Wrapper from "@/components/wrapper";
 import { SearchComp } from "./search.comp";
 import { IllustrationComp } from "./illustration.comp";
-import React from "react";
-import { useTranslations } from "next-intl";
 
 export const HeroComp = () => {
   const t = useTranslations("hero");

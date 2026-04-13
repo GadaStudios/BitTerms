@@ -11,7 +11,8 @@
     "seed-terms": "bun scripts/seed-terms.ts",
     "clear-terms": "bun scripts/clear-terms.ts",
     "gen-locales": "bun scripts/genlocales.ts",
-    "typegen": "sanity schema extract && sanity typegen generate --enforce-required-fields"
+    "typegen": "sanity schema extract && sanity typegen generate --enforce-required-fields",
+    "export:terms": "bun scripts/export-terms.ts"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.8.1",

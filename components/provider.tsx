@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { client } from "@/sanity/lib/client";
 import { QUERY_TERMS_PAGED } from "@/sanity/lib/queries";
 import { ScrollToTop } from "./scroll";
-import { Locale } from "@/lib/i18n";
+import { Locale } from "@/i18n/config";
 
 export type TermDataProps = {
   _id: string;

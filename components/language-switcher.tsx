@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname, useRouter } from "@/i18n/routing";
-import { i18n, languageNames, Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -11,7 +10,6 @@ import {
 import { Button } from "./ui/button";
 import { LuLanguages } from "react-icons/lu";
 
-// ✅ shadcn command
 import {
   Command,
   CommandInput,
@@ -22,6 +20,7 @@ import {
 } from "@/components/ui/command";
 import { MdRadioButtonChecked } from "react-icons/md";
 import { getFlag } from "@/lib/language";
+import { i18n, languageNames, Locale } from "@/i18n/config";
 
 export const LanguageSwitcher = ({
   lang,

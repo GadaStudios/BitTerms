@@ -6,10 +6,10 @@
  * Any changes will be overwritten the next time the generator runs.
  */
 
-import { getLanguageName } from "./language";
+import { getLanguageName } from "@/lib/language";
 
 const defaultLocale = "en" as const;
-const locales = ["en","de","fr","sw","es"] as const;
+const locales = ["en","es"] as const;
 
 if (!locales.includes(defaultLocale as Locale)) {
   throw new Error("defaultLocale must exist in locales");

@@ -11,8 +11,6 @@ export const termsType = defineType({
       name: "language",
       title: "Language",
       type: "string",
-      readOnly: true,
-      // The document-internationalization plugin handles this field
     }),
     defineField({
       name: "name",
@@ -116,13 +114,14 @@ export const termsType = defineType({
       approved: "approved",
       audio: "audio",
       media: "illustration",
+      language: "language",
     },
-    prepare({ title, subtitle, approved, audio, media }) {
+    prepare({ title, subtitle, approved, audio, media, language }) {
       const status = approved ? "Approved" : "Pending";
       const audioStatus = audio ? "Has Audio" : "No Audio";
 
       return {
-        title,
+        title: language ? `${title} - ${language}` : title,
         subtitle: `${subtitle || "No author"} • ${status} • ${audioStatus}`,
         media,
       };

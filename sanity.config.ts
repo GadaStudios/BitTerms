@@ -13,7 +13,7 @@ import { apiVersion, dataset, projectId } from "@/sanity/env";
 import { schema } from "@/sanity/schema";
 import { structure } from "@/sanity/structure";
 import { documentInternationalization } from "@sanity/document-internationalization";
-import { i18n, languageNames } from "@/lib/i18n";
+import { i18n, languageNames } from "./i18n/config";
 
 export default defineConfig({
   basePath: "/studio",

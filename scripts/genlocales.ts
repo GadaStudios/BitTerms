@@ -22,7 +22,7 @@ const warning = `/**
 
 const content = `${warning}
 
-import { getLanguageName } from "./language";
+import { getLanguageName } from "@/lib/language";
 
 const defaultLocale = ${JSON.stringify(defaultLocale)} as const;
 const locales = ${JSON.stringify(locales)} as const;
@@ -43,7 +43,7 @@ export const languageNames = Object.fromEntries(
 ) as Record<Locale, string>;
 `;
 
-fs.writeFileSync("lib/i18n.ts", content);
+fs.writeFileSync("i18n/config.ts", content);
 
 console.log("[i18n] Default locale:", defaultLocale);
 console.log("[i18n] Generated locales:", locales);
