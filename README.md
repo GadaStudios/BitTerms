@@ -98,7 +98,7 @@ sw.json
 After adding or updating translations, run:
 
 ```bash
-pnpm run gen-locales
+pnpm run gLocales
 ```
 
 The system will automatically:

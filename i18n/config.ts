@@ -9,7 +9,7 @@
 import { getLanguageName } from "@/lib/language";
 
 const defaultLocale = "en" as const;
-const locales = ["en","es"] as const;
+const locales = ["en","fr","es"] as const;
 
 if (!locales.includes(defaultLocale as Locale)) {
   throw new Error("defaultLocale must exist in locales");

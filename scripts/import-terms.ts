@@ -61,7 +61,7 @@ async function importTerms(filePath: string, language: string) {
 const args = process.argv.slice(2);
 if (args.length < 2) {
   console.error(
-    "Usage: bun run import-terms.ts ndjson/<file.ndjson> <language>",
+    "Usage: bun run scripts/import-terms.ts ndjson/<file.ndjson> <language>",
   );
   process.exit(1);
 }
