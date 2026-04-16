@@ -1,0 +1,216 @@
+{
+  "navigation": {
+    "about": "À propos",
+    "suggest": "Suggérer",
+    "contribute": "Comment contribuer"
+  },
+  "hero": {
+    "title_part1": "BITCOIN",
+    "title_part2": "TERMES",
+    "subtitle": "ENFIN SIMPLIFIÉS",
+    "description": "Approchez-vous de Bitcoin avec moins de jargon et sans confusion. Bit Terms vous accompagne où que vous soyez, vous aidant à comprendre Bitcoin, une définition claire à la fois, avec des visuels sympathiques pour que vous compreniez et mémorisiez."
+  },
+  "search": {
+    "placeholder": "Rechercher des termes bitcoin",
+    "no_results": "Aucun résultat trouvé",
+    "recent": "Ajoutés récemment",
+    "top_searched": "Les plus recherchés :",
+    "search_button": "Rechercher"
+  },
+  "terms": {
+    "simplified": "Définition simplifiée",
+    "technical": "Définition technique",
+    "author": "Auteur",
+    "all": "Tous",
+    "see_technical": "Voir la définition technique",
+    "see_less": "Voir moins",
+    "search_result": "Résultat de recherche",
+    "abc_filters": {
+      "all": "tous",
+      "symbol": "#"
+    }
+  },
+  "about": {
+    "title": "Bienvenue sur Bit Terms",
+    "description": "Bitcoin peut être plein de « hache ceci », « nœud cela ». C’est comme s’il avait son propre langage. Il est presque normal de se sentir perdu ou même un peu stressé en essayant de suivre. BitTerms transforme les termes bitcoin en mots ordinaires. Nous prenons ces termes compliqués et les traduisons en conversation quotidienne. Pas de stress. Apprenez simplement à votre rythme.",
+    "intro_button": "Voir tous les termes",
+    "intro_data": [
+      {
+        "title": "CoinJoin",
+        "description": "CoinJoin mélange votre bitcoin avec celui d’autres utilisateurs dans une seule transaction pour rendre le traçage plus difficile, pour plus de confidentialité."
+      },
+      {
+        "title": "Hachage",
+        "description": "Un hachage est une empreinte digitale mélangée utilisée pour sécuriser les données de Bitcoin."
+      },
+      {
+        "title": "Nœud",
+        "description": "Un nœud est un ordinateur qui aide à exécuter, soutenir et partager des informations sur le réseau Bitcoin."
+      }
+    ],
+    "contribute": {
+      "title": "Comment contribuer",
+      "p1": "Vous voulez aider à rendre Bitcoin plus accessible ? Vous êtes au bon endroit. Cette section vous montre comment vous impliquer dans BitTerms. Que ce soit en simplifiant des termes, en dessinant des illustrations ou en suggérant des améliorations, nous avons facilité la participation et la collaboration avec la communauté.",
+      "p2": "Aidez les autres à apprendre en ajoutant vos propres explications simples, en suggérant des définitions, en partageant des commentaires ou en contribuant avec des images. Chaque petit geste aide quelqu’un d’autre à apprendre.",
+      "suggest_button": "Suggérer un terme",
+      "github_button": "Voir le dépôt GitHub",
+      "process_data": [
+        {
+          "title": "Interface Web",
+          "description": "Pour les utilisateurs non techniques : visitez BitTerms, allez à la page 'Suggérer un terme', remplissez le formulaire avec les détails de votre contribution et soumettez-le. Nous l’examinerons et l’ajouterons à la plateforme."
+        },
+        {
+          "title": "Ticket GitHub",
+          "description": "Pour les contributeurs techniques : créez un nouveau ticket GitHub en utilisant notre modèle avec les champs obligatoires (nom du terme, définition technique) et facultatifs (définition simple, illustration, fichier audio, nom de l’auteur)."
+        },
+        {
+          "title": "Assurer les normes de qualité",
+          "description": "Assurez-vous que vos définitions sont précises et à jour, utilisez un langage clair et concis, incluez des sources pour des faits spécifiques, et gardez les illustrations propres et faciles à comprendre."
+        },
+        {
+          "title": "Soyez respectueux et collaboratif",
+          "description": "BitTerms est un effort communautaire. Partagez vos commentaires avec bienveillance, restez ouvert aux suggestions, respectez les autres contributeurs et concentrez-vous sur rendre Bitcoin plus clair pour tout le monde."
+        }
+      ]
+    },
+    "support": {
+      "title": "Aider les gens à comprendre Bitcoin un mot à la fois !",
+      "description": "BitTerms n’est pas qu’une liste de mots ; c’est un projet continu pour partager la connaissance et rendre Bitcoin accessible à tous. Voici comment nous faisons.",
+      "support_data": [
+        {
+          "title": "Simplification des termes",
+          "description": "Nous transformons le jargon complexe de Bitcoin en un langage simple et quotidien. Si vous pouvez l’expliquer à un ami autour d’un café, à un enfant de 9 ans ou à un grand-père, vous le trouverez ici."
+        },
+        {
+          "title": "Illustrations",
+          "description": "Nous associons des définitions claires à des illustrations simples pour rendre l’apprentissage intuitif. Parce que parfois, un croquis fait ce qu’un paragraphe ne peut pas : il comble le fossé entre la confusion et la clarté."
+        },
+        {
+          "title": "Open Source",
+          "description": "Ajoutez vos propres définitions en langage simple, suggérez des modifications, partagez des commentaires ou téléchargez des visuels. Chaque contribution rend Bitcoin plus clair pour quelqu’un d’autre. Petit à petit, ensemble, nous construisons la compréhension."
+        }
+      ]
+    },
+    "guidelines": {
+      "title": "Directives de contribution",
+      "suggest_button": "Suggérer un terme",
+      "github_button": "Voir le dépôt GitHub",
+      "guideline_data": [
+        {
+          "title": "Guide de simplification des termes",
+          "guides": [
+            {
+              "label": "Écrivez pour tout le monde",
+              "description": "Utilisez un langage quotidien et adapté aux débutants. Évitez le jargon ou les termes trop techniques sauf si absolument nécessaire, et expliquez-les si vous les utilisez."
+            },
+            {
+              "label": "Soyez bref",
+              "description": "Visez 1 à 2 phrases claires par définition simplifiée. Imaginez que vous l’expliquez à un enfant curieux de 12 ans."
+            },
+            {
+              "label": "Pas de tirets ni de formatage complexe",
+              "description": "Évitez d’utiliser de longs tirets ou des formats trop structurés ; gardez un ton conversationnel et humain."
+            },
+            {
+              "label": "Restez fidèle au sens original",
+              "description": "En simplifiant, ne déformez pas le sens original. Recoupez avec la définition standard pour garantir l’exactitude."
+            }
+          ]
+        },
+        {
+          "title": "Guide d’illustration",
+          "guides": [
+            {
+              "label": "Utilisez le style stickman",
+              "description": "Toutes les illustrations doivent suivre le style ludique et minimaliste de stickman que nous avons adopté : formes simples, actions claires et gestes expressifs."
+            },
+            {
+              "label": "Correspondre à la définition",
+              "description": "Les illustrations doivent représenter visuellement la définition simplifiée du terme, aidant les utilisateurs à comprendre en un coup d’œil."
+            },
+            {
+              "label": "Fond blanc uniquement",
+              "description": "Gardez toutes les illustrations sur un fond blanc uni pour maintenir la cohérence visuelle dans tout le projet."
+            },
+            {
+              "label": "Utilisez le format vectoriel",
+              "description": "Soumettez vos illustrations sous forme de graphiques vectoriels évolutifs (SVG ou PNG haute résolution) pour garantir qu’elles restent nettes et adaptables."
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "suggest": {
+    "title": "Suggérer un terme",
+    "description": "Du jargon déroutant ? Pas ici. De la vendeuse du marché au passionné de technologie, BitTerms aide tout le monde à comprendre Bitcoin, une définition simple à la fois.",
+    "form": {
+      "name": "Nom du terme",
+      "slug": "Slug",
+      "definition": "Définition simplifiée",
+      "technical": "Définition technique",
+      "author": "Nom complet",
+      "submit": "Soumettre",
+      "success_title": "Suggestion envoyée !",
+      "success_description": "Merci pour votre contribution à BitTerms. Nous examinerons votre soumission sous peu.",
+      "error_title": "Une erreur s’est produite",
+      "error_description": "Une erreur s’est produite lors de l’envoi. Veuillez réessayer plus tard.",
+      "optional": "(Optionnel)",
+      "upload_illustration": "Télécharger une illustration",
+      "drag_drop": "Glissez-déposez un document ici ou parcourez",
+      "supported_files": "Fichiers pris en charge : JPEG, PNG, SVG.",
+      "max_file_size": "Taille maximale du fichier :",
+      "submitting": "Envoi en cours...",
+      "submission_failed": "Échec de l’envoi",
+      "submission_error": "Une erreur est survenue lors de l’envoi",
+      "validation": {
+        "name_min": "Le nom du terme doit comporter au moins 3 caractères",
+        "name_max": "Le nom du terme doit comporter au plus 100 caractères",
+        "author_max": "Le nom de l’auteur doit comporter au plus 50 caractères",
+        "definition_max": "La définition simplifiée doit comporter au plus 300 caractères",
+        "technical_min": "La définition technique doit comporter au moins 2 caractères",
+        "technical_max": "La définition technique doit comporter au plus 1000 caractères"
+      }
+    }
+  },
+  "not_found": {
+    "title": "Page non trouvée",
+    "back_to_home": "Retour à la page d’accueil"
+  },
+  "metadata": {
+    "title": "BitTerms",
+    "description": "Termes Bitcoin enfin simplifiés. Approchez-vous de Bitcoin avec moins de jargon et des visuels sympathiques.",
+    "keywords": [
+      "Bitcoin",
+      "cryptomonnaie",
+      "termes Bitcoin",
+      "glossaire crypto",
+      "éducation Bitcoin",
+      "apprentissage Bitcoin",
+      "définitions Bitcoin",
+      "blockchain",
+      "termes crypto",
+      "Bitcoin expliqué"
+    ],
+    "about": {
+      "title": "À propos de BitTerms",
+      "description": "En savoir plus sur notre mission de rendre la terminologie Bitcoin accessible à tous.",
+      "keywords": [
+        "à propos de BitTerms",
+        "projet d’éducation Bitcoin",
+        "apprentissage des cryptomonnaies",
+        "termes Bitcoin open source"
+      ]
+    },
+    "suggest": {
+      "title": "Suggérer un terme",
+      "description": "Soumettez un terme Bitcoin pour examen et inclusion possible dans BitTerms.",
+      "keywords": [
+        "suggérer un terme Bitcoin",
+        "contribuer à BitTerms",
+        "contribution de définition Bitcoin",
+        "termes contribués par la communauté"
+      ]
+    }
+  }
+}

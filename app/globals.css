@@ -78,7 +78,7 @@
   }
 
   h1 {
-    @apply text-5xl min-[360px]:text-6xl sm:text-7xl md:text-8xl lg:text-9xl;
+    @apply text-[44px] min-[360px]:text-6xl sm:text-7xl md:text-8xl lg:text-9xl;
   }
 
   h2 {
